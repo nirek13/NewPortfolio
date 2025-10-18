@@ -41,7 +41,7 @@ export default function About() {
         {/* Header */}
         <div className="text-sm sm:text-[0.95rem] leading-tight space-y-2">
           <div className="flex items-center justify-between">
-            <h1 className="underline underline-offset-[3px] font-extralight">◆ Lance Yan</h1>
+            <h1 className="underline underline-offset-[3px] font-extralight">◆ Nirek Shetty</h1>
             <div className="flex items-center gap-2 font-extralight">
               <a href="/" className={`hover-underline-nudge ${shouldBounce('home') ? 'nav-bounce' : ''}`}>Home</a>
               <span className="text-neutral-400">|</span>
@@ -66,10 +66,10 @@ export default function About() {
           <footer className="pb-16 sm:pb-24">
             <div>◆ Contact:</div>
             <div className="mt-2 flex items-center gap-3 text-neutral-700">
-              <a className="inline-flex items-center gap-1" href="mailto:lance.yan.business@gmail.com"><Mail size={14} /><span className="hover-underline-nudge">Email</span></a>
-              <a className="inline-flex items-center gap-1" href="https://github.com/lance116" target="_blank" rel="noreferrer"><Github size={14} /><span className="hover-underline-nudge">GitHub</span></a>
+              <a className="inline-flex items-center gap-1" href="mailto:Nirek.Shetty.business@gmail.com"><Mail size={14} /><span className="hover-underline-nudge">Email</span></a>
+              <a className="inline-flex items-center gap-1" href="https://github.com/Nirek116" target="_blank" rel="noreferrer"><Github size={14} /><span className="hover-underline-nudge">GitHub</span></a>
               <a className="inline-flex items-center gap-1" href="https://x.com/cnnguan/" target="_blank" rel="noreferrer"><Logo src="/X.png" alt="X" /><span className="hover-underline-nudge">Twitter</span></a>
-              <a className="inline-flex items-center gap-1" href="https://www.linkedin.com/in/lance-yan/" target="_blank" rel="noreferrer"><Logo src="/linkedin.webp" alt="LinkedIn" /><span className="hover-underline-nudge">LinkedIn</span></a>
+              <a className="inline-flex items-center gap-1" href="https://www.linkedin.com/in/Nirek-Shetty/" target="_blank" rel="noreferrer"><Logo src="/linkedin.webp" alt="LinkedIn" /><span className="hover-underline-nudge">LinkedIn</span></a>
             </div>
           </footer>
         </div>

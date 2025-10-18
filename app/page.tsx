@@ -41,7 +41,7 @@ export default function Home() {
         {/* Header */}
         <div className="text-sm sm:text-[0.95rem] leading-tight space-y-2">
           <div className="flex items-center justify-between">
-            <h1 className="underline underline-offset-[3px] font-extralight">◆ Lance Yan</h1>
+            <h1 className="underline underline-offset-[3px] font-extralight">◆ Nirek Shetty</h1>
             <div className="flex items-center gap-2 font-extralight">
               <a href="/about" className={`hover-underline-nudge ${shouldBounce('about') ? 'nav-bounce' : ''}`}>About me</a>
               <span className="text-neutral-400">|</span>
@@ -66,7 +66,7 @@ export default function Home() {
           <div>↳ Growth at <span className="inline-flex items-center align-middle gap-1"><Logo src="/symbal_logo.jpeg" alt="Symbal" /><Label><a href="https://www.symbal.ai/" target="_blank" rel="noreferrer" className="hover-underline-nudge">Symbal</a></Label></span>, backed by Peter Thiel and <span className="inline-flex items-center align-middle gap-1"><Logo src="/founders fund.jpeg" alt="Founders Fund" /><Label><a href="https://foundersfund.com/" target="_blank" rel="noreferrer" className="hover-underline-nudge">Founders Fund</a></Label></span>.</div>
           <div>↳ Fellow at <span className="inline-flex items-center align-middle gap-1"><Logo src="/boardy_logo.jpeg" alt="Boardy" /><Label><a href="https://www.boardy.ai/" target="_blank" rel="noreferrer" className="hover-underline-nudge">Boardy</a></Label></span>, Fall 2025 Cohort.</div>
           <div className="leading-[1.4]">↳ Mentored by some <span className="font-bold slight-italic">amazing</span> people. Including founders from <span className="inline-flex items-center align-middle gap-1"><Logo src="/YClogo.png" alt="YC" /><Label><a href="https://www.ycombinator.com/" target="_blank" rel="noreferrer" className="hover-underline-nudge">Y Combinator</a></Label></span>, <span className="inline-flex items-center align-middle gap-1"><Logo src="/speedrun.jpg" alt="speedrun" /><Label><a href="https://speedrun.a16z.com/" target="_blank" rel="noreferrer" className="hover-underline-nudge">speedrun</a></Label></span>, <span className="inline-flex items-center align-middle gap-1"><Logo src="/zfellows.jpg" alt="Z Fellows" /><Label><a href="https://www.zfellows.com/" target="_blank" rel="noreferrer" className="hover-underline-nudge">Z Fellows</a></Label></span> and <span className="inline-flex items-center align-middle gap-1"><Logo src="/thielfellow.png" alt="Thiel Fellows" /><Label><a href="https://thielfellowship.org/" target="_blank" rel="noreferrer" className="hover-underline-nudge">Thiel Fellowship</a></Label></span>.</div>
-          <div>↳ <span className="font-bold slight-italic">2200+</span> followers on <span className="inline-flex items-center align-middle gap-1"><Logo src="/linkedin.webp" alt="LinkedIn" /><Label><a href="https://www.linkedin.com/in/lance-yan/" target="_blank" rel="noreferrer" className="hover-underline-nudge">LinkedIn</a></Label></span>, <span className="font-bold slight-italic">1300+</span> followers on <span className="inline-flex items-center align-middle gap-1"><span className="relative -top-[1px]"><Logo src="/X.png" alt="X" /></span></span>, with posts totaling <span className="font-bold slight-italic">1M+</span> views.</div>
+          <div>↳ <span className="font-bold slight-italic">2200+</span> followers on <span className="inline-flex items-center align-middle gap-1"><Logo src="/linkedin.webp" alt="LinkedIn" /><Label><a href="https://www.linkedin.com/in/Nirek-Shetty/" target="_blank" rel="noreferrer" className="hover-underline-nudge">LinkedIn</a></Label></span>, <span className="font-bold slight-italic">1300+</span> followers on <span className="inline-flex items-center align-middle gap-1"><span className="relative -top-[1px]"><Logo src="/X.png" alt="X" /></span></span>, with posts totaling <span className="font-bold slight-italic">1M+</span> views.</div>
         </div>
 
         <div className="my-3 border-t border-neutral-200" />
@@ -97,10 +97,10 @@ export default function Home() {
           <footer className="pb-16 sm:pb-24">
             <div>◆ Contact:</div>
             <div className="mt-2 flex items-center gap-3 text-neutral-700">
-              <a className="inline-flex items-center gap-1" href="mailto:lance.yan.business@gmail.com"><Mail size={14} /><span className="hover-underline-nudge">Email</span></a>
-              <a className="inline-flex items-center gap-1" href="https://github.com/lance116" target="_blank" rel="noreferrer"><Github size={14} /><span className="hover-underline-nudge">GitHub</span></a>
+              <a className="inline-flex items-center gap-1" href="mailto:Nirek.Shetty.business@gmail.com"><Mail size={14} /><span className="hover-underline-nudge">Email</span></a>
+              <a className="inline-flex items-center gap-1" href="https://github.com/Nirek116" target="_blank" rel="noreferrer"><Github size={14} /><span className="hover-underline-nudge">GitHub</span></a>
               <a className="inline-flex items-center gap-1" href="https://x.com/cnnguan/" target="_blank" rel="noreferrer"><Logo src="/X.png" alt="X" /><span className="hover-underline-nudge">Twitter</span></a>
-              <a className="inline-flex items-center gap-1" href="https://www.linkedin.com/in/lance-yan/" target="_blank" rel="noreferrer"><Logo src="/linkedin.webp" alt="LinkedIn" /><span className="hover-underline-nudge">LinkedIn</span></a>
+              <a className="inline-flex items-center gap-1" href="https://www.linkedin.com/in/Nirek-Shetty/" target="_blank" rel="noreferrer"><Logo src="/linkedin.webp" alt="LinkedIn" /><span className="hover-underline-nudge">LinkedIn</span></a>
             </div>
           </footer>
         </div>
