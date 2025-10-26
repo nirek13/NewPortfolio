@@ -178,6 +178,99 @@ interface ArtisticPageLoaderProps {
   className?: string;
 }
 
+interface MacOSHelloLoaderProps {
+  className?: string;
+  onComplete?: () => void;
+  size?: 'sm' | 'md' | 'lg';
+}
+
+export function MacOSHelloLoader({ 
+  className, 
+  onComplete,
+  size = 'md'
+}: MacOSHelloLoaderProps) {
+  const [visibleChars, setVisibleChars] = useState(0);
+  const [isComplete, setIsComplete] = useState(false);
+  
+  const text = "hello";
+  const colors = [
+    '#FF6B35', // Orange-red
+    '#F7931E', // Orange
+    '#FFD23F', // Yellow
+    '#67B26F', // Green
+    '#4ECDC4', // Teal
+    '#45B7D1', // Blue
+    '#9B59B6', // Purple
+  ];
+
+  const sizeClasses = {
+    sm: 'text-4xl',
+    md: 'text-6xl lg:text-8xl',
+    lg: 'text-8xl lg:text-9xl'
+  };
+
+  useEffect(() => {
+    if (visibleChars >= text.length) {
+      setTimeout(() => {
+        setIsComplete(true);
+        onComplete?.();
+      }, 1000);
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      setVisibleChars(prev => prev + 1);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [visibleChars, onComplete]);
+
+  if (isComplete) return null;
+
+  return (
+    <div className={cn(
+      'flex items-center justify-center min-h-[200px]',
+      className
+    )}>
+      <div className={cn(
+        'font-light tracking-wider select-none',
+        sizeClasses[size]
+      )}>
+        {text.split('').map((char, index) => (
+          <span
+            key={index}
+            className={cn(
+              'inline-block transition-all duration-500 ease-out',
+              index < visibleChars 
+                ? 'opacity-100 transform translate-y-0' 
+                : 'opacity-0 transform translate-y-4'
+            )}
+            style={{
+              color: index < visibleChars ? colors[index % colors.length] : 'transparent',
+              animationDelay: `${index * 100}ms`,
+              textShadow: index < visibleChars 
+                ? `0 0 20px ${colors[index % colors.length]}40, 0 0 40px ${colors[index % colors.length]}20`
+                : 'none'
+            }}
+          >
+            {char}
+          </span>
+        ))}
+        <span 
+          className={cn(
+            'inline-block w-1 ml-1 bg-gray-400 animate-pulse',
+            size === 'sm' ? 'h-8' : size === 'md' ? 'h-12 lg:h-16' : 'h-16 lg:h-20'
+          )}
+          style={{
+            opacity: visibleChars >= text.length ? 0 : 1,
+            transition: 'opacity 0.5s ease-out'
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
 export function ArtisticPageLoader({ 
   isLoading, 
   onComplete, 
