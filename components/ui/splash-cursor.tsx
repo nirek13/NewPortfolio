@@ -1222,6 +1222,8 @@ function SplashCursor({
       
       // Update each ghost mouse circle
       ghostMice.forEach((ghost, index) => {
+        if (!ghost) return; // Skip if ghost is null
+        
         ghost.circleTimer += dt * 1000;
         
         // Check if current circle is complete - create a new one
@@ -1230,8 +1232,8 @@ function SplashCursor({
           const newGhost = createGhostCircle();
           if (newGhost) {
             ghostMice[index] = newGhost;
-            ghost = ghostMice[index]; // Update reference
           }
+          return; // Skip to next iteration with new ghost
         }
         
         // Update angle for circular motion
@@ -1271,7 +1273,7 @@ function SplashCursor({
         }
         
         // Create splash effect at ghost mouse position
-        if (canvas) {
+        if (canvas && ghost) {
           const pointer = {
             texcoordX: ghost.x / canvas.width,
             texcoordY: 1.0 - ghost.y / canvas.height,
@@ -1312,8 +1314,28 @@ function SplashCursor({
       clickSplat(pointer);
     });
 
+    // Type definition for ghost circle
+    interface GhostCircle {
+      x: number;
+      y: number;
+      centerX: number;
+      centerY: number;
+      angle: number;
+      radiusX: number;
+      radiusY: number;
+      speed: number;
+      noiseOffset1: number;
+      noiseOffset2: number;
+      noiseOffset3: number;
+      noiseScale: number;
+      lumpiness: number;
+      wobbleAmount: number;
+      circleTimer: number;
+      circleDuration: number;
+    }
+
     // Multiple ghost mice for simultaneous circles
-    function createGhostCircle() {
+    function createGhostCircle(): GhostCircle | null {
       if (!canvas) return null;
       
       const margin = 100;
@@ -1343,11 +1365,11 @@ function SplashCursor({
       };
     }
 
-    let ghostMice = [
+    let ghostMice: GhostCircle[] = [
       createGhostCircle(),
       createGhostCircle(),
       createGhostCircle()
-    ].filter(Boolean);
+    ].filter((ghost): ghost is GhostCircle => ghost !== null);
     
     let ghostMouseActive = true;
     let lastUserActivity = Date.now();
