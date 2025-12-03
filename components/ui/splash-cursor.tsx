@@ -6,8 +6,8 @@ function SplashCursor({
   SIM_RESOLUTION = 128,
   DYE_RESOLUTION = 1440,
   CAPTURE_RESOLUTION = 512,
-  DENSITY_DISSIPATION = 2.08, // was 2.45 → ~15% lower (lingers more)
-  VELOCITY_DISSIPATION = 1.19, // was 1.4 → ~15% lower (lingers more)
+  DENSITY_DISSIPATION = 2, // was 2.45 → ~15% lower (lingers more)
+  VELOCITY_DISSIPATION = 1, // was 1.4 → ~15% lower (lingers more)
   PRESSURE = 0.1,
   PRESSURE_ITERATIONS = 20,
   CURL = 3,
@@ -818,10 +818,14 @@ function SplashCursor({
     let lastUpdateTime = Date.now();
     let colorUpdateTimer = 0.0;
 
+    let animationId: number;
+    let isAnimating = false;
+
     function updateFrame() {
       const dt = calcDeltaTime();
       if (resizeCanvas()) initFramebuffers();
       updateColors(dt);
+      updateGhostMouse(dt);
       applyInputs();
       step(dt);
       render(null);
@@ -829,6 +833,16 @@ function SplashCursor({
         animationId = requestAnimationFrame(updateFrame);
       }
     }
+
+    function startAnimation() {
+      if (!isAnimating) {
+        isAnimating = true;
+        animationId = requestAnimationFrame(updateFrame);
+      }
+    }
+    
+    // Start animation automatically for ghost mouse
+    startAnimation();
 
     function calcDeltaTime() {
       let now = Date.now();
@@ -1187,6 +1201,91 @@ function SplashCursor({
       return Math.floor(input * pixelRatio);
     }
 
+    // Smooth, ethereal noise function for organic shapes
+    function smoothNoise(x: number) {
+      return Math.sin(x) * 0.6 + Math.sin(x * 1.618) * 0.25 + Math.sin(x * 0.618) * 0.15;
+    }
+
+    function updateGhostMouse(dt: number) {
+      const timeSinceLastActivity = Date.now() - lastUserActivity;
+      
+      // Hide ghost mice if user was recently active
+      if (timeSinceLastActivity < 1000) {
+        ghostMouseActive = false;
+        return;
+      }
+      
+      // Show ghost mice after 1 second of inactivity
+      ghostMouseActive = true;
+      
+      if (!ghostMouseActive) return;
+      
+      // Update each ghost mouse circle
+      ghostMice.forEach((ghost, index) => {
+        ghost.circleTimer += dt * 1000;
+        
+        // Check if current circle is complete - create a new one
+        if (ghost.circleTimer >= ghost.circleDuration) {
+          // Replace this ghost with a new one at a new location
+          ghostMice[index] = createGhostCircle();
+          ghost = ghostMice[index]; // Update reference
+        }
+        
+        // Update angle for circular motion
+        ghost.angle += ghost.speed;
+        
+        // Create organic lumpy distortions using multiple noise layers
+        const noiseAngle1 = ghost.angle * 3 + ghost.noiseOffset1; // Higher frequency for lumpiness
+        const noiseAngle2 = ghost.angle * 1.7 + ghost.noiseOffset2; // Medium frequency
+        const noiseAngle3 = ghost.angle * 0.8 + ghost.noiseOffset3; // Lower frequency for overall shape
+        
+        // Create lumpy radius variations
+        const lump1 = smoothNoise(noiseAngle1 * ghost.noiseScale) * ghost.lumpiness;
+        const lump2 = smoothNoise(noiseAngle2 * ghost.noiseScale * 0.7) * ghost.lumpiness * 0.6;
+        const lump3 = smoothNoise(noiseAngle3 * ghost.noiseScale * 0.3) * ghost.lumpiness * 0.4;
+        
+        const totalLump = lump1 + lump2 + lump3;
+        
+        // Apply lumps to both X and Y radius for organic elliptical distortion
+        const adjustedRadiusX = ghost.radiusX * (1 + totalLump);
+        const adjustedRadiusY = ghost.radiusY * (1 + totalLump * 0.8); // Slightly less lumpy in Y
+        
+        // Add subtle hand-drawn wobble
+        const wobbleX = smoothNoise(ghost.angle * 5 + ghost.noiseOffset1) * ghost.wobbleAmount;
+        const wobbleY = smoothNoise(ghost.angle * 4.3 + ghost.noiseOffset2) * ghost.wobbleAmount;
+        
+        // Calculate final organic ellipse position
+        const prevX = ghost.x;
+        const prevY = ghost.y;
+        
+        ghost.x = ghost.centerX + Math.cos(ghost.angle) * adjustedRadiusX + wobbleX;
+        ghost.y = ghost.centerY + Math.sin(ghost.angle) * adjustedRadiusY + wobbleY;
+        
+        // Keep within canvas bounds
+        ghost.x = Math.max(30, Math.min(canvas.width - 30, ghost.x));
+        ghost.y = Math.max(30, Math.min(canvas.height - 30, ghost.y));
+        
+        // Create splash effect at ghost mouse position
+        const pointer = {
+          texcoordX: ghost.x / canvas.width,
+          texcoordY: 1.0 - ghost.y / canvas.height,
+          prevTexcoordX: prevX / canvas.width,
+          prevTexcoordY: 1.0 - prevY / canvas.height,
+          deltaX: 0,
+          deltaY: 0,
+          moved: true,
+          color: generateColor()
+        };
+        
+        pointer.deltaX = correctDeltaX(pointer.texcoordX - pointer.prevTexcoordX);
+        pointer.deltaY = correctDeltaY(pointer.texcoordY - pointer.prevTexcoordY);
+        
+        if (Math.abs(pointer.deltaX) > 0 || Math.abs(pointer.deltaY) > 0) {
+          splatPointer(pointer);
+        }
+      });
+    }
+
     function hashCode(s: string) {
       if (s.length === 0) return 0;
       let hash = 0;
@@ -1198,6 +1297,7 @@ function SplashCursor({
     }
 
     window.addEventListener("mousedown", (e) => {
+      lastUserActivity = Date.now();
       let pointer = pointers[0];
       let posX = scaleByPixelRatio(e.clientX);
       let posY = scaleByPixelRatio(e.clientY);
@@ -1205,19 +1305,48 @@ function SplashCursor({
       clickSplat(pointer);
     });
 
-    let animationId: number;
-    let isAnimating = false;
-
-    function startAnimation() {
-      if (!isAnimating) {
-        isAnimating = true;
-        animationId = requestAnimationFrame(updateFrame);
-      }
+    // Multiple ghost mice for simultaneous circles
+    function createGhostCircle() {
+      const margin = 100;
+      return {
+        x: canvas.width / 2,
+        y: canvas.height / 2,
+        
+        // Organic circle parameters
+        centerX: margin + Math.random() * (canvas.width - 2 * margin),
+        centerY: margin + Math.random() * (canvas.height - 2 * margin),
+        angle: Math.random() * Math.PI * 2,
+        radiusX: canvas.width * 0.15 + Math.random() * canvas.width * 0.15, // 15-30% of page width
+        radiusY: canvas.height * 0.12 + Math.random() * canvas.height * 0.15, // 12-27% of page height
+        speed: 0.003 + Math.random() * 0.005, // Slower for multiple circles
+        
+        // Organic shape parameters
+        noiseOffset1: Math.random() * 1000,
+        noiseOffset2: Math.random() * 1000,
+        noiseOffset3: Math.random() * 1000,
+        noiseScale: 0.015 + Math.random() * 0.02,
+        lumpiness: 0.2 + Math.random() * 0.3,
+        wobbleAmount: 3 + Math.random() * 6,
+        
+        // Circle lifecycle
+        circleTimer: 0,
+        circleDuration: 20000 + Math.random() * 25000, // 20-45 seconds per circle
+      };
     }
+
+    let ghostMice = [
+      createGhostCircle(),
+      createGhostCircle(),
+      createGhostCircle()
+    ];
+    
+    let ghostMouseActive = true;
+    let lastUserActivity = Date.now();
 
     document.body.addEventListener(
       "mousemove",
       function handleFirstMouseMove(e) {
+        lastUserActivity = Date.now();
         let pointer = pointers[0];
         let posX = scaleByPixelRatio(e.clientX);
         let posY = scaleByPixelRatio(e.clientY);
@@ -1229,6 +1358,7 @@ function SplashCursor({
     );
 
     window.addEventListener("mousemove", (e) => {
+      lastUserActivity = Date.now();
       let pointer = pointers[0];
       let posX = scaleByPixelRatio(e.clientX);
       let posY = scaleByPixelRatio(e.clientY);
@@ -1239,6 +1369,7 @@ function SplashCursor({
     document.body.addEventListener(
       "touchstart",
       function handleFirstTouchStart(e) {
+        lastUserActivity = Date.now();
         const touches = e.targetTouches;
         let pointer = pointers[0];
         for (let i = 0; i < touches.length; i++) {
@@ -1252,6 +1383,7 @@ function SplashCursor({
     );
 
     window.addEventListener("touchstart", (e) => {
+      lastUserActivity = Date.now();
       const touches = e.targetTouches;
       let pointer = pointers[0];
       for (let i = 0; i < touches.length; i++) {
@@ -1264,6 +1396,7 @@ function SplashCursor({
     window.addEventListener(
       "touchmove",
       (e) => {
+        lastUserActivity = Date.now();
         const touches = e.targetTouches;
         let pointer = pointers[0];
         for (let i = 0; i < touches.length; i++) {
