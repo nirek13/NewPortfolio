@@ -1227,8 +1227,11 @@ function SplashCursor({
         // Check if current circle is complete - create a new one
         if (ghost.circleTimer >= ghost.circleDuration) {
           // Replace this ghost with a new one at a new location
-          ghostMice[index] = createGhostCircle();
-          ghost = ghostMice[index]; // Update reference
+          const newGhost = createGhostCircle();
+          if (newGhost) {
+            ghostMice[index] = newGhost;
+            ghost = ghostMice[index]; // Update reference
+          }
         }
         
         // Update angle for circular motion
@@ -1262,26 +1265,30 @@ function SplashCursor({
         ghost.y = ghost.centerY + Math.sin(ghost.angle) * adjustedRadiusY + wobbleY;
         
         // Keep within canvas bounds
-        ghost.x = Math.max(30, Math.min(canvas.width - 30, ghost.x));
-        ghost.y = Math.max(30, Math.min(canvas.height - 30, ghost.y));
+        if (canvas) {
+          ghost.x = Math.max(30, Math.min(canvas.width - 30, ghost.x));
+          ghost.y = Math.max(30, Math.min(canvas.height - 30, ghost.y));
+        }
         
         // Create splash effect at ghost mouse position
-        const pointer = {
-          texcoordX: ghost.x / canvas.width,
-          texcoordY: 1.0 - ghost.y / canvas.height,
-          prevTexcoordX: prevX / canvas.width,
-          prevTexcoordY: 1.0 - prevY / canvas.height,
-          deltaX: 0,
-          deltaY: 0,
-          moved: true,
-          color: generateColor()
-        };
-        
-        pointer.deltaX = correctDeltaX(pointer.texcoordX - pointer.prevTexcoordX);
-        pointer.deltaY = correctDeltaY(pointer.texcoordY - pointer.prevTexcoordY);
-        
-        if (Math.abs(pointer.deltaX) > 0 || Math.abs(pointer.deltaY) > 0) {
-          splatPointer(pointer);
+        if (canvas) {
+          const pointer = {
+            texcoordX: ghost.x / canvas.width,
+            texcoordY: 1.0 - ghost.y / canvas.height,
+            prevTexcoordX: prevX / canvas.width,
+            prevTexcoordY: 1.0 - prevY / canvas.height,
+            deltaX: 0,
+            deltaY: 0,
+            moved: true,
+            color: generateColor()
+          };
+          
+          pointer.deltaX = correctDeltaX(pointer.texcoordX - pointer.prevTexcoordX);
+          pointer.deltaY = correctDeltaY(pointer.texcoordY - pointer.prevTexcoordY);
+          
+          if (Math.abs(pointer.deltaX) > 0 || Math.abs(pointer.deltaY) > 0) {
+            splatPointer(pointer);
+          }
         }
       });
     }
@@ -1307,6 +1314,8 @@ function SplashCursor({
 
     // Multiple ghost mice for simultaneous circles
     function createGhostCircle() {
+      if (!canvas) return null;
+      
       const margin = 100;
       return {
         x: canvas.width / 2,
@@ -1338,7 +1347,7 @@ function SplashCursor({
       createGhostCircle(),
       createGhostCircle(),
       createGhostCircle()
-    ];
+    ].filter(Boolean);
     
     let ghostMouseActive = true;
     let lastUserActivity = Date.now();
