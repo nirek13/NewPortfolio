@@ -46,7 +46,7 @@ function SplashCursor({
       id: -1,
       texcoordX: 0,
       texcoordY: 0,
-      prevTexcoordX: 0,
+      prevTexcoordX: 500,
       prevTexcoordY: 0,
       deltaX: 0,
       deltaY: 0,
@@ -1338,18 +1338,18 @@ function SplashCursor({
     function createGhostCircle(): GhostCircle | null {
       if (!canvas) return null;
       
-      const margin = 100;
+      const margin = 500;
       return {
         x: canvas.width / 2,
         y: canvas.height / 2,
         
         // Organic circle parameters
-        centerX: margin + Math.random() * (canvas.width - 2 * margin),
-        centerY: margin + Math.random() * (canvas.height - 2 * margin),
+        centerX: canvas.width / 2,
+        centerY: canvas.height / 2,
         angle: Math.random() * Math.PI * 2,
-        radiusX: canvas.width * 0.15 + Math.random() * canvas.width * 0.15, // 15-30% of page width
-        radiusY: canvas.height * 0.12 + Math.random() * canvas.height * 0.15, // 12-27% of page height
-        speed: 0.003 + Math.random() * 0.005, // Slower for multiple circles
+        radiusX: canvas.width * 0.15 + Math.random() * canvas.width * 2, // 15-30% of page width
+        radiusY: canvas.height * 0.12 + Math.random() * canvas.height * 2, // 12-27% of page height
+        speed: 0.003 + Math.random() * 0.005, // Slower for multiple circles   
         
         // Organic shape parameters
         noiseOffset1: Math.random() * 1000,
