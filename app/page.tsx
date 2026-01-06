@@ -6,6 +6,8 @@ import { Mail, Github, Twitter, Linkedin, Briefcase, Camera, User, Sparkles } fr
 import { useNavigationBounce } from "../lib/useNavigationBounce";
 import { DynamicBackground } from "@/components/ui/dynamic-background";
 import { GlassCard, LiquidFlowButton, FlowingBorder, LiquidGlassPanel, FloatingGlassCard } from "@/components/ui/glass-components";
+import { GitCommitGraph } from "@/components/widgets/GitStatsWidget";
+
 
 function Logo({ src, alt, size = 18, className = "" }: { src: string; alt: string; size?: number; className?: string }) {
   return (
@@ -76,45 +78,48 @@ export default function Home() {
 
           {/* Navigation Cards */}
           <div className="col-span-12 md:col-span-4">
-            <GlassCard className="p-3 h-full" intensity="subtle">
-              <h3 className="text-xs font-medium mb-2 flex items-center gap-1.5 text-gray-800">
-                <User size={16} className="text-blue-600" />
-                Navigation
-              </h3>
-              <div className="space-y-1.5">
-                <Link href="/about" className="block">
-                  <LiquidFlowButton 
-                    variant="pastel-blue" 
-                    className={`w-full justify-start py-1.5 px-2.5 text-xs ${shouldBounce('about') ? 'nav-bounce' : ''}`}
-                  >
-                    <User size={14} />
-                    About Me
-                  </LiquidFlowButton>
-                </Link>
-
-                <Link href="/projects" className="block">
-                  <LiquidFlowButton 
-                    variant="pastel-purple" 
-                    className="w-full justify-start py-1.5 px-2.5 text-xs"
-                  >
-                    <Briefcase size={14} />
-                    Projects
-                  </LiquidFlowButton>
-                </Link>
-
-                <Link href="/photography" className="block">
-                  <LiquidFlowButton 
-                    variant="pastel-pink" 
-                    className={`w-full justify-start py-1.5 px-2.5 text-xs ${shouldBounce('photography') ? 'nav-bounce-delayed' : ''}`}
-                  >
-                    <Camera size={14} />
-                    Photography
-                  </LiquidFlowButton>
-                </Link>
-              </div>
-            </GlassCard>
-          </div>
-
+  {/* Reduced padding from p-3 to p-2.5 for a tighter footprint */}
+  <GlassCard className="p-2.5 h-full border-white/20 shadow-lg" intensity="subtle">
+    <h3 className="text-[10px] font-bold mb-2.5 flex items-center gap-1.5 text-gray-400 uppercase tracking-widest">
+      <User size={12} className="opacity-70" />
+      Navigation
+    </h3>
+    
+    <div className="space-y-1.5">
+      {[
+        { href: "/about", label: "About Me", icon: User, variant: "pastel-blue", bounce: 'about' },
+        { href: "/projects", label: "Projects", icon: Briefcase, variant: "pastel-purple", bounce: '' },
+        { href: "/photography", label: "Photography", icon: Camera, variant: "pastel-pink", bounce: 'photography' }
+      ].map((item) => (
+        <Link href={item.href} key={item.label} className="block group">
+          <LiquidFlowButton 
+            variant={item.variant as "pastel-blue" | "pastel-purple" | "pastel-pink" | "pastel-green"} 
+            className={`
+              w-full justify-start py-1.5 px-3 text-[11px] font-semibold transition-all duration-300 ease-out
+              relative overflow-visible
+              /* 1. Base State: Flat-ish with a slight rim light */
+              border-t border-white/50 border-l border-white/30
+              bg-white/10 backdrop-blur-sm
+              shadow-[2px_2px_5px_rgba(0,0,0,0.05)]
+              
+              /* 2. Popping Effect on Hover */
+              hover:-translate-y-1 hover:translate-x-0.5
+              hover:shadow-[8px_12px_20px_rgba(0,0,0,0.15),-2px_-2px_10px_rgba(255,255,255,0.8)]
+              hover:border-white/80
+              
+              /* 3. Click compression */
+              active:translate-y-0.5 active:translate-x-0 active:shadow-inner
+              ${item.bounce && shouldBounce(item.bounce) ? 'nav-bounce' : ''}
+            `}
+          >
+            <item.icon size={13} className="mr-2 group-hover:scale-110 group-hover:rotate-3 transition-transform" />
+            {item.label}
+          </LiquidFlowButton>
+        </Link>
+      ))}
+    </div>
+  </GlassCard>
+</div>
           {/* What Makes Me Different */}
           <div className="col-span-12 md:col-span-8">
             <GlassCard className="p-3 h-full" intensity="subtle">
@@ -181,71 +186,65 @@ export default function Home() {
             </GlassCard>
           </div>
 
-          {/* Stats Cards - Compact */}
-          <div className="col-span-6 md:col-span-3">
-            <GlassCard className="p-2 h-full text-center" intensity="subtle">
-              <div className="space-y-0.5">
-                <div className="text-base font-light text-blue-700">$7M+</div>
-                <div className="text-xs text-gray-600">Valuation Offers</div>
-              </div>
-            </GlassCard>
+          {/* GitHub Stats Widget */}
+          <div className="col-span-12 md:col-span-6">
+            <GitCommitGraph />
           </div>
 
-          <div className="col-span-6 md:col-span-3">
-            <GlassCard className="p-2 h-full text-center" intensity="subtle">
-              <div className="space-y-0.5">
-                <div className="text-base font-light text-green-700">2200+</div>
-                <div className="text-xs text-gray-600">LinkedIn Followers</div>
-              </div>
-            </GlassCard>
-          </div>
-
-          <div className="col-span-6 md:col-span-3">
-            <GlassCard className="p-2 h-full text-center" intensity="subtle">
-              <div className="space-y-0.5">
-                <div className="text-base font-light text-purple-700">1M+</div>
-                <div className="text-xs text-gray-600">Post Views</div>
-              </div>
-            </GlassCard>
-          </div>
-
-          <div className="col-span-6 md:col-span-3">
-            <GlassCard className="p-2 h-full text-center" intensity="subtle">
-              <div className="space-y-0.5">
-                <div className="text-base font-light text-orange-700">19+</div>
-                <div className="text-xs text-gray-600">Years Coding</div>
-              </div>
-            </GlassCard>
-          </div>
-
-          {/* Mentorship Network */}
-          <div className="col-span-12">
-            <GlassCard className="p-3" intensity="subtle">
-              <div className="space-y-2">
-                <h3 className="text-xs font-medium text-gray-800">Mentorship & Network</h3>
-                <div className="text-xs leading-relaxed text-gray-700">
-                  <p>↳ Mentored by founders from <span className="inline-flex items-center align-middle gap-1"><Logo src="/YClogo.png" alt="YC" /><Label><a href="https://www.ycombinator.com/" target="_blank" rel="noreferrer" className="hover-underline-nudge text-blue-700">Y Combinator</a></Label></span>, <span className="inline-flex items-center align-middle gap-1"><Logo src="/speedrun.jpg" alt="speedrun" /><Label><a href="https://speedrun.a16z.com/" target="_blank" rel="noreferrer" className="hover-underline-nudge text-blue-700">speedrun</a></Label></span>, <span className="inline-flex items-center align-middle gap-1"><Logo src="/zfellows.jpg" alt="Z Fellows" /><Label><a href="https://www.zfellows.com/" target="_blank" rel="noreferrer" className="hover-underline-nudge text-blue-700">Z Fellows</a></Label></span> and <span className="inline-flex items-center align-middle gap-1"><Logo src="/thielfellow.png" alt="Thiel Fellows" /><Label><a href="https://thielfellowship.org/" target="_blank" rel="noreferrer" className="hover-underline-nudge text-blue-700">Thiel Fellowship</a></Label></span>.</p>
+          {/* Dog Photo */}
+          <div className="col-span-12 md:col-span-6">
+            <GlassCard className="p-4 h-full group hover:shadow-xl transition-all duration-500" intensity="subtle">
+              <div className="space-y-3">
+                <h3 className="text-xs font-medium flex items-center gap-2 text-gray-800">
+                  <span className="text-green-600 text-sm">🐕</span>
+                  <span className="tracking-wide">Life Moments</span>
+                  <div className="flex-1 h-px bg-gradient-to-r from-green-200 to-transparent"></div>
+                </h3>
+                <div className="relative">
+                  {/* Decorative frame border */}
+                  <div className="absolute -inset-2 bg-gradient-to-br from-green-100/30 to-blue-100/30 rounded-xl blur-sm opacity-50 group-hover:opacity-80 transition-opacity duration-500"></div>
+                  <div className="relative aspect-[4/3] bg-gradient-to-br from-white/20 to-white/5 rounded-xl backdrop-blur-sm overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.1)] border border-white/30 group-hover:border-white/50 transition-all duration-500">
+                    {/* Inner frame shadow */}
+                    <div className="absolute inset-2 rounded-lg shadow-inner bg-gradient-to-br from-black/5 to-transparent"></div>
+                    <Image
+                      src="/dog-with-collar.jpg"
+                      alt="Dog with glowing collar"
+                      width={400}
+                      height={300}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                    />
+                    {/* Subtle overlay for depth */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  </div>
                 </div>
               </div>
             </GlassCard>
           </div>
 
-          {/* Call to Action */}
-          <div className="col-span-12">
-            <GlassCard className="p-3 text-center" intensity="intense">
-              <div className="space-y-2">
-                <h3 className="text-sm font-medium text-gray-800">Let's Connect</h3>
-                <p className="text-xs text-gray-700 max-w-2xl mx-auto">
-                  Reach out if you're a fellow founder, engineer, or someone curious about what I'm building.
-                </p>
-                <div className="flex justify-center gap-2">
-                  <LiquidFlowButton variant="pastel-blue" className="text-xs py-1.5 px-3">
-                    <Mail size={12} />
-                    Get in Touch
-                  </LiquidFlowButton>
+          {/* Enhanced Call to Action */}
+          <div className="col-span-12 mt-4">
+            <GlassCard className="p-6 text-center group hover:shadow-2xl transition-all duration-500" intensity="intense">
+              <div className="space-y-4">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-100/20 via-purple-100/20 to-pink-100/20 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <h3 className="relative text-lg font-light text-gray-800 tracking-wide">Let's Connect & Create</h3>
+                </div>
+                <div className="max-w-md mx-auto">
+                  <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent mb-3"></div>
+                  <p className="text-sm text-gray-700 leading-relaxed">
+                    Reach out if you're a fellow founder, engineer, or someone curious about what I'm building.
+                  </p>
+                </div>
+                <div className="flex justify-center gap-3 pt-2">
+                  <a href="mailto:Nirek.Shetty.business@gmail.com">
+                    <LiquidFlowButton variant="pastel-blue" className="text-sm py-2.5 px-4 hover:scale-105 transition-transform duration-300">
+                      <Mail size={14} className="mr-2" />
+                      Get in Touch
+                    </LiquidFlowButton>
+                  </a>
                   <Link href="/projects">
-                    <LiquidFlowButton variant="pastel-purple" className="text-xs py-1.5 px-3">
-                      <Briefcase size={12} />
+                    <LiquidFlowButton variant="pastel-purple" className="text-sm py-2.5 px-4 hover:scale-105 transition-transform duration-300">
+                      <Briefcase size={14} className="mr-2" />
                       View Projects
                     </LiquidFlowButton>
                   </Link>

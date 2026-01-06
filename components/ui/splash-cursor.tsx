@@ -11,8 +11,8 @@ function SplashCursor({
   PRESSURE = 0.1,
   PRESSURE_ITERATIONS = 20,
   CURL = 3,
-  SPLAT_RADIUS = 0.217, // was 0.255 → another ~15% smaller for the white circle
-  SPLAT_FORCE = 9000, // was 7800 → ~15% stronger
+  SPLAT_RADIUS = 0.45, // Larger radius for broader coverage
+  SPLAT_FORCE = 3000, // Reduced intensity for gentler splashes
   SHADING = true,
   COLOR_UPDATE_SPEED = 10,
   BACK_COLOR = { r: 0.5, g: 0, b: 0 },
@@ -825,7 +825,7 @@ function SplashCursor({
       const dt = calcDeltaTime();
       if (resizeCanvas()) initFramebuffers();
       updateColors(dt);
-      updateGhostMouse(dt);
+      updateBackgroundEffect(dt);
       applyInputs();
       step(dt);
       render(null);
@@ -1206,19 +1206,71 @@ function SplashCursor({
       return Math.sin(x) * 0.6 + Math.sin(x * 1.618) * 0.25 + Math.sin(x * 0.618) * 0.15;
     }
 
-    function updateGhostMouse(dt: number) {
+    // Apply push effects to prevent crowding and corner clustering
+    function applyPushEffects(ghost: GhostCircle, ghostIndex: number, dt: number) {
+      if (!canvas) return;
+      
+      const pushForce = 0.3; // Strength of repulsion
+      const cornerAvoidanceForce = 0.2; // Strength of corner avoidance
+      const edgeBuffer = canvas.width * 0.15; // 15% buffer from edges
+      
+      let pushX = 0;
+      let pushY = 0;
+      
+      // Repulsion from other ghost mice centers
+      ghostMice.forEach((otherGhost, otherIndex) => {
+        if (!otherGhost || otherIndex === ghostIndex) return;
+        
+        const dx = ghost.centerX - otherGhost.centerX;
+        const dy = ghost.centerY - otherGhost.centerY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        const minDistance = Math.max(ghost.radiusX, ghost.radiusY) + Math.max(otherGhost.radiusX, otherGhost.radiusY);
+        
+        if (distance < minDistance && distance > 0) {
+          const repelStrength = (minDistance - distance) / minDistance;
+          const normalizedDx = dx / distance;
+          const normalizedDy = dy / distance;
+          
+          pushX += normalizedDx * repelStrength * pushForce;
+          pushY += normalizedDy * repelStrength * pushForce;
+        }
+      });
+      
+      // Corner and edge avoidance
+      const leftEdgeForce = Math.max(0, (edgeBuffer - ghost.centerX) / edgeBuffer);
+      const rightEdgeForce = Math.max(0, (ghost.centerX - (canvas.width - edgeBuffer)) / edgeBuffer);
+      const topEdgeForce = Math.max(0, (edgeBuffer - ghost.centerY) / edgeBuffer);
+      const bottomEdgeForce = Math.max(0, (ghost.centerY - (canvas.height - edgeBuffer)) / edgeBuffer);
+      
+      pushX += leftEdgeForce * cornerAvoidanceForce;
+      pushX -= rightEdgeForce * cornerAvoidanceForce;
+      pushY += topEdgeForce * cornerAvoidanceForce;
+      pushY -= bottomEdgeForce * cornerAvoidanceForce;
+      
+      // Apply gradual push to center position
+      const dampening = 20; // How gradual the movement is
+      ghost.centerX += pushX * dt * dampening;
+      ghost.centerY += pushY * dt * dampening;
+      
+      // Keep centers within reasonable bounds
+      const margin = Math.max(ghost.radiusX, ghost.radiusY);
+      ghost.centerX = Math.max(margin, Math.min(canvas.width - margin, ghost.centerX));
+      ghost.centerY = Math.max(margin, Math.min(canvas.height - margin, ghost.centerY));
+    }
+
+    function updateBackgroundEffect(dt: number) {
       const timeSinceLastActivity = Date.now() - lastUserActivity;
       
-      // Hide ghost mice if user was recently active
-      if (timeSinceLastActivity < 1000) {
-        ghostMouseActive = false;
+      // Hide background effect if user was recently active
+      if (timeSinceLastActivity < 2000) {
+        backgroundEffectActive = false;
         return;
       }
       
-      // Show ghost mice after 1 second of inactivity
-      ghostMouseActive = true;
+      // Show subtle background effect after 2 seconds of inactivity
+      backgroundEffectActive = true;
       
-      if (!ghostMouseActive) return;
+      if (!backgroundEffectActive) return;
       
       // Update each ghost mouse circle
       ghostMice.forEach((ghost, index) => {
@@ -1236,13 +1288,28 @@ function SplashCursor({
           return; // Skip to next iteration with new ghost
         }
         
-        // Update angle for circular motion
-        ghost.angle += ghost.speed;
+        // Apply push effects to center position to avoid crowding
+        applyPushEffects(ghost, index, dt);
+        
+        // Add spiral outward expansion - both angle and radius increase
+        const timeSinceActivation = Math.max(0, Date.now() - ghost.activationTime);
+        const spiralExpansion = Math.min(timeSinceActivation / 5000, 1); // 5-second spiral expansion
+        
+        // Spiral motion: angle increases faster as we expand outward
+        const spiralAngleBoost = spiralExpansion * 2.0; // Extra angular velocity for spiral
+        ghost.angle += ghost.speed * (1 + spiralAngleBoost);
+        
+        // Radius grows from center outward in spiral pattern
+        const spiralMultiplier = 0.2 + (spiralExpansion * 0.8); // Grow from 20% to 100% of radius
+        
+        // Apply spiral expansion to radius
+        const expandedRadiusX = ghost.radiusX * spiralMultiplier;
+        const expandedRadiusY = ghost.radiusY * spiralMultiplier;
         
         // Create organic lumpy distortions using multiple noise layers
         const noiseAngle1 = ghost.angle * 3 + ghost.noiseOffset1; // Higher frequency for lumpiness
         const noiseAngle2 = ghost.angle * 1.7 + ghost.noiseOffset2; // Medium frequency
-        const noiseAngle3 = ghost.angle * 0.8 + ghost.noiseOffset3; // Lower frequency for overall shape
+        const noiseAngle3 = ghost.angle * 2.5 + ghost.noiseOffset3; // Lower frequency for overall shape
         
         // Create lumpy radius variations
         const lump1 = smoothNoise(noiseAngle1 * ghost.noiseScale) * ghost.lumpiness;
@@ -1251,9 +1318,9 @@ function SplashCursor({
         
         const totalLump = lump1 + lump2 + lump3;
         
-        // Apply lumps to both X and Y radius for organic elliptical distortion
-        const adjustedRadiusX = ghost.radiusX * (1 + totalLump);
-        const adjustedRadiusY = ghost.radiusY * (1 + totalLump * 0.8); // Slightly less lumpy in Y
+        // Apply lumps to expanded radius for organic elliptical distortion
+        const adjustedRadiusX = expandedRadiusX * (1 + totalLump);
+        const adjustedRadiusY = expandedRadiusY * (1 + totalLump * 0.8); // Slightly less lumpy in Y
         
         // Add subtle hand-drawn wobble
         const wobbleX = smoothNoise(ghost.angle * 5 + ghost.noiseOffset1) * ghost.wobbleAmount;
@@ -1272,24 +1339,64 @@ function SplashCursor({
           ghost.y = Math.max(30, Math.min(canvas.height - 30, ghost.y));
         }
         
-        // Create splash effect at ghost mouse position
+        // Create vivid algae bloom effect - spreads from center outward
         if (canvas && ghost) {
-          const pointer = {
-            texcoordX: ghost.x / canvas.width,
-            texcoordY: 1.0 - ghost.y / canvas.height,
-            prevTexcoordX: prevX / canvas.width,
-            prevTexcoordY: 1.0 - prevY / canvas.height,
-            deltaX: 0,
-            deltaY: 0,
-            moved: true,
-            color: generateColor()
+          const currentTime = Date.now();
+          
+          // Check if this bloom layer should be active yet
+          if (currentTime < ghost.activationTime) return;
+          
+          // Calculate bloom expansion phase
+          const timeSinceActivation = currentTime - ghost.activationTime;
+          const bloomPhase = Math.min(timeSinceActivation / 3000, 1); // 3-second expansion per layer
+          
+          // Prevent white light by keeping colors moderate and distinct
+          const bloomIntensity = 0.15 * bloomPhase; // Reduced to prevent white light
+          const pulsation = Math.sin(Date.now() * 0.003 + ghost.noiseOffset1) * 0.2 + 0.6; // 0.4-0.8 gentler pulsation
+          
+          // Distance from center affects intensity (stronger at edges, weaker at center)
+          const centerX = canvas.width * 0.5;
+          const centerY = canvas.height * 0.5;
+          const distanceFromCenter = Math.sqrt(Math.pow(ghost.x - centerX, 2) + Math.pow(ghost.y - centerY, 2));
+          const maxDistance = Math.sqrt(Math.pow(canvas.width * 0.5, 2) + Math.pow(canvas.height * 0.5, 2));
+          const centerReduction = 0.3 + (distanceFromCenter / maxDistance) * 0.7; // 30-100% based on distance
+          
+          const algaeColors = [
+            { r: 0.05, g: 0.4, b: 0.15 }, // Darker green to prevent white
+            { r: 0.0, g: 0.3, b: 0.4 },   // Darker cyan
+            { r: 0.15, g: 0.45, b: 0.2 }, // Darker lime
+            { r: 0.0, g: 0.35, b: 0.3 }   // Darker teal
+          ];
+          
+          const baseColor = algaeColors[ghost.bloomLayer % algaeColors.length];
+          const algaeColor = {
+            r: baseColor.r * bloomIntensity * pulsation * centerReduction,
+            g: baseColor.g * bloomIntensity * pulsation * centerReduction,
+            b: baseColor.b * bloomIntensity * pulsation * centerReduction
           };
           
-          pointer.deltaX = correctDeltaX(pointer.texcoordX - pointer.prevTexcoordX);
-          pointer.deltaY = correctDeltaY(pointer.texcoordY - pointer.prevTexcoordY);
-          
-          if (Math.abs(pointer.deltaX) > 0 || Math.abs(pointer.deltaY) > 0) {
-            splatPointer(pointer);
+          // More frequent, aggressive spreading effect
+          const bloomChance = 0.7 + Math.sin(Date.now() * 0.004 + index) * 0.2; // 0.5-0.9 chance
+          if (Math.random() < bloomChance) {
+            const pointer = {
+              texcoordX: ghost.x / canvas.width,
+              texcoordY: 1.0 - ghost.y / canvas.height,
+              prevTexcoordX: prevX / canvas.width,
+              prevTexcoordY: 1.0 - prevY / canvas.height,
+              deltaX: 0,
+              deltaY: 0,
+              moved: true,
+              color: algaeColor
+            };
+            
+            // Vigorous outward spreading movement
+            const spreadIntensity = 1.2 * bloomPhase * pulsation;
+            pointer.deltaX = correctDeltaX(pointer.texcoordX - pointer.prevTexcoordX) * spreadIntensity;
+            pointer.deltaY = correctDeltaY(pointer.texcoordY - pointer.prevTexcoordY) * spreadIntensity;
+            
+            if (Math.abs(pointer.deltaX) > 0 || Math.abs(pointer.deltaY) > 0) {
+              splatPointer(pointer);
+            }
           }
         }
       });
@@ -1314,7 +1421,7 @@ function SplashCursor({
       clickSplat(pointer);
     });
 
-    // Type definition for ghost circle
+    // Type definition for algae bloom circle
     interface GhostCircle {
       x: number;
       y: number;
@@ -1332,24 +1439,51 @@ function SplashCursor({
       wobbleAmount: number;
       circleTimer: number;
       circleDuration: number;
+      bloomLayer: number;
+      activationTime: number;
     }
 
-    // Multiple ghost mice for simultaneous circles
-    function createGhostCircle(): GhostCircle | null {
+    // Algae bloom expansion pattern - starts center and spreads outward
+    const algaeBloomLayers = [
+      { x: 0.5, y: 0.5, layer: 0 },   // Center origin
+      { x: 0.45, y: 0.48, layer: 1 }, // Close to center
+      { x: 0.55, y: 0.52, layer: 1 }, // Close to center
+      { x: 0.4, y: 0.4, layer: 2 },   // Second ring
+      { x: 0.6, y: 0.6, layer: 2 },   // Second ring
+      { x: 0.3, y: 0.3, layer: 3 },   // Third ring
+      { x: 0.7, y: 0.7, layer: 3 },   // Third ring
+      { x: 0.2, y: 0.2, layer: 4 },   // Outer ring
+      { x: 0.8, y: 0.8, layer: 4 },   // Outer ring
+      { x: 0.25, y: 0.75, layer: 4 }, // Outer spread
+      { x: 0.75, y: 0.25, layer: 4 }  // Outer spread
+    ];
+
+    // Simple initial ghost circle creator (for first initialization)
+    function createInitialGhostCircle(index: number): GhostCircle | null {
       if (!canvas) return null;
       
-      const margin = 500;
+      // Use algae bloom layer with organic growth variation
+      const bloomLayer = algaeBloomLayers[index % algaeBloomLayers.length];
+      const organicGrowth = 0.12; // 12% variation for natural algae spread
+      
+      const centerX = canvas.width * (bloomLayer.x + (Math.random() - 0.5) * organicGrowth);
+      const centerY = canvas.height * (bloomLayer.y + (Math.random() - 0.5) * organicGrowth);
+      
+      // Allow full page coverage for algae bloom
+      const boundedCenterX = Math.max(canvas.width * 0.05, Math.min(canvas.width * 0.95, centerX));
+      const boundedCenterY = Math.max(canvas.height * 0.05, Math.min(canvas.height * 0.95, centerY));
+      
       return {
-        x: canvas.width / 2,
-        y: canvas.height / 2,
+        x: boundedCenterX,
+        y: boundedCenterY,
         
         // Organic circle parameters
-        centerX: canvas.width / 2,
-        centerY: canvas.height / 2,
+        centerX: boundedCenterX,
+        centerY: boundedCenterY,
         angle: Math.random() * Math.PI * 2,
-        radiusX: canvas.width * 0.15 + Math.random() * canvas.width * 2, // 15-30% of page width
-        radiusY: canvas.height * 0.12 + Math.random() * canvas.height * 2, // 12-27% of page height
-        speed: 0.003 + Math.random() * 0.005, // Slower for multiple circles   
+        radiusX: canvas.width * 0.4 + Math.random() * canvas.width * 0.5, // Large algae bloom patterns
+        radiusY: canvas.height * 0.4 + Math.random() * canvas.height * 0.5, // 40-90% coverage
+        speed: 0.0003 + Math.random() * 0.0005, // Very slow organic movement   
         
         // Organic shape parameters
         noiseOffset1: Math.random() * 1000,
@@ -1361,18 +1495,103 @@ function SplashCursor({
         
         // Circle lifecycle
         circleTimer: 0,
-        circleDuration: 20000 + Math.random() * 25000, // 20-45 seconds per circle
+        circleDuration: 45000 + Math.random() * 30000, // 45-75 seconds per circle
+        
+        // Algae bloom properties
+        bloomLayer: bloomLayer.layer,
+        activationTime: Date.now() + (bloomLayer.layer * 800), // Stagger by layer (0.8s per layer)
       };
     }
 
     let ghostMice: GhostCircle[] = [
-      createGhostCircle(),
-      createGhostCircle(),
-      createGhostCircle()
+      createInitialGhostCircle(0),
+      createInitialGhostCircle(1),
+      createInitialGhostCircle(2),
+      createInitialGhostCircle(3),
+      createInitialGhostCircle(4),
+      createInitialGhostCircle(5),
+      createInitialGhostCircle(6),
+      createInitialGhostCircle(7)
     ].filter((ghost): ghost is GhostCircle => ghost !== null);
     
-    let ghostMouseActive = true;
+    // Advanced ghost circle creator with anti-crowding logic (after ghostMice is initialized)
+    function createGhostCircle(): GhostCircle | null {
+      if (!canvas) return null;
+      
+      // Try to find a good position that's not too close to existing ghosts
+      let bestX = canvas.width / 2;
+      let bestY = canvas.height / 2;
+      let bestScore = 0;
+      
+      // Try multiple random positions and pick the best one
+      for (let attempt = 0; attempt < 10; attempt++) {
+        const candidateX = canvas.width * 0.2 + Math.random() * canvas.width * 0.6;
+        const candidateY = canvas.height * 0.2 + Math.random() * canvas.height * 0.6;
+        
+        // Calculate distance score from other ghosts and edges
+        let score = 0;
+        
+        // Distance from other ghost centers
+        ghostMice.forEach(otherGhost => {
+          if (otherGhost) {
+            const dx = candidateX - otherGhost.centerX;
+            const dy = candidateY - otherGhost.centerY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            score += distance; // Higher distance = better score
+          }
+        });
+        
+        // Distance from corners (avoid clustering in corners)
+        const cornerDistances = [
+          Math.sqrt(candidateX * candidateX + candidateY * candidateY), // top-left
+          Math.sqrt((canvas.width - candidateX) * (canvas.width - candidateX) + candidateY * candidateY), // top-right
+          Math.sqrt(candidateX * candidateX + (canvas.height - candidateY) * (canvas.height - candidateY)), // bottom-left
+          Math.sqrt((canvas.width - candidateX) * (canvas.width - candidateX) + (canvas.height - candidateY) * (canvas.height - candidateY)) // bottom-right
+        ];
+        const minCornerDistance = Math.min(...cornerDistances);
+        score += minCornerDistance * 0.5; // Bonus for being away from corners
+        
+        if (score > bestScore) {
+          bestScore = score;
+          bestX = candidateX;
+          bestY = candidateY;
+        }
+      }
+      
+      return {
+        x: bestX,
+        y: bestY,
+        
+        // Organic circle parameters
+        centerX: bestX,
+        centerY: bestY,
+        angle: Math.random() * Math.PI * 2,
+        radiusX: canvas.width * 0.4 + Math.random() * canvas.width * 0.5, // Large sunlight reflection patterns
+        radiusY: canvas.height * 0.4 + Math.random() * canvas.height * 0.5, // 40-90% coverage for full-page effect
+        speed: 0.0003 + Math.random() * 0.0005, // Very slow background movement   
+        
+        // Organic shape parameters
+        noiseOffset1: Math.random() * 1000,
+        noiseOffset2: Math.random() * 1000,
+        noiseOffset3: Math.random() * 1000,
+        noiseScale: 0.015 + Math.random() * 0.02,
+        lumpiness: 0.2 + Math.random() * 0.3,
+        wobbleAmount: 3 + Math.random() * 6,
+        
+        // Circle lifecycle
+        circleTimer: 0,
+        circleDuration: 45000 + Math.random() * 30000, // 45-75 seconds per circle
+        
+        // Algae bloom properties for runtime creation
+        bloomLayer: Math.floor(Math.random() * 5), // Random layer 0-4
+        activationTime: Date.now(), // Immediate activation for replacements
+      };
+    }
+    
+    let backgroundEffectActive = true;
     let lastUserActivity = Date.now();
+    let startupTime = Date.now();
+    const startupDuration = 10000; // 10 seconds for very gradual background fade-in
 
     document.body.addEventListener(
       "mousemove",
