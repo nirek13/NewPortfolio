@@ -48,14 +48,13 @@ export default function About() {
               <a href="/photography" className={`hover-underline-nudge ${shouldBounce('photography') ? 'nav-bounce-delayed' : ''}`}>Photos</a>
             </div>
           </div>
-          <div>↳ Based in <span className="inline-flex items-center align-middle gap-1"><Logo src="/ontario flag.png" alt="Ontario" /><Label>Waterloo</Label></span>, but also live in <span className="inline-flex items-center align-middle gap-1"><Logo src="/bc flag.png" alt="BC" /><Label>Vancouver</Label></span>, <span className="inline-flex items-center align-middle gap-1"><Logo src="/ontario flag.png" alt="Ontario" /><Label>Toronto</Label></span> and <span className="inline-flex items-center align-middle gap-1"><Logo src="/cali flag.png" alt="California" /><Label>San Francisco</Label></span>.</div>
-          <div className="ml-4">↳ Proud <span className="inline-flex items-center align-middle gap-1"><Logo src="/canada flag.png" alt="Canada" /><Label>Canadian Citizen.</Label></span></div>
-          <div className="ml-4">↳ Grew up in <span className="inline-flex items-center align-middle gap-1"><Logo src="/bc flag.png" alt="BC" /><Label>Vancouver.</Label></span></div>
-          <div className="ml-4">↳ Born in <span className="inline-flex items-center align-middle gap-1"><Logo src="/chinese flag.png" alt="China" /><Label>Beijing.</Label></span></div>
-          <div>↳ Played the Cello since I was 6 years old.</div>
-          <div className="ml-4">↳ Played for the <span className="inline-flex items-center align-middle gap-1"><Logo src="/vyso-favicon.png" alt="VYSO" /><Label><a href="https://vyso.com/" target="_blank" rel="noreferrer" className="hover-underline-nudge">Vancouver Youth Symphony Orchestra</a></Label></span> and was the Principal Cellist of the <span className="inline-flex items-center align-middle gap-1"><Logo src="/vam.jpg" alt="VAM" /><Label><a href="https://vancouveracademyofmusic.com/events/vamso-orpheum-series/" target="_blank" rel="noreferrer" className="hover-underline-nudge">Vancouver Academy of Music Symphony Orchestra</a></Label></span>.</div>
-          <div className="ml-4">↳ Performed at: The Vancouver <span className="inline-flex items-center align-middle gap-1"><Logo src="/vancouver_civic_theatres_logo.jpeg" alt="VCT" /><Label><a href="https://vancouvercivictheatres.com/venues/orpheum/" target="_blank" rel="noreferrer" className="hover-underline-nudge">Orpheum</a></Label></span>, the <span className="inline-flex items-center align-middle gap-1"><Logo src="/ubc-logo-edited.jpg" alt="UBC" /><Label><a href="https://www.ubc.ca/" target="_blank" rel="noreferrer" className="hover-underline-nudge">University of British Columbia</a></Label></span>, <span className="inline-flex items-center align-middle gap-1"><Logo src="/capU.jpg" alt="CapU" /><Label><a href="https://www.capilanou.ca/" target="_blank" rel="noreferrer" className="hover-underline-nudge">Capilano University</a></Label></span> and various churches around Vancouver.</div>
-          <div>↳ My favorite hobby is 📷 <a href="/photography" className={`hover-underline-nudge ${shouldBounce('photography') ? 'nav-bounce' : ''}`}>photography</a> and my favorite sport is <span className="inline-flex items-center align-middle gap-1"><Logo src="/badminton.png" alt="Badminton" /><Label>badminton.</Label></span></div>
+          <div>↳ Born and raised in <span className="inline-flex items-center align-middle gap-1"><Logo src="/ontario flag.png" alt="Ontario" /><Label>Toronto</Label></span>, but spend a lot of time in <span className="inline-flex items-center align-middle gap-1"><Logo src="/ontario flag.png" alt="Ontario" /><Label>Waterloo</Label></span>.</div>
+          <div className="ml-4">↳ Fun fact: I was born on Friday the 13th.</div>
+          <div>↳ Started coding around age 7 and have been to well over 30 hackathons.</div>
+          <div>↳ Won a silver at IOAI Canada and got nominated for NASA Space Apps out of like 93k people.</div>
+          <div className="ml-4">↳ Did pretty well on the Canadian Computing Competition (71/75) and came 3rd in the national math contest.</div>
+          <div className="ml-4">↳ Got Waterloo distinctions on Pascal, Gauss, and a few other contests.</div>
+          <div>↳ Got an award in provincial legislation and am getting flown out to Ottawa free of charge for a week to the House of Commons.</div>
         </div>
 
         <div className="my-3 border-t border-neutral-200" />
@@ -66,10 +65,10 @@ export default function About() {
           <footer className="pb-16 sm:pb-24">
             <div>◆ Contact:</div>
             <div className="mt-2 flex items-center gap-3 text-neutral-700">
-              <a className="inline-flex items-center gap-1" href="mailto:Nirek.Shetty.business@gmail.com"><Mail size={14} /><span className="hover-underline-nudge">Email</span></a>
-              <a className="inline-flex items-center gap-1" href="https://github.com/Nirek116" target="_blank" rel="noreferrer"><Github size={14} /><span className="hover-underline-nudge">GitHub</span></a>
-              <a className="inline-flex items-center gap-1" href="https://x.com/cnnguan/" target="_blank" rel="noreferrer"><Logo src="/X.png" alt="X" /><span className="hover-underline-nudge">Twitter</span></a>
-              <a className="inline-flex items-center gap-1" href="https://www.linkedin.com/in/Nirek-Shetty/" target="_blank" rel="noreferrer"><Logo src="/linkedin.webp" alt="LinkedIn" /><span className="hover-underline-nudge">LinkedIn</span></a>
+              <a className="inline-flex items-center gap-1" href="mailto:shettynirek@gmail.com"><Mail size={14} /><span className="hover-underline-nudge">Email</span></a>
+              <a className="inline-flex items-center gap-1" href="https://github.com/nirek13" target="_blank" rel="noreferrer"><Github size={14} /><span className="hover-underline-nudge">GitHub</span></a>
+              <a className="inline-flex items-center gap-1" href="https://x.com/nirekshetty/" target="_blank" rel="noreferrer"><Logo src="/X.png" alt="X" /><span className="hover-underline-nudge">Twitter</span></a>
+              <a className="inline-flex items-center gap-1" href="https://www.linkedin.com/in/NirekShetty/" target="_blank" rel="noreferrer"><Logo src="/linkedin.webp" alt="LinkedIn" /><span className="hover-underline-nudge">LinkedIn</span></a>
             </div>
           </footer>
         </div>

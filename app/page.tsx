@@ -120,20 +120,18 @@ export default function Home() {
     </div>
   </GlassCard>
 </div>
-          {/* What Makes Me Different */}
+          {/* TLDR */}
           <div className="col-span-12 md:col-span-8">
             <GlassCard className="p-3 h-full" intensity="subtle">
               <div className="space-y-2">
                 <div className="flex items-center gap-1.5">
                   <Sparkles className="text-blue-600" size={16} />
-                  <h2 className="text-sm font-medium text-gray-800">What makes me different</h2>
+                  <h2 className="text-sm font-medium text-gray-800">TL;DR</h2>
                 </div>
                 <div className="space-y-1.5 text-xs leading-relaxed text-gray-700">
-                  <p>↳ The <span className="font-semibold text-blue-700">fastest</span> in <span className="inline-flex items-center align-middle gap-1"><Logo src="/waterloo-logo.png" alt="UWaterloo" /><Label><a href="https://uwaterloo.ca/" target="_blank" rel="noreferrer" className="hover-underline-nudge text-blue-700">UWaterloo</a></Label></span>'s <span className="font-semibold text-blue-700">entire history</span> to get flown out to San Francisco to raise venture.</p>
+                  <p>↳ <span className="font-semibold text-blue-700">16</span> years old, working at a startup with <span className="font-semibold text-green-700">1 million users</span> called <span className="inline-flex items-center align-middle gap-1"><Logo src="/stealthlogo.jpg" alt="Penseum" className="rounded-full" /><Label>Penseum</Label></span>.</p>
                   
-                  <p className="ml-3">↳ Built Cursor for mortgage brokers, received offers at a <span className="font-semibold text-green-700">$7M</span> valuation, and turned them all down to build <span className="inline-flex items-center align-middle gap-1"><Logo src="/stealthlogo.jpg" alt="Stealth" className="rounded-full" /><Label>Clice</Label></span>.</p>
-                  
-                  <p>↳ Received full-time interest for: <span className="font-semibold text-green-700">$300K</span> founding engineer role and another at <span className="inline-flex items-center align-middle gap-1"><Logo src="/icon.jpg" alt="Icon" /><Label><a href="https://icon.com/" target="_blank" rel="noreferrer" className="hover-underline-nudge text-blue-700">Icon</a></Label></span>.</p>
+                  <p>↳ Founded a non-profit <span className="font-semibold text-purple-700">Hackathons Canada</span> which has partnered with <span className="font-semibold text-blue-700">Google</span> and <span className="font-semibold text-blue-700">Microsoft</span> with <span className="font-semibold text-green-700">25 million views</span> across social media and <span className="font-semibold text-green-700">5,000 members</span> in its online community.</p>
                 </div>
               </div>
             </GlassCard>
@@ -150,17 +148,17 @@ export default function Home() {
                 <div className="space-y-1.5 text-xs leading-relaxed text-gray-700">
                   <div className="p-2 bg-white/10 rounded-lg backdrop-blur-sm">
                     <div className="flex items-center gap-1.5 mb-1">
-                      <Logo src="/stealthlogo.jpg" alt="Stealth" className="rounded-full" />
-                      <span className="font-medium text-gray-800">Clice</span>
+                      <Logo src="/stealthlogo.jpg" alt="Penseum" className="rounded-full" />
+                      <span className="font-medium text-gray-800">Penseum</span>
                     </div>
-                    <p className="text-xs">Revolutionary startup in stealth mode.</p>
+                    <p className="text-xs">Educational platform helping 1M+ users learn.</p>
                   </div>
                   <div className="p-2 bg-white/10 rounded-lg backdrop-blur-sm">
                     <div className="flex items-center gap-1.5 mb-1">
-                      <span className="text-orange-600">📊</span>
-                      <span className="font-medium text-orange-700">RateMyInternship</span>
+                      <span className="text-purple-600">💼</span>
+                      <span className="font-medium text-purple-700">Contractual</span>
                     </div>
-                    <p className="text-xs">RateMyProfessors but for tech internships (Coming soon).</p>
+                    <p className="text-xs">AI-powered contract management platform.</p>
                   </div>
                 </div>
               </div>
@@ -178,17 +176,47 @@ export default function Home() {
                 <div className="space-y-1.5 text-xs leading-relaxed text-gray-700">
                   <p>↳ Programming since <span className="font-semibold text-purple-700">age 5</span>, entrepreneur since <span className="font-semibold text-purple-700">age 11</span>.</p>
                   
-                  <p>↳ Lead Software engineer at <span className="inline-flex items-center align-middle gap-1"><Logo src="/waterloo-logo.png" alt="UWaterloo" /><Label><a href="https://uwaterloo.ca/" target="_blank" rel="noreferrer" className="hover-underline-nudge text-blue-700">UWaterloo</a></Label></span>'s AI organization.</p>
+                  <p>↳ Product engineer at <span className="inline-flex items-center align-middle gap-1"><Logo src="/stealthlogo.jpg" alt="Penseum" className="rounded-full" /><Label>Penseum</Label></span>, helping <span className="font-semibold text-green-700">1M+ users learn</span>.</p>
                   
-                  <p>↳ Growth at <span className="inline-flex items-center align-middle gap-1"><Logo src="/symbal_logo.jpeg" alt="Symbal" /><Label><a href="https://www.symbal.ai/" target="_blank" rel="noreferrer" className="hover-underline-nudge text-blue-700">Symbal</a></Label></span>, backed by Peter Thiel.</p>
+                  <p>↳ Founder and Vice President at <span className="font-semibold text-purple-700">Hackathons Canada</span>.</p>
+                  
+                  <p>↳ Founder at <span className="font-semibold text-purple-700">Contractual</span>.</p>
                 </div>
               </div>
             </GlassCard>
           </div>
 
-          {/* GitHub Stats Widget */}
-          <div className="col-span-12 md:col-span-6">
-            <GitCommitGraph />
+          {/* Right Column with GitHub and Links */}
+          <div className="col-span-12 md:col-span-6 space-y-3">
+            {/* GitHub Stats Widget */}
+            <div>
+              <GitCommitGraph />
+            </div>
+            
+            {/* Quick Links */}
+            <GlassCard className="p-4 text-center group hover:shadow-xl transition-all duration-500" intensity="subtle">
+              <div className="space-y-3">
+                <h3 className="text-xs font-medium flex items-center gap-2 text-gray-800 justify-center">
+                  <span className="text-blue-600 text-sm">🔗</span>
+                  <span className="tracking-wide">Quick Links</span>
+                  <div className="flex-1 h-px bg-gradient-to-r from-blue-200 to-transparent max-w-16"></div>
+                </h3>
+                <div className="flex justify-center gap-6">
+                  <a href="https://github.com/nirek13" target="_blank" rel="noreferrer" className="group/link transition-all duration-300 hover:scale-125 hover:-translate-y-2 hover:rotate-12">
+                    <Github size={32} style={{ color: '#000000' }} className="transition-transform duration-300" />
+                  </a>
+                  <a href="https://www.linkedin.com/in/nirekshetty/" target="_blank" rel="noreferrer" className="group/link transition-all duration-300 hover:scale-125 hover:-translate-y-2 hover:rotate-12">
+                    <Linkedin size={32} style={{ color: '#0077b5' }} className="transition-transform duration-300" />
+                  </a>
+                  <a href="mailto:shettynirek@gmail.com" className="group/link transition-all duration-300 hover:scale-125 hover:-translate-y-2 hover:rotate-12">
+                    <Mail size={32} style={{ color: '#ea4335' }} className="transition-transform duration-300" />
+                  </a>
+                  <a href="mailto:nirek@penseum.com" className="group/link transition-all duration-300 hover:scale-125 hover:-translate-y-2 hover:rotate-12">
+                    <Briefcase size={32} style={{ color: '#16a34a' }} className="transition-transform duration-300" />
+                  </a>
+                </div>
+              </div>
+            </GlassCard>
           </div>
 
           {/* Dog Photo */}
@@ -197,7 +225,7 @@ export default function Home() {
               <div className="space-y-3">
                 <h3 className="text-xs font-medium flex items-center gap-2 text-gray-800">
                   <span className="text-green-600 text-sm">🐕</span>
-                  <span className="tracking-wide">Life Moments</span>
+                  <span className="tracking-wide">My Doggo</span>
                   <div className="flex-1 h-px bg-gradient-to-r from-green-200 to-transparent"></div>
                 </h3>
                 <div className="relative">
@@ -221,34 +249,118 @@ export default function Home() {
             </GlassCard>
           </div>
 
-          {/* Enhanced Call to Action */}
-          <div className="col-span-12 mt-4">
-            <GlassCard className="p-6 text-center group hover:shadow-2xl transition-all duration-500" intensity="intense">
-              <div className="space-y-4">
-                <div className="relative">
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-100/20 via-purple-100/20 to-pink-100/20 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <h3 className="relative text-lg font-light text-gray-800 tracking-wide">Let's Connect & Create</h3>
+          {/* Clean Glassy Text Signature */}
+          <div className="col-span-12 mt-8">
+            <GlassCard className="p-6 text-center group hover:shadow-xl transition-all duration-500" intensity="subtle">
+              <div className="relative inline-block">
+                <h1 className="relative font-light italic tracking-wide transform-gpu whitespace-nowrap" style={{ 
+                  fontFamily: '"Playfair Display", serif',
+                  fontSize: 'clamp(2rem, 8vw, 6rem)',
+                  maxWidth: '100%',
+                  overflow: 'hidden'
+                }}>
+                  {/* Interactive transparent glassy letter tints */}
+                  <div className="relative transition-all duration-700 transform group-hover:scale-[1.02] origin-center">
+                  <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-4 hover:scale-125 hover:rotate-6 active:rotate-180 active:scale-90" style={{ 
+                    color: 'transparent', 
+                    WebkitTextStroke: '1.5px rgba(255,150,150,0.6)',
+                    background: 'linear-gradient(135deg, rgba(255,200,200,0.2), rgba(255,150,150,0.1))',
+                    WebkitBackgroundClip: 'text',
+                    filter: 'drop-shadow(0 0 20px rgba(255,150,150,0.4))',
+                    textShadow: '0 0 30px rgba(255,150,150,0.6)'
+                  }}>N</span>
+                  <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-4 hover:scale-125 hover:rotate-6 active:rotate-180 active:scale-90" style={{ 
+                    color: 'transparent', 
+                    WebkitTextStroke: '1.5px rgba(255,200,150,0.6)',
+                    background: 'linear-gradient(135deg, rgba(255,230,200,0.2), rgba(255,200,150,0.1))',
+                    WebkitBackgroundClip: 'text',
+                    filter: 'drop-shadow(0 0 20px rgba(255,200,150,0.4))',
+                    textShadow: '0 0 30px rgba(255,200,150,0.6)'
+                  }}>i</span>
+                  <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-4 hover:scale-125 hover:rotate-6 active:rotate-180 active:scale-90" style={{ 
+                    color: 'transparent', 
+                    WebkitTextStroke: '1.5px rgba(255,255,150,0.6)',
+                    background: 'linear-gradient(135deg, rgba(255,255,200,0.2), rgba(255,255,150,0.1))',
+                    WebkitBackgroundClip: 'text',
+                    filter: 'drop-shadow(0 0 20px rgba(255,255,150,0.3))',
+                    textShadow: '0 0 30px rgba(255,255,255,0.4)'
+                  }}>r</span>
+                  <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-4 hover:scale-125 hover:rotate-6 active:rotate-180 active:scale-90" style={{ 
+                    color: 'transparent', 
+                    WebkitTextStroke: '1.5px rgba(150,255,150,0.6)',
+                    background: 'linear-gradient(135deg, rgba(200,255,200,0.2), rgba(150,255,150,0.1))',
+                    WebkitBackgroundClip: 'text',
+                    filter: 'drop-shadow(0 0 20px rgba(150,255,150,0.3))',
+                    textShadow: '0 0 30px rgba(255,255,255,0.4)'
+                  }}>e</span>
+                  <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-4 hover:scale-125 hover:rotate-6 active:rotate-180 active:scale-90" style={{ 
+                    color: 'transparent', 
+                    WebkitTextStroke: '1.5px rgba(150,255,255,0.6)',
+                    background: 'linear-gradient(135deg, rgba(200,255,255,0.2), rgba(150,255,255,0.1))',
+                    WebkitBackgroundClip: 'text',
+                    filter: 'drop-shadow(0 0 20px rgba(150,255,255,0.3))',
+                    textShadow: '0 0 30px rgba(255,255,255,0.4)'
+                  }}>k</span>
+                  <span className="inline-block" style={{ 
+                    color: 'transparent', 
+                    WebkitTextStroke: '1.5px rgba(255,255,255,0.4)',
+                    background: 'linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))',
+                    WebkitBackgroundClip: 'text',
+                    filter: 'drop-shadow(0 0 20px rgba(255,255,255,0.3))',
+                    textShadow: '0 0 30px rgba(255,255,255,0.4)',
+                    marginLeft: '0.5em',
+                    marginRight: '0.5em'
+                  }}> </span>
+                  <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-4 hover:scale-125 hover:rotate-6 active:rotate-180 active:scale-90" style={{ 
+                    color: 'transparent', 
+                    WebkitTextStroke: '1.5px rgba(150,150,255,0.6)',
+                    background: 'linear-gradient(135deg, rgba(200,200,255,0.2), rgba(150,150,255,0.1))',
+                    WebkitBackgroundClip: 'text',
+                    filter: 'drop-shadow(0 0 20px rgba(150,150,255,0.3))',
+                    textShadow: '0 0 30px rgba(255,255,255,0.4)'
+                  }}>S</span>
+                  <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-4 hover:scale-125 hover:rotate-6 active:rotate-180 active:scale-90" style={{ 
+                    color: 'transparent', 
+                    WebkitTextStroke: '1.5px rgba(200,150,255,0.6)',
+                    background: 'linear-gradient(135deg, rgba(230,200,255,0.2), rgba(200,150,255,0.1))',
+                    WebkitBackgroundClip: 'text',
+                    filter: 'drop-shadow(0 0 20px rgba(200,150,255,0.3))',
+                    textShadow: '0 0 30px rgba(255,255,255,0.4)'
+                  }}>h</span>
+                  <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-4 hover:scale-125 hover:rotate-6 active:rotate-180 active:scale-90" style={{ 
+                    color: 'transparent', 
+                    WebkitTextStroke: '1.5px rgba(255,150,200,0.6)',
+                    background: 'linear-gradient(135deg, rgba(255,200,230,0.2), rgba(255,150,200,0.1))',
+                    WebkitBackgroundClip: 'text',
+                    filter: 'drop-shadow(0 0 20px rgba(255,150,200,0.3))',
+                    textShadow: '0 0 30px rgba(255,255,255,0.4)'
+                  }}>e</span>
+                  <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-4 hover:scale-125 hover:rotate-6 active:rotate-180 active:scale-90" style={{ 
+                    color: 'transparent', 
+                    WebkitTextStroke: '1.5px rgba(255,180,150,0.6)',
+                    background: 'linear-gradient(135deg, rgba(255,220,200,0.2), rgba(255,180,150,0.1))',
+                    WebkitBackgroundClip: 'text',
+                    filter: 'drop-shadow(0 0 20px rgba(255,180,150,0.3))',
+                    textShadow: '0 0 30px rgba(255,255,255,0.4)'
+                  }}>t</span>
+                  <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-4 hover:scale-125 hover:rotate-6 active:rotate-180 active:scale-90" style={{ 
+                    color: 'transparent', 
+                    WebkitTextStroke: '1.5px rgba(150,220,255,0.6)',
+                    background: 'linear-gradient(135deg, rgba(200,240,255,0.2), rgba(150,220,255,0.1))',
+                    WebkitBackgroundClip: 'text',
+                    filter: 'drop-shadow(0 0 20px rgba(150,220,255,0.3))',
+                    textShadow: '0 0 30px rgba(255,255,255,0.4)'
+                  }}>t</span>
+                  <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-4 hover:scale-125 hover:rotate-6 active:rotate-180 active:scale-90" style={{ 
+                    color: 'transparent', 
+                    WebkitTextStroke: '1.5px rgba(180,255,180,0.6)',
+                    background: 'linear-gradient(135deg, rgba(220,255,220,0.2), rgba(180,255,180,0.1))',
+                    WebkitBackgroundClip: 'text',
+                    filter: 'drop-shadow(0 0 20px rgba(180,255,180,0.3))',
+                    textShadow: '0 0 30px rgba(255,255,255,0.4)'
+                  }}>y</span>
                 </div>
-                <div className="max-w-md mx-auto">
-                  <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent mb-3"></div>
-                  <p className="text-sm text-gray-700 leading-relaxed">
-                    Reach out if you're a fellow founder, engineer, or someone curious about what I'm building.
-                  </p>
-                </div>
-                <div className="flex justify-center gap-3 pt-2">
-                  <a href="mailto:Nirek.Shetty.business@gmail.com">
-                    <LiquidFlowButton variant="pastel-blue" className="text-sm py-2.5 px-4 hover:scale-105 transition-transform duration-300">
-                      <Mail size={14} className="mr-2" />
-                      Get in Touch
-                    </LiquidFlowButton>
-                  </a>
-                  <Link href="/projects">
-                    <LiquidFlowButton variant="pastel-purple" className="text-sm py-2.5 px-4 hover:scale-105 transition-transform duration-300">
-                      <Briefcase size={14} className="mr-2" />
-                      View Projects
-                    </LiquidFlowButton>
-                  </Link>
-                </div>
+              </h1>
               </div>
             </GlassCard>
           </div>

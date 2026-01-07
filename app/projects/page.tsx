@@ -129,7 +129,7 @@ export default function ProjectsPage() {
             </div>
             <div className="text-center">
               <h1 className="text-2xl lg:text-3xl font-light tracking-wide text-gray-900">◆ Projects</h1>
-              <p className="text-gray-600 text-xs mt-1">A curated collection of my work</p>
+              <p className="text-gray-600 text-xs mt-1">Coming Soon</p>
             </div>
           </GlassCard>
 
