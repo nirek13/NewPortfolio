@@ -2,11 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Mail, Github, Twitter, Linkedin, Briefcase, Camera, User, Sparkles } from "lucide-react";
+import { Mail, Github, Twitter, Linkedin, Briefcase, Camera, User, Sparkles, Settings } from "lucide-react";
 import { useNavigationBounce } from "../lib/useNavigationBounce";
 import { DynamicBackground } from "@/components/ui/dynamic-background";
 import { GlassCard, LiquidFlowButton, FlowingBorder, LiquidGlassPanel, FloatingGlassCard } from "@/components/ui/glass-components";
 import { GitCommitGraph } from "@/components/widgets/GitStatsWidget";
+import { useState, useEffect } from "react";
 
 
 function Logo({ src, alt, size = 18, className = "" }: { src: string; alt: string; size?: number; className?: string }) {
@@ -36,6 +37,15 @@ const FallbackLogo = ({ alt }: { alt: string }) => (
 
 export default function Home() {
   const { shouldBounce } = useNavigationBounce('home');
+  const [cursorEnabled, setCursorEnabled] = useState(true);
+
+  // Toggle cursor effect in the DOM
+  useEffect(() => {
+    const splashCursor = document.getElementById('fluid');
+    if (splashCursor) {
+      splashCursor.style.display = cursorEnabled ? 'block' : 'none';
+    }
+  }, [cursorEnabled]);
 
   return (
     <main className="relative min-h-screen">
@@ -54,7 +64,21 @@ export default function Home() {
                   <div className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-600 transition-colors cursor-pointer"></div>
                   <div className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-600 transition-colors cursor-pointer"></div>
                 </div>
-                <div className="text-xs text-gray-500 font-mono">nireks-portfolio</div>
+                <div className="flex items-center gap-3">
+                  {/* Cursor Toggle Button */}
+                  <button
+                    onClick={() => setCursorEnabled(!cursorEnabled)}
+                    className="group relative flex items-center justify-center w-7 h-7 rounded-full bg-white/60 backdrop-blur-sm border border-black/8 shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_2px_8px_rgba(0,0,0,0.15)] transition-all duration-300 hover:scale-105 active:scale-95"
+                    title={cursorEnabled ? "Disable cursor effects" : "Enable cursor effects"}
+                  >
+                    <Settings 
+                      size={14} 
+                      className={`transition-all duration-200 ${cursorEnabled ? 'text-blue-600 rotate-90' : 'text-gray-500'}`} 
+                    />
+                    <div className={`absolute inset-0 rounded-full transition-opacity duration-200 ${cursorEnabled ? 'bg-gradient-to-t from-blue-500/10 to-transparent opacity-100' : 'opacity-0'}`}></div>
+                  </button>
+                  <div className="text-xs text-gray-500 font-mono">nireks-portfolio</div>
+                </div>
               </div>
               <div className="flex flex-col md:flex-row md:items-center md:justify-between">
                 <div>
@@ -193,30 +217,60 @@ export default function Home() {
               <GitCommitGraph />
             </div>
             
-            {/* Quick Links */}
-            <GlassCard className="p-4 text-center group hover:shadow-xl transition-all duration-500" intensity="subtle">
-              <div className="space-y-3">
-                <h3 className="text-xs font-medium flex items-center gap-2 text-gray-800 justify-center">
-                  <span className="text-blue-600 text-sm">🔗</span>
-                  <span className="tracking-wide">Quick Links</span>
-                  <div className="flex-1 h-px bg-gradient-to-r from-blue-200 to-transparent max-w-16"></div>
-                </h3>
-                <div className="flex justify-center gap-6">
-                  <a href="https://github.com/nirek13" target="_blank" rel="noreferrer" className="group/link transition-all duration-300 hover:scale-125 hover:-translate-y-2 hover:rotate-12">
-                    <Github size={32} style={{ color: '#000000' }} className="transition-transform duration-300" />
+            {/* Quick Links - Apple Style */}
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-white/60 via-gray-50/40 to-white/60 backdrop-blur-2xl rounded-2xl border border-black/5 shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_1px_3px_rgba(0,0,0,0.05)]"></div>
+              
+              <div className="relative z-10 px-6 py-5">
+                <div className="text-center mb-4">
+                  <h3 className="text-sm font-medium text-gray-900" style={{
+                    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                    fontWeight: 500,
+                    letterSpacing: '-0.01em'
+                  }}>
+                    Connect
+                  </h3>
+                </div>
+                
+                <div className="flex justify-center gap-4">
+                  <a 
+                    href="https://github.com/nirek13" 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    className="group relative flex items-center justify-center w-12 h-12 rounded-full bg-white/80 backdrop-blur-sm border border-black/8 shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)] transition-all duration-300 hover:scale-105 active:scale-95"
+                  >
+                    <Github size={20} className="text-gray-900 transition-transform duration-200 group-hover:scale-110" />
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-t from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
                   </a>
-                  <a href="https://www.linkedin.com/in/nirekshetty/" target="_blank" rel="noreferrer" className="group/link transition-all duration-300 hover:scale-125 hover:-translate-y-2 hover:rotate-12">
-                    <Linkedin size={32} style={{ color: '#0077b5' }} className="transition-transform duration-300" />
+                  
+                  <a 
+                    href="https://www.linkedin.com/in/nirekshetty/" 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    className="group relative flex items-center justify-center w-12 h-12 rounded-full bg-white/80 backdrop-blur-sm border border-black/8 shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)] transition-all duration-300 hover:scale-105 active:scale-95"
+                  >
+                    <Linkedin size={20} className="text-[#0077b5] transition-transform duration-200 group-hover:scale-110" />
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-t from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
                   </a>
-                  <a href="mailto:shettynirek@gmail.com" className="group/link transition-all duration-300 hover:scale-125 hover:-translate-y-2 hover:rotate-12">
-                    <Mail size={32} style={{ color: '#ea4335' }} className="transition-transform duration-300" />
+                  
+                  <a 
+                    href="mailto:shettynirek@gmail.com" 
+                    className="group relative flex items-center justify-center w-12 h-12 rounded-full bg-white/80 backdrop-blur-sm border border-black/8 shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)] transition-all duration-300 hover:scale-105 active:scale-95"
+                  >
+                    <Mail size={20} className="text-[#ea4335] transition-transform duration-200 group-hover:scale-110" />
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-t from-red-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
                   </a>
-                  <a href="mailto:nirek@penseum.com" className="group/link transition-all duration-300 hover:scale-125 hover:-translate-y-2 hover:rotate-12">
-                    <Briefcase size={32} style={{ color: '#16a34a' }} className="transition-transform duration-300" />
+                  
+                  <a 
+                    href="mailto:nirek@penseum.com" 
+                    className="group relative flex items-center justify-center w-12 h-12 rounded-full bg-white/80 backdrop-blur-sm border border-black/8 shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)] transition-all duration-300 hover:scale-105 active:scale-95"
+                  >
+                    <Briefcase size={20} className="text-[#16a34a] transition-transform duration-200 group-hover:scale-110" />
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-t from-green-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
                   </a>
                 </div>
               </div>
-            </GlassCard>
+            </div>
           </div>
 
           {/* Dog Photo */}
@@ -249,121 +303,135 @@ export default function Home() {
             </GlassCard>
           </div>
 
-          {/* Clean Glassy Text Signature */}
-          <div className="col-span-12 mt-8">
-            <GlassCard className="p-6 text-center group hover:shadow-xl transition-all duration-500" intensity="subtle">
-              <div className="relative inline-block">
-                <h1 className="relative font-light italic tracking-wide transform-gpu whitespace-nowrap" style={{ 
-                  fontFamily: '"Playfair Display", serif',
-                  fontSize: 'clamp(2rem, 8vw, 6rem)',
-                  maxWidth: '100%',
-                  overflow: 'hidden'
-                }}>
-                  {/* Interactive transparent glassy letter tints */}
-                  <div className="relative transition-all duration-700 transform group-hover:scale-[1.02] origin-center">
-                  <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-4 hover:scale-125 hover:rotate-6 active:rotate-180 active:scale-90" style={{ 
-                    color: 'transparent', 
-                    WebkitTextStroke: '1.5px rgba(255,150,150,0.6)',
-                    background: 'linear-gradient(135deg, rgba(255,200,200,0.2), rgba(255,150,150,0.1))',
-                    WebkitBackgroundClip: 'text',
-                    filter: 'drop-shadow(0 0 20px rgba(255,150,150,0.4))',
-                    textShadow: '0 0 30px rgba(255,150,150,0.6)'
-                  }}>N</span>
-                  <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-4 hover:scale-125 hover:rotate-6 active:rotate-180 active:scale-90" style={{ 
-                    color: 'transparent', 
-                    WebkitTextStroke: '1.5px rgba(255,200,150,0.6)',
-                    background: 'linear-gradient(135deg, rgba(255,230,200,0.2), rgba(255,200,150,0.1))',
-                    WebkitBackgroundClip: 'text',
-                    filter: 'drop-shadow(0 0 20px rgba(255,200,150,0.4))',
-                    textShadow: '0 0 30px rgba(255,200,150,0.6)'
-                  }}>i</span>
-                  <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-4 hover:scale-125 hover:rotate-6 active:rotate-180 active:scale-90" style={{ 
-                    color: 'transparent', 
-                    WebkitTextStroke: '1.5px rgba(255,255,150,0.6)',
-                    background: 'linear-gradient(135deg, rgba(255,255,200,0.2), rgba(255,255,150,0.1))',
-                    WebkitBackgroundClip: 'text',
-                    filter: 'drop-shadow(0 0 20px rgba(255,255,150,0.3))',
-                    textShadow: '0 0 30px rgba(255,255,255,0.4)'
-                  }}>r</span>
-                  <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-4 hover:scale-125 hover:rotate-6 active:rotate-180 active:scale-90" style={{ 
-                    color: 'transparent', 
-                    WebkitTextStroke: '1.5px rgba(150,255,150,0.6)',
-                    background: 'linear-gradient(135deg, rgba(200,255,200,0.2), rgba(150,255,150,0.1))',
-                    WebkitBackgroundClip: 'text',
-                    filter: 'drop-shadow(0 0 20px rgba(150,255,150,0.3))',
-                    textShadow: '0 0 30px rgba(255,255,255,0.4)'
-                  }}>e</span>
-                  <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-4 hover:scale-125 hover:rotate-6 active:rotate-180 active:scale-90" style={{ 
-                    color: 'transparent', 
-                    WebkitTextStroke: '1.5px rgba(150,255,255,0.6)',
-                    background: 'linear-gradient(135deg, rgba(200,255,255,0.2), rgba(150,255,255,0.1))',
-                    WebkitBackgroundClip: 'text',
-                    filter: 'drop-shadow(0 0 20px rgba(150,255,255,0.3))',
-                    textShadow: '0 0 30px rgba(255,255,255,0.4)'
-                  }}>k</span>
-                  <span className="inline-block" style={{ 
-                    color: 'transparent', 
-                    WebkitTextStroke: '1.5px rgba(255,255,255,0.4)',
-                    background: 'linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))',
-                    WebkitBackgroundClip: 'text',
-                    filter: 'drop-shadow(0 0 20px rgba(255,255,255,0.3))',
-                    textShadow: '0 0 30px rgba(255,255,255,0.4)',
-                    marginLeft: '0.5em',
-                    marginRight: '0.5em'
-                  }}> </span>
-                  <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-4 hover:scale-125 hover:rotate-6 active:rotate-180 active:scale-90" style={{ 
-                    color: 'transparent', 
-                    WebkitTextStroke: '1.5px rgba(150,150,255,0.6)',
-                    background: 'linear-gradient(135deg, rgba(200,200,255,0.2), rgba(150,150,255,0.1))',
-                    WebkitBackgroundClip: 'text',
-                    filter: 'drop-shadow(0 0 20px rgba(150,150,255,0.3))',
-                    textShadow: '0 0 30px rgba(255,255,255,0.4)'
-                  }}>S</span>
-                  <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-4 hover:scale-125 hover:rotate-6 active:rotate-180 active:scale-90" style={{ 
-                    color: 'transparent', 
-                    WebkitTextStroke: '1.5px rgba(200,150,255,0.6)',
-                    background: 'linear-gradient(135deg, rgba(230,200,255,0.2), rgba(200,150,255,0.1))',
-                    WebkitBackgroundClip: 'text',
-                    filter: 'drop-shadow(0 0 20px rgba(200,150,255,0.3))',
-                    textShadow: '0 0 30px rgba(255,255,255,0.4)'
-                  }}>h</span>
-                  <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-4 hover:scale-125 hover:rotate-6 active:rotate-180 active:scale-90" style={{ 
-                    color: 'transparent', 
-                    WebkitTextStroke: '1.5px rgba(255,150,200,0.6)',
-                    background: 'linear-gradient(135deg, rgba(255,200,230,0.2), rgba(255,150,200,0.1))',
-                    WebkitBackgroundClip: 'text',
-                    filter: 'drop-shadow(0 0 20px rgba(255,150,200,0.3))',
-                    textShadow: '0 0 30px rgba(255,255,255,0.4)'
-                  }}>e</span>
-                  <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-4 hover:scale-125 hover:rotate-6 active:rotate-180 active:scale-90" style={{ 
-                    color: 'transparent', 
-                    WebkitTextStroke: '1.5px rgba(255,180,150,0.6)',
-                    background: 'linear-gradient(135deg, rgba(255,220,200,0.2), rgba(255,180,150,0.1))',
-                    WebkitBackgroundClip: 'text',
-                    filter: 'drop-shadow(0 0 20px rgba(255,180,150,0.3))',
-                    textShadow: '0 0 30px rgba(255,255,255,0.4)'
-                  }}>t</span>
-                  <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-4 hover:scale-125 hover:rotate-6 active:rotate-180 active:scale-90" style={{ 
-                    color: 'transparent', 
-                    WebkitTextStroke: '1.5px rgba(150,220,255,0.6)',
-                    background: 'linear-gradient(135deg, rgba(200,240,255,0.2), rgba(150,220,255,0.1))',
-                    WebkitBackgroundClip: 'text',
-                    filter: 'drop-shadow(0 0 20px rgba(150,220,255,0.3))',
-                    textShadow: '0 0 30px rgba(255,255,255,0.4)'
-                  }}>t</span>
-                  <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-4 hover:scale-125 hover:rotate-6 active:rotate-180 active:scale-90" style={{ 
-                    color: 'transparent', 
-                    WebkitTextStroke: '1.5px rgba(180,255,180,0.6)',
-                    background: 'linear-gradient(135deg, rgba(220,255,220,0.2), rgba(180,255,180,0.1))',
-                    WebkitBackgroundClip: 'text',
-                    filter: 'drop-shadow(0 0 20px rgba(180,255,180,0.3))',
-                    textShadow: '0 0 30px rgba(255,255,255,0.4)'
-                  }}>y</span>
-                </div>
-              </h1>
+          {/* Apple-esque Footer */}
+          <footer className="col-span-12 mt-6 relative">
+            <div className="absolute inset-0 bg-gradient-to-t from-gray-50/50 via-white/20 to-transparent backdrop-blur-xl rounded-2xl border border-gray-200/30"></div>
+            
+            <div className="relative z-10 px-5 py-6 text-center">
+              {/* Signature */}
+              <div className="mb-4">
+                <h1 className="text-3xl md:text-4xl tracking-wider font-light" style={{ fontFamily: '"Playfair Display", serif' }}>
+                  <div className="flex justify-center items-center gap-1">
+                    <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-105 hover:rotate-2 active:rotate-180 active:scale-90" style={{ 
+                      color: 'transparent', 
+                      WebkitTextStroke: '1.5px rgba(255,120,150,0.6)',
+                      background: 'linear-gradient(135deg, rgba(255,180,200,0.2), rgba(255,120,150,0.1))',
+                      WebkitBackgroundClip: 'text',
+                      filter: 'drop-shadow(0 0 15px rgba(255,120,150,0.3))',
+                      textShadow: '0 0 25px rgba(255,255,255,0.4)'
+                    }}>N</span>
+                    <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-105 hover:rotate-2 active:rotate-180 active:scale-90" style={{ 
+                      color: 'transparent', 
+                      WebkitTextStroke: '1.5px rgba(255,180,120,0.6)',
+                      background: 'linear-gradient(135deg, rgba(255,220,180,0.2), rgba(255,180,120,0.1))',
+                      WebkitBackgroundClip: 'text',
+                      filter: 'drop-shadow(0 0 15px rgba(255,180,120,0.3))',
+                      textShadow: '0 0 25px rgba(255,255,255,0.4)'
+                    }}>i</span>
+                    <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-105 hover:rotate-2 active:rotate-180 active:scale-90" style={{ 
+                      color: 'transparent', 
+                      WebkitTextStroke: '1.5px rgba(255,200,120,0.6)',
+                      background: 'linear-gradient(135deg, rgba(255,240,180,0.2), rgba(255,200,120,0.1))',
+                      WebkitBackgroundClip: 'text',
+                      filter: 'drop-shadow(0 0 15px rgba(255,200,120,0.3))',
+                      textShadow: '0 0 25px rgba(255,255,255,0.4)'
+                    }}>r</span>
+                    <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-105 hover:rotate-2 active:rotate-180 active:scale-90" style={{ 
+                      color: 'transparent', 
+                      WebkitTextStroke: '1.5px rgba(200,255,120,0.6)',
+                      background: 'linear-gradient(135deg, rgba(240,255,180,0.2), rgba(200,255,120,0.1))',
+                      WebkitBackgroundClip: 'text',
+                      filter: 'drop-shadow(0 0 15px rgba(200,255,120,0.3))',
+                      textShadow: '0 0 25px rgba(255,255,255,0.4)'
+                    }}>e</span>
+                    <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-105 hover:rotate-2 active:rotate-180 active:scale-90" style={{ 
+                      color: 'transparent', 
+                      WebkitTextStroke: '1.5px rgba(150,255,150,0.6)',
+                      background: 'linear-gradient(135deg, rgba(200,255,200,0.2), rgba(150,255,150,0.1))',
+                      WebkitBackgroundClip: 'text',
+                      filter: 'drop-shadow(0 0 15px rgba(150,255,150,0.3))',
+                      textShadow: '0 0 25px rgba(255,255,255,0.4)'
+                    }}>k</span>
+                    <span className="mx-2"></span>
+                    <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-105 hover:rotate-2 active:rotate-180 active:scale-90" style={{ 
+                      color: 'transparent', 
+                      WebkitTextStroke: '1.5px rgba(120,255,200,0.6)',
+                      background: 'linear-gradient(135deg, rgba(180,255,240,0.2), rgba(120,255,200,0.1))',
+                      WebkitBackgroundClip: 'text',
+                      filter: 'drop-shadow(0 0 15px rgba(120,255,200,0.3))',
+                      textShadow: '0 0 25px rgba(255,255,255,0.4)'
+                    }}>S</span>
+                    <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-105 hover:rotate-2 active:rotate-180 active:scale-90" style={{ 
+                      color: 'transparent', 
+                      WebkitTextStroke: '1.5px rgba(120,200,255,0.6)',
+                      background: 'linear-gradient(135deg, rgba(180,240,255,0.2), rgba(120,200,255,0.1))',
+                      WebkitBackgroundClip: 'text',
+                      filter: 'drop-shadow(0 0 15px rgba(120,200,255,0.3))',
+                      textShadow: '0 0 25px rgba(255,255,255,0.4)'
+                    }}>h</span>
+                    <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-105 hover:rotate-2 active:rotate-180 active:scale-90" style={{ 
+                      color: 'transparent', 
+                      WebkitTextStroke: '1.5px rgba(150,150,255,0.6)',
+                      background: 'linear-gradient(135deg, rgba(200,200,255,0.2), rgba(150,150,255,0.1))',
+                      WebkitBackgroundClip: 'text',
+                      filter: 'drop-shadow(0 0 15px rgba(150,150,255,0.3))',
+                      textShadow: '0 0 25px rgba(255,255,255,0.4)'
+                    }}>e</span>
+                    <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-105 hover:rotate-2 active:rotate-180 active:scale-90" style={{ 
+                      color: 'transparent', 
+                      WebkitTextStroke: '1.5px rgba(200,120,255,0.6)',
+                      background: 'linear-gradient(135deg, rgba(240,180,255,0.2), rgba(200,120,255,0.1))',
+                      WebkitBackgroundClip: 'text',
+                      filter: 'drop-shadow(0 0 15px rgba(200,120,255,0.3))',
+                      textShadow: '0 0 25px rgba(255,255,255,0.4)'
+                    }}>t</span>
+                    <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-105 hover:rotate-2 active:rotate-180 active:scale-90" style={{ 
+                      color: 'transparent', 
+                      WebkitTextStroke: '1.5px rgba(255,180,150,0.6)',
+                      background: 'linear-gradient(135deg, rgba(255,220,200,0.2), rgba(255,180,150,0.1))',
+                      WebkitBackgroundClip: 'text',
+                      filter: 'drop-shadow(0 0 15px rgba(255,180,150,0.3))',
+                      textShadow: '0 0 25px rgba(255,255,255,0.4)'
+                    }}>t</span>
+                    <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-105 hover:rotate-2 active:rotate-180 active:scale-90" style={{ 
+                      color: 'transparent', 
+                      WebkitTextStroke: '1.5px rgba(150,220,255,0.6)',
+                      background: 'linear-gradient(135deg, rgba(200,240,255,0.2), rgba(150,220,255,0.1))',
+                      WebkitBackgroundClip: 'text',
+                      filter: 'drop-shadow(0 0 15px rgba(150,220,255,0.3))',
+                      textShadow: '0 0 25px rgba(255,255,255,0.4)'
+                    }}>t</span>
+                    <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-105 hover:rotate-2 active:rotate-180 active:scale-90" style={{ 
+                      color: 'transparent', 
+                      WebkitTextStroke: '1.5px rgba(180,255,180,0.6)',
+                      background: 'linear-gradient(135deg, rgba(220,255,220,0.2), rgba(180,255,180,0.1))',
+                      WebkitBackgroundClip: 'text',
+                      filter: 'drop-shadow(0 0 15px rgba(180,255,180,0.3))',
+                      textShadow: '0 0 25px rgba(255,255,255,0.4)'
+                    }}>y</span>
+                  </div>
+                </h1>
               </div>
-            </GlassCard>
-          </div>
+              
+              {/* Apple-style footer content */}
+              <div className="border-t border-gray-300/20 pt-3">
+                <div className="flex flex-col md:flex-row items-center justify-center gap-1 md:gap-4 text-xs text-gray-600 font-light">
+                  <p className="flex items-center gap-1">
+                    <span>Made with</span>
+                    <span className="text-red-500 text-xs animate-pulse">♥</span>
+                    <span>in Toronto</span>
+                  </p>
+                  <span className="hidden md:block text-gray-400">•</span>
+                  <p className="flex items-center gap-1">
+                    <span>Built with</span>
+                    <span className="font-medium text-blue-600">Next.js</span>
+                  </p>
+                  <span className="hidden md:block text-gray-400">•</span>
+                  <p className="text-gray-500">© 2024 Nirek Shetty</p>
+                </div>
+              </div>
+            </div>
+          </footer>
 
         </div>
       </div>
