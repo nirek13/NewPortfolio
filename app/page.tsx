@@ -48,12 +48,12 @@ export default function Home() {
   }, [cursorEnabled]);
 
   return (
-    <main className="relative min-h-screen">
+    <main className="relative min-h-screen bg-textured-3d">
       <DynamicBackground />
       
       <div className="relative z-[1] min-h-screen p-1.5 lg:p-2">
         {/* Compact Apple-like Glass Grid Layout */}
-        <div className="max-w-5xl mx-auto grid grid-cols-12 gap-2 min-h-screen">
+        <div className="max-w-5xl lg:max-w-none lg:w-[90%] mx-auto grid grid-cols-12 gap-2 min-h-screen">
           
           {/* Header Section - Full Width */}
           <div className="col-span-12">

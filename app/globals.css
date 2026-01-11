@@ -82,6 +82,74 @@
     background-size: 24px 24px;
   }
 
+  /* Textured 3D background */
+  .bg-textured-3d {
+    background-image:
+      /* Main texture layer */
+      radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(0,0,0,0.05) 0%, transparent 50%),
+      /* Depth pattern */
+      repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(255,255,255,0.02) 2px, rgba(255,255,255,0.02) 4px),
+      repeating-linear-gradient(-45deg, transparent, transparent 3px, rgba(0,0,0,0.015) 3px, rgba(0,0,0,0.015) 6px),
+      /* Fine noise texture */
+      repeating-conic-gradient(from 0deg at 50% 50%, rgba(255,255,255,0.008) 0deg, transparent 5deg, rgba(0,0,0,0.008) 10deg, transparent 15deg),
+      /* Base grid for depth */
+      linear-gradient(to right, rgba(0,0,0,0.01) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0,0,0,0.01) 1px, transparent 1px);
+    background-size: 
+      200px 200px,
+      180px 180px,
+      8px 8px,
+      12px 12px,
+      40px 40px,
+      20px 20px,
+      20px 20px;
+    background-position:
+      0 0,
+      100px 100px,
+      0 0,
+      6px 6px,
+      0 0,
+      0 0,
+      0 0;
+  }
+
+  /* Enhanced glass with texture */
+  .glass-textured {
+    background: 
+      radial-gradient(circle at 30% 30%, rgba(255,255,255,0.15) 0%, transparent 40%),
+      radial-gradient(circle at 70% 70%, rgba(255,255,255,0.08) 0%, transparent 50%),
+      linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.03));
+    backdrop-filter: blur(20px) saturate(140%);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    box-shadow: 
+      0 8px 32px rgba(0,0,0,0.12),
+      inset 0 1px 0 rgba(255,255,255,0.2),
+      inset 0 -1px 0 rgba(255,255,255,0.05);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glass-textured::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(45deg, 
+        transparent, 
+        transparent 1px, 
+        rgba(255,255,255,0.03) 1px, 
+        rgba(255,255,255,0.03) 2px),
+      repeating-linear-gradient(-45deg, 
+        transparent, 
+        transparent 2px, 
+        rgba(0,0,0,0.015) 2px, 
+        rgba(0,0,0,0.015) 3px);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
   .link-minimal {
     @apply underline underline-offset-[3px] decoration-transparent hover:decoration-foreground/30 transition-colors;
   }
