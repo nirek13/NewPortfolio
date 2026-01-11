@@ -412,8 +412,102 @@ export default function Home() {
             </div>
           </div>
 
+          {/* Music Player - Liquid Glass Style */}
+          <div className="col-span-12 mt-4">
+            <div className="relative group">
+              {/* Multi-layer glass glow effects */}
+              <div className="absolute -inset-2 bg-gradient-to-r from-cyan-500/15 via-purple-500/10 to-pink-500/15 rounded-2xl blur-lg opacity-40 group-hover:opacity-80 transition-opacity duration-700 animate-pulse"></div>
+              <div className="absolute -inset-1 bg-gradient-to-br from-white/20 via-gray-50/10 to-white/20 rounded-xl blur-sm opacity-60 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              {/* Main glass container */}
+              <div className="relative bg-gradient-to-br from-white/60 via-gray-50/40 to-white/60 backdrop-blur-2xl rounded-2xl border border-black/8 shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_8px_32px_rgba(0,0,0,0.12)] overflow-hidden">
+                
+                <div className="flex items-center p-4 gap-4">
+                  {/* Album Art with glass effects */}
+                  <div className="relative flex-shrink-0">
+                    <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400/40 via-purple-400/30 to-pink-400/40 rounded-xl blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="relative w-16 h-16 rounded-xl overflow-hidden border border-white/40 shadow-[0_4px_16px_rgba(0,0,0,0.1)] bg-gradient-to-br from-white/20 to-gray-100/10">
+                      <Image
+                        src="/college-dropout-cover.jpg"
+                        alt="The College Dropout Album Art"
+                        width={64}
+                        height={64}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      {/* Glass overlay on album art */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-black/10 opacity-40"></div>
+                      {/* Corner glass accents */}
+                      <div className="absolute top-1 right-1 w-2 h-2 bg-gradient-to-br from-white/60 to-transparent rounded-full"></div>
+                    </div>
+                  </div>
+                  
+                  {/* Track Info & Controls */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-sm font-medium text-gray-900 truncate" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>Family Business</h3>
+                        <p className="text-xs text-gray-600 truncate">Kanye West • The College Dropout</p>
+                      </div>
+                      
+                      {/* Glass audio visualizer */}
+                      <div className="flex items-end gap-1 ml-4 h-6">
+                        <div className="w-1 bg-gradient-to-t from-cyan-500/80 to-cyan-300/60 rounded-full animate-[wave1_1s_ease-in-out_infinite] h-3 shadow-[0_0_4px_rgba(6,182,212,0.5)]"></div>
+                        <div className="w-1 bg-gradient-to-t from-purple-500/80 to-purple-300/60 rounded-full animate-[wave2_1.2s_ease-in-out_infinite] h-4 shadow-[0_0_4px_rgba(168,85,247,0.5)]"></div>
+                        <div className="w-1 bg-gradient-to-t from-pink-500/80 to-pink-300/60 rounded-full animate-[wave3_0.8s_ease-in-out_infinite] h-2 shadow-[0_0_4px_rgba(236,72,153,0.5)]"></div>
+                        <div className="w-1 bg-gradient-to-t from-cyan-500/80 to-cyan-300/60 rounded-full animate-[wave4_1.1s_ease-in-out_infinite] h-5 shadow-[0_0_4px_rgba(168,85,247,0.5)]"></div>
+                        <div className="w-1 bg-gradient-to-t from-purple-500/80 to-purple-300/60 rounded-full animate-[wave5_0.9s_ease-in-out_infinite] h-3 shadow-[0_0_4px_rgba(168,85,247,0.5)]"></div>
+                      </div>
+                    </div>
+                    
+                    {/* Glass Audio Player */}
+                    <div className="mt-3">
+                      <audio 
+                        controls 
+                        className="w-full h-8 glass-audio-player"
+                        preload="metadata"
+                      >
+                        <source src="/family-business.m4a" type="audio/mp4" />
+                        Your browser does not support the audio element.
+                      </audio>
+                    </div>
+                  </div>
+                  
+                  {/* Glass status indicator */}
+                  <div className="flex-shrink-0">
+                    <div className="relative">
+                      <div className="w-3 h-3 bg-gradient-to-r from-cyan-400 to-purple-400 rounded-full animate-pulse shadow-[0_0_12px_rgba(6,182,212,0.6)]"></div>
+                      <div className="absolute inset-0.5 bg-white/30 rounded-full"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Ultra Advanced CSS Animations */}
           <style jsx>{`
+            .audio-player {
+              background: rgba(0, 0, 0, 0.3);
+              border-radius: 6px;
+              border: 1px solid rgba(251, 146, 60, 0.2);
+            }
+            .audio-player::-webkit-media-controls-panel {
+              background: rgba(0, 0, 0, 0.3);
+            }
+            .audio-player::-webkit-media-controls-play-button,
+            .audio-player::-webkit-media-controls-pause-button {
+              background: rgba(251, 146, 60, 0.8);
+              border-radius: 50%;
+            }
+            .audio-player::-webkit-media-controls-timeline {
+              background: rgba(251, 146, 60, 0.3);
+              border-radius: 3px;
+            }
+            .audio-player::-webkit-media-controls-current-time-display,
+            .audio-player::-webkit-media-controls-time-remaining-display {
+              color: rgba(251, 146, 60, 0.9);
+              font-size: 11px;
+            }
             @keyframes scan {
               0%, 100% { transform: translateY(-100%); }
               50% { transform: translateY(300%); }
@@ -468,6 +562,26 @@ export default function Home() {
               25% { transform: translateY(-5px) rotate(90deg); }
               50% { transform: translateY(0px) rotate(180deg); }
               75% { transform: translateY(5px) rotate(270deg); }
+            }
+            @keyframes wave1 {
+              0%, 100% { height: 0.75rem; }
+              50% { height: 1.25rem; }
+            }
+            @keyframes wave2 {
+              0%, 100% { height: 1rem; }
+              50% { height: 1.5rem; }
+            }
+            @keyframes wave3 {
+              0%, 100% { height: 0.5rem; }
+              50% { height: 1rem; }
+            }
+            @keyframes wave4 {
+              0%, 100% { height: 1.25rem; }
+              50% { height: 1.5rem; }
+            }
+            @keyframes wave5 {
+              0%, 100% { height: 0.75rem; }
+              50% { height: 1.25rem; }
             }
             .animation-delay-150 { animation-delay: 150ms; }
             .animation-delay-200 { animation-delay: 200ms; }
