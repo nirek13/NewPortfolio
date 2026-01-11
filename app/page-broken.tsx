@@ -38,7 +38,6 @@ const FallbackLogo = ({ alt }: { alt: string }) => (
 export default function Home() {
   const { shouldBounce } = useNavigationBounce('home');
   const [cursorEnabled, setCursorEnabled] = useState(true);
-  const [currentTime, setCurrentTime] = useState(new Date());
 
   // Toggle cursor effect in the DOM
   useEffect(() => {
@@ -48,14 +47,6 @@ export default function Home() {
     }
   }, [cursorEnabled]);
 
-  // Update time every minute
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 60000);
-    return () => clearInterval(timer);
-  }, []);
-
   return (
     <main className="relative min-h-screen bg-textured-3d">
       <DynamicBackground />
@@ -64,60 +55,55 @@ export default function Home() {
         {/* Compact Apple-like Glass Grid Layout */}
         <div className="max-w-5xl lg:max-w-none lg:w-[90%] mx-auto grid grid-cols-12 gap-2 min-h-screen">
           
-          {/* Zen Header - Compact Design with Rainbow Theme */}
+          {/* Header Section - Full Width */}
           <div className="col-span-12">
-            <GlassCard className="p-3" intensity="subtle">
+            <div className="frosted-premium p-3">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-red-400"></div>
-                  <div className="w-2 h-2 rounded-full bg-yellow-400"></div>
-                  <div className="w-2 h-2 rounded-full bg-green-400"></div>
+                  <div className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-600 transition-colors cursor-pointer"></div>
+                  <div className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-600 transition-colors cursor-pointer"></div>
+                  <div className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-600 transition-colors cursor-pointer"></div>
                 </div>
-                
                 <div className="flex items-center gap-3">
-                  <div className="text-xs text-gray-600 font-mono">
-                    {currentTime.toLocaleTimeString('en-US', { 
-                      timeZone: 'America/Toronto',
-                      hour12: false,
-                      hour: '2-digit',
-                      minute: '2-digit'
-                    })} YYZ
-                  </div>
+                  {/* Cursor Toggle Button */}
                   <button
                     onClick={() => setCursorEnabled(!cursorEnabled)}
-                    className={`p-1.5 rounded transition-all duration-200 ${cursorEnabled ? 'bg-gradient-to-r from-purple-100 to-pink-100' : ''}`}
+                    className="group relative flex items-center justify-center w-7 h-7 rounded-full frosted-premium hover:shadow-[0_2px_8px_rgba(0,0,0,0.15)] transition-all duration-300 hover:scale-105 active:scale-95"
                     title={cursorEnabled ? "Disable cursor effects" : "Enable cursor effects"}
                   >
-                    <Settings size={14} className={`${cursorEnabled ? 'text-purple-600' : 'text-gray-400'}`} />
+                    <Settings 
+                      size={14} 
+                      className={`transition-all duration-200 ${cursorEnabled ? 'text-blue-600 rotate-90' : 'text-gray-500'}`} 
+                    />
+                    <div className={`absolute inset-0 rounded-full transition-opacity duration-200 ${cursorEnabled ? 'bg-gradient-to-t from-blue-500/10 to-transparent opacity-100' : 'opacity-0'}`}></div>
                   </button>
+                  <div className="text-xs text-gray-500 font-mono">nireks-portfolio</div>
                 </div>
               </div>
-              
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between">
                 <div>
-                  <h1 className="text-xl font-light text-gray-900 mb-1">Nirek Shetty</h1>
-                  <p className="text-gray-600 text-sm">Founder & Engineer</p>
+                  <h1 className="text-xl lg:text-2xl font-light tracking-wide text-gray-900">◆ Nirek Shetty</h1>
+                  <p className="text-gray-600 text-xs mt-0.5">Founder & Engineer</p>
                 </div>
-                
-                <div className="flex gap-2">
-                  <a href="mailto:Nirek.Shetty.business@gmail.com" className="p-2 text-gray-500 hover:text-blue-500 transition-colors">
+                <div className="flex gap-2 mt-2 md:mt-0">
+                  <a href="mailto:Nirek.Shetty.business@gmail.com" className="p-2 hover:bg-blue-600 hover:text-white rounded-lg transition-all duration-200">
                     <Mail size={16} />
                   </a>
-                  <a href="https://github.com/Nirek116" target="_blank" rel="noreferrer" className="p-2 text-gray-500 hover:text-purple-500 transition-colors">
+                  <a href="https://github.com/Nirek116" target="_blank" rel="noreferrer" className="p-2 hover:bg-gray-800 hover:text-white rounded-lg transition-all duration-200">
                     <Github size={16} />
                   </a>
-                  <a href="https://www.linkedin.com/in/Nirek-Shetty/" target="_blank" rel="noreferrer" className="p-2 text-gray-500 hover:text-cyan-500 transition-colors">
+                  <a href="https://www.linkedin.com/in/Nirek-Shetty/" target="_blank" rel="noreferrer" className="p-2 hover:bg-blue-700 hover:text-white rounded-lg transition-all duration-200">
                     <Linkedin size={16} />
                   </a>
                 </div>
               </div>
-            </GlassCard>
+            </div>
           </div>
 
           {/* Navigation Cards */}
           <div className="col-span-12 md:col-span-4">
   {/* Reduced padding from p-3 to p-2.5 for a tighter footprint */}
-  <GlassCard className="p-2.5 h-full border-white/20 shadow-lg" intensity="subtle">
+  <div className="frosted-premium p-2.5 h-full">
     <h3 className="text-[10px] font-bold mb-2.5 flex items-center gap-1.5 text-gray-400 uppercase tracking-widest">
       <User size={12} className="opacity-70" />
       Navigation
@@ -134,13 +120,13 @@ export default function Home() {
             variant={item.variant as "pastel-blue" | "pastel-purple" | "pastel-pink" | "pastel-green"} 
             className={`
               w-full justify-start py-1.5 px-3 text-[11px] font-semibold transition-all duration-300 ease-out
-              relative overflow-visible
-              /* 1. Base State: Flat-ish with a slight rim light */
+              relative overflow-visible haptic-button
+              /* 1. Base State: Enhanced with micro-textures */
               border-t border-white/50 border-l border-white/30
               bg-white/10 backdrop-blur-sm
               shadow-[2px_2px_5px_rgba(0,0,0,0.05)]
               
-              /* 2. Popping Effect on Hover */
+              /* 2. Enhanced Popping Effect on Hover */
               hover:-translate-y-1 hover:translate-x-0.5
               hover:shadow-[8px_12px_20px_rgba(0,0,0,0.15),-2px_-2px_10px_rgba(255,255,255,0.8)]
               hover:border-white/80
@@ -156,11 +142,11 @@ export default function Home() {
         </Link>
       ))}
     </div>
-  </GlassCard>
+  </div>
 </div>
           {/* TLDR */}
           <div className="col-span-12 md:col-span-8">
-            <GlassCard className="p-3 h-full" intensity="subtle">
+            <div className="frosted-premium p-3 h-full animate-surface-tension">
               <div className="space-y-2">
                 <div className="flex items-center gap-1.5">
                   <Sparkles className="text-blue-600" size={16} />
@@ -172,12 +158,12 @@ export default function Home() {
                   <p>↳ Founded a non-profit <span className="font-semibold text-purple-700">Hackathons Canada</span> which has partnered with <span className="font-semibold text-blue-700">Google</span> and <span className="font-semibold text-blue-700">Microsoft</span> with <span className="font-semibold text-green-700">25 million views</span> across social media and <span className="font-semibold text-green-700">5,000 members</span> in its online community.</p>
                 </div>
               </div>
-            </GlassCard>
+            </div>
           </div>
 
           {/* Currently Building */}
           <div className="col-span-12 md:col-span-6">
-            <GlassCard className="p-3 h-full" intensity="subtle">
+            <div className="frosted-premium p-3 h-full">
               <div className="space-y-2">
                 <h3 className="text-xs font-medium flex items-center gap-1.5 text-gray-800">
                   <span className="text-green-600">🚀</span>
@@ -200,12 +186,12 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            </GlassCard>
+            </div>
           </div>
 
           {/* Experience */}
           <div className="col-span-12 md:col-span-6">
-            <GlassCard className="p-3 h-full" intensity="subtle">
+            <div className="frosted-premium p-3 h-full animate-texture-shimmer">
               <div className="space-y-2">
                 <h3 className="text-xs font-medium flex items-center gap-1.5 text-gray-800">
                   <Briefcase size={14} className="text-purple-600" />
@@ -221,7 +207,7 @@ export default function Home() {
                   <p>↳ Founder at <span className="font-semibold text-purple-700">Contractual</span>.</p>
                 </div>
               </div>
-            </GlassCard>
+            </div>
           </div>
 
           {/* Right Column with GitHub and Links */}
@@ -231,11 +217,9 @@ export default function Home() {
               <GitCommitGraph />
             </div>
             
-            {/* Quick Links - Apple Style */}
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-white/60 via-gray-50/40 to-white/60 backdrop-blur-2xl rounded-2xl border border-black/5 shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_1px_3px_rgba(0,0,0,0.05)]"></div>
-              
-              <div className="relative z-10 px-6 py-5">
+            {/* Quick Links - Frosted Glass Style */}
+            <div className="frosted-premium">
+              <div className="px-6 py-5">
                 <div className="text-center mb-4">
                   <h3 className="text-sm font-medium text-gray-900" style={{
                     fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
@@ -251,7 +235,7 @@ export default function Home() {
                     href="https://github.com/nirek13" 
                     target="_blank" 
                     rel="noreferrer" 
-                    className="group relative flex items-center justify-center w-12 h-12 rounded-full bg-white/80 backdrop-blur-sm border border-black/8 shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)] transition-all duration-300 hover:scale-105 active:scale-95"
+                    className="group relative flex items-center justify-center w-12 h-12 rounded-full frosted-premium hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)] transition-all duration-300 hover:scale-105 active:scale-95"
                   >
                     <Github size={20} className="text-gray-900 transition-transform duration-200 group-hover:scale-110" />
                     <div className="absolute inset-0 rounded-full bg-gradient-to-t from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
@@ -261,7 +245,7 @@ export default function Home() {
                     href="https://www.linkedin.com/in/nirekshetty/" 
                     target="_blank" 
                     rel="noreferrer" 
-                    className="group relative flex items-center justify-center w-12 h-12 rounded-full bg-white/80 backdrop-blur-sm border border-black/8 shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)] transition-all duration-300 hover:scale-105 active:scale-95"
+                    className="group relative flex items-center justify-center w-12 h-12 rounded-full frosted-premium hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)] transition-all duration-300 hover:scale-105 active:scale-95"
                   >
                     <Linkedin size={20} className="text-[#0077b5] transition-transform duration-200 group-hover:scale-110" />
                     <div className="absolute inset-0 rounded-full bg-gradient-to-t from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
@@ -269,7 +253,7 @@ export default function Home() {
                   
                   <a 
                     href="mailto:shettynirek@gmail.com" 
-                    className="group relative flex items-center justify-center w-12 h-12 rounded-full bg-white/80 backdrop-blur-sm border border-black/8 shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)] transition-all duration-300 hover:scale-105 active:scale-95"
+                    className="group relative flex items-center justify-center w-12 h-12 rounded-full frosted-premium hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)] transition-all duration-300 hover:scale-105 active:scale-95"
                   >
                     <Mail size={20} className="text-[#ea4335] transition-transform duration-200 group-hover:scale-110" />
                     <div className="absolute inset-0 rounded-full bg-gradient-to-t from-red-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
@@ -277,7 +261,7 @@ export default function Home() {
                   
                   <a 
                     href="mailto:nirek@penseum.com" 
-                    className="group relative flex items-center justify-center w-12 h-12 rounded-full bg-white/80 backdrop-blur-sm border border-black/8 shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)] transition-all duration-300 hover:scale-105 active:scale-95"
+                    className="group relative flex items-center justify-center w-12 h-12 rounded-full frosted-premium hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)] transition-all duration-300 hover:scale-105 active:scale-95"
                   >
                     <Briefcase size={20} className="text-[#16a34a] transition-transform duration-200 group-hover:scale-110" />
                     <div className="absolute inset-0 rounded-full bg-gradient-to-t from-green-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
@@ -304,7 +288,7 @@ export default function Home() {
               </div>
               
               {/* Main container with breathing effect */}
-              <div className="relative h-full bg-gradient-to-br from-white/70 via-gray-50/50 to-white/70 backdrop-blur-3xl rounded-2xl border border-black/8 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_8px_32px_rgba(0,0,0,0.15),0_32px_64px_rgba(0,0,0,0.1)] overflow-hidden group-hover:scale-[1.02] transition-transform duration-700">
+              <div className="relative h-full frosted-premium overflow-hidden group-hover:scale-[1.02] transition-transform duration-700">
                 
                 <div className="relative p-4 h-full">
                   {/* Enhanced header with status indicators */}
@@ -434,7 +418,7 @@ export default function Home() {
               <div className="absolute -inset-1 bg-gradient-to-br from-white/20 via-gray-50/10 to-white/20 rounded-xl blur-sm opacity-60 group-hover:opacity-100 transition-opacity duration-500"></div>
               
               {/* Main glass container */}
-              <div className="relative bg-gradient-to-br from-white/60 via-gray-50/40 to-white/60 backdrop-blur-2xl rounded-2xl border border-black/8 shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_8px_32px_rgba(0,0,0,0.12)] overflow-hidden">
+              <div className="relative frosted-premium overflow-hidden">
                 
                 <div className="flex items-center p-4 gap-4">
                   {/* Album Art with glass effects */}
@@ -608,11 +592,10 @@ export default function Home() {
             .animation-delay-1000 { animation-delay: 1000ms; }
           `}</style>
 
-          {/* Apple-esque Footer */}
-          <footer className="col-span-12 mt-6 relative">
-            <div className="absolute inset-0 bg-gradient-to-t from-gray-50/50 via-white/20 to-transparent backdrop-blur-xl rounded-2xl border border-gray-200/30"></div>
-            
-            <div className="relative z-10 px-5 py-6 text-center">
+          {/* Frosted Glass Footer */}
+          <footer className="col-span-12 mt-6">
+            <div className="frosted-premium">
+              <div className="px-5 py-6 text-center">
               {/* Signature */}
               <div className="mb-4">
                 <h1 className="text-3xl md:text-4xl tracking-wider font-light" style={{ fontFamily: '"Playfair Display", serif' }}>
