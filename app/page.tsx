@@ -67,7 +67,7 @@ export default function Home() {
           {/* Zen Header - Compact Design with Rainbow Theme */}
           <div className="col-span-12">
             <GlassCard className="p-3" intensity="subtle">
-              <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-red-400"></div>
                   <div className="w-2 h-2 rounded-full bg-yellow-400"></div>
@@ -111,29 +111,28 @@ export default function Home() {
                   </a>
                 </div>
               </div>
-            </GlassCard>
+              </GlassCard>
           </div>
 
           {/* Navigation Cards */}
           <div className="col-span-12 md:col-span-4">
-  {/* Reduced padding from p-3 to p-2.5 for a tighter footprint */}
-  <GlassCard className="p-2.5 h-full border-white/20 shadow-lg" intensity="subtle">
-    <h3 className="text-[10px] font-bold mb-2.5 flex items-center gap-1.5 text-gray-400 uppercase tracking-widest">
-      <User size={12} className="opacity-70" />
-      Navigation
-    </h3>
-    
-    <div className="space-y-1.5">
-      {[
-        { href: "/about", label: "About Me", icon: User, variant: "pastel-blue", bounce: 'about' },
-        { href: "/projects", label: "Projects", icon: Briefcase, variant: "pastel-purple", bounce: '' },
-        { href: "/photography", label: "Photography", icon: Camera, variant: "pastel-pink", bounce: 'photography' }
-      ].map((item) => (
-        <Link href={item.href} key={item.label} className="block group">
-          <LiquidFlowButton 
-            variant={item.variant as "pastel-blue" | "pastel-purple" | "pastel-pink" | "pastel-green"} 
-            className={`
-              w-full justify-start py-1.5 px-3 text-[11px] font-semibold transition-all duration-300 ease-out
+            <GlassCard className="p-2.5 h-full" intensity="subtle">
+              <h3 className="text-[10px] font-bold mb-2.5 flex items-center gap-1.5 text-gray-400 uppercase tracking-widest">
+                <User size={12} className="opacity-70" />
+                Navigation
+              </h3>
+              
+              <div className="space-y-1.5">
+                {[
+                  { href: "/about", label: "About Me", icon: User, variant: "pastel-blue", bounce: 'about' },
+                  { href: "/projects", label: "Projects", icon: Briefcase, variant: "pastel-purple", bounce: '' },
+                  { href: "/photography", label: "Photography", icon: Camera, variant: "pastel-pink", bounce: 'photography' }
+                ].map((item) => (
+                  <Link href={item.href} key={item.label} className="block group">
+                    <LiquidFlowButton 
+                      variant={item.variant as "pastel-blue" | "pastel-purple" | "pastel-pink" | "pastel-green"} 
+                      className={`
+                        w-full justify-start py-1.5 px-3 text-[11px] font-semibold transition-all duration-300 ease-out
               relative overflow-visible
               /* 1. Base State: Flat-ish with a slight rim light */
               border-t border-white/50 border-l border-white/30
@@ -149,15 +148,15 @@ export default function Home() {
               active:translate-y-0.5 active:translate-x-0 active:shadow-inner
               ${item.bounce && shouldBounce(item.bounce) ? 'nav-bounce' : ''}
             `}
-          >
-            <item.icon size={13} className="mr-2 group-hover:scale-110 group-hover:rotate-3 transition-transform" />
-            {item.label}
-          </LiquidFlowButton>
-        </Link>
-      ))}
-    </div>
-  </GlassCard>
-</div>
+                      >
+                        <item.icon size={13} className="mr-2 group-hover:scale-110 group-hover:rotate-3 transition-transform" />
+                        {item.label}
+                      </LiquidFlowButton>
+                    </Link>
+                  ))}
+                </div>
+              </GlassCard>
+          </div>
           {/* TLDR */}
           <div className="col-span-12 md:col-span-8">
             <GlassCard className="p-3 h-full" intensity="subtle">
@@ -171,8 +170,8 @@ export default function Home() {
                   
                   <p>↳ Founded a non-profit <span className="font-semibold text-purple-700">Hackathons Canada</span> which has partnered with <span className="font-semibold text-blue-700">Google</span> and <span className="font-semibold text-blue-700">Microsoft</span> with <span className="font-semibold text-green-700">25 million views</span> across social media and <span className="font-semibold text-green-700">5,000 members</span> in its online community.</p>
                 </div>
-              </div>
-            </GlassCard>
+                </div>
+              </GlassCard>
           </div>
 
           {/* Currently Building */}
@@ -224,64 +223,141 @@ export default function Home() {
             </GlassCard>
           </div>
 
-          {/* Right Column with GitHub and Links */}
-          <div className="col-span-12 md:col-span-6 space-y-3">
+          {/* Right Column with GitHub and Side-by-Side Widgets */}
+          <div className="col-span-12 md:col-span-6 flex flex-col">
             {/* GitHub Stats Widget */}
-            <div>
+            <div className="mb-3">
               <GitCommitGraph />
             </div>
             
-            {/* Quick Links - Apple Style */}
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-white/60 via-gray-50/40 to-white/60 backdrop-blur-2xl rounded-2xl border border-black/5 shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_1px_3px_rgba(0,0,0,0.05)]"></div>
-              
-              <div className="relative z-10 px-6 py-5">
-                <div className="text-center mb-4">
-                  <h3 className="text-sm font-medium text-gray-900" style={{
-                    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-                    fontWeight: 500,
-                    letterSpacing: '-0.01em'
-                  }}>
-                    Connect
-                  </h3>
-                </div>
+            {/* Side-by-Side Connect & Time Display */}
+            <div className="grid grid-cols-2 gap-3 flex-1">
+              {/* Connect Section */}
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-white/60 via-gray-50/40 to-white/60 backdrop-blur-2xl rounded-2xl border border-black/5 shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_1px_3px_rgba(0,0,0,0.05)]"></div>
                 
-                <div className="flex justify-center gap-4">
-                  <a 
-                    href="https://github.com/nirek13" 
-                    target="_blank" 
-                    rel="noreferrer" 
-                    className="group relative flex items-center justify-center w-12 h-12 rounded-full bg-white/80 backdrop-blur-sm border border-black/8 shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)] transition-all duration-300 hover:scale-105 active:scale-95"
-                  >
-                    <Github size={20} className="text-gray-900 transition-transform duration-200 group-hover:scale-110" />
-                    <div className="absolute inset-0 rounded-full bg-gradient-to-t from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
-                  </a>
+                <div className="relative z-10 px-4 py-4 h-full flex flex-col justify-center min-h-[120px]">
+                  <div className="text-center mb-3">
+                    <h3 className="text-xs font-medium text-gray-900" style={{
+                      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                      fontWeight: 500,
+                      letterSpacing: '-0.01em'
+                    }}>
+                      Connect
+                    </h3>
+                  </div>
                   
-                  <a 
-                    href="https://www.linkedin.com/in/nirekshetty/" 
-                    target="_blank" 
-                    rel="noreferrer" 
-                    className="group relative flex items-center justify-center w-12 h-12 rounded-full bg-white/80 backdrop-blur-sm border border-black/8 shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)] transition-all duration-300 hover:scale-105 active:scale-95"
-                  >
-                    <Linkedin size={20} className="text-[#0077b5] transition-transform duration-200 group-hover:scale-110" />
-                    <div className="absolute inset-0 rounded-full bg-gradient-to-t from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
-                  </a>
+                  {/* 2x2 Grid of Connect Buttons */}
+                  <div className="grid grid-cols-2 gap-2 max-w-[96px] mx-auto">
+                    <a 
+                      href="https://github.com/nirek13" 
+                      target="_blank" 
+                      rel="noreferrer" 
+                      className="group relative flex items-center justify-center w-10 h-10 rounded-xl bg-white/90 backdrop-blur-sm border border-black/[0.08] shadow-[0_1px_2px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] hover:shadow-[0_3px_12px_rgba(0,0,0,0.12)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                    >
+                      <Github size={14} className="text-gray-800 transition-transform duration-200 group-hover:scale-105" />
+                    </a>
+                    
+                    <a 
+                      href="https://www.linkedin.com/in/nirekshetty/" 
+                      target="_blank" 
+                      rel="noreferrer" 
+                      className="group relative flex items-center justify-center w-10 h-10 rounded-xl bg-white/90 backdrop-blur-sm border border-black/[0.08] shadow-[0_1px_2px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] hover:shadow-[0_3px_12px_rgba(0,0,0,0.12)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                    >
+                      <Linkedin size={14} className="text-[#0077b5] transition-transform duration-200 group-hover:scale-105" />
+                    </a>
+                    
+                    <a 
+                      href="mailto:shettynirek@gmail.com" 
+                      className="group relative flex items-center justify-center w-10 h-10 rounded-xl bg-white/90 backdrop-blur-sm border border-black/[0.08] shadow-[0_1px_2px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] hover:shadow-[0_3px_12px_rgba(0,0,0,0.12)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                    >
+                      <Mail size={14} className="text-[#ea4335] transition-transform duration-200 group-hover:scale-105" />
+                    </a>
+                    
+                    <a 
+                      href="mailto:nirek@penseum.com" 
+                      className="group relative flex items-center justify-center w-10 h-10 rounded-xl bg-white/90 backdrop-blur-sm border border-black/[0.08] shadow-[0_1px_2px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] hover:shadow-[0_3px_12px_rgba(0,0,0,0.12)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                    >
+                      <Briefcase size={14} className="text-[#16a34a] transition-transform duration-200 group-hover:scale-105" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* Apple-style Time Display */}
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/70 via-gray-50/50 to-white/70 backdrop-blur-2xl rounded-2xl border border-black/[0.06] shadow-[0_4px_16px_rgba(0,0,0,0.04),inset_0_1px_0_rgba(255,255,255,0.9)]"></div>
+                
+                <div className="relative z-10 px-3 py-4 h-full flex flex-col items-center justify-center min-h-[120px]">
+                  {/* Progress Ring */}
+                  <div className="relative w-14 h-14 mb-2">
+                    {/* Background Ring */}
+                    <div className="absolute inset-0">
+                      <svg className="w-14 h-14 transform -rotate-90" viewBox="0 0 56 56">
+                        <circle
+                          cx="28"
+                          cy="28"
+                          r="24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                          className="text-gray-200/60"
+                        />
+                      </svg>
+                    </div>
+                    
+                    {/* Progress Ring */}
+                    <div className="absolute inset-0">
+                      <svg className="w-14 h-14 transform -rotate-90" viewBox="0 0 56 56">
+                        <circle
+                          cx="28"
+                          cy="28"
+                          r="24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          className="text-orange-500"
+                          strokeDasharray={`${(currentTime.getHours() % 12) * (150.7 / 12)} 150.7`}
+                        />
+                      </svg>
+                    </div>
+                    
+                    {/* Center Content */}
+                    <div className="absolute inset-0 flex flex-col items-center justify-center">
+                      <div className="w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm shadow-[0_1px_4px_rgba(0,0,0,0.08)] flex items-center justify-center border border-black/[0.04]">
+                        {currentTime.getHours() >= 6 && currentTime.getHours() < 18 ? (
+                          <span className="text-sm">☀️</span>
+                        ) : (
+                          <span className="text-sm">🌙</span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
                   
-                  <a 
-                    href="mailto:shettynirek@gmail.com" 
-                    className="group relative flex items-center justify-center w-12 h-12 rounded-full bg-white/80 backdrop-blur-sm border border-black/8 shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)] transition-all duration-300 hover:scale-105 active:scale-95"
-                  >
-                    <Mail size={20} className="text-[#ea4335] transition-transform duration-200 group-hover:scale-110" />
-                    <div className="absolute inset-0 rounded-full bg-gradient-to-t from-red-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
-                  </a>
-                  
-                  <a 
-                    href="mailto:nirek@penseum.com" 
-                    className="group relative flex items-center justify-center w-12 h-12 rounded-full bg-white/80 backdrop-blur-sm border border-black/8 shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)] transition-all duration-300 hover:scale-105 active:scale-95"
-                  >
-                    <Briefcase size={20} className="text-[#16a34a] transition-transform duration-200 group-hover:scale-110" />
-                    <div className="absolute inset-0 rounded-full bg-gradient-to-t from-green-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
-                  </a>
+                  {/* Apple-style Text */}
+                  <div className="text-center">
+                    <div className="text-xl font-light text-gray-900 mb-1 tabular-nums" style={{
+                      fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
+                      fontWeight: 200,
+                      letterSpacing: '-0.02em'
+                    }}>
+                      {Math.round(((currentTime.getHours() % 12) / 12) * 100)}%
+                    </div>
+                    <div className="text-[10px] font-medium text-gray-600 uppercase tracking-wide" style={{
+                      fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                      letterSpacing: '0.05em'
+                    }}>
+                      {currentTime.getHours() >= 6 && currentTime.getHours() < 12 
+                        ? 'Morning'
+                        : currentTime.getHours() >= 12 && currentTime.getHours() < 18
+                        ? 'Day'
+                        : currentTime.getHours() >= 18 && currentTime.getHours() < 22
+                        ? 'Evening'
+                        : 'Night'
+                      }
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -289,22 +365,7 @@ export default function Home() {
 
           {/* ULTRA Epic Dog Photo */}
           <div className="col-span-12 md:col-span-6">
-            <div className="relative h-full group">
-              {/* Multi-layer outer glow effects */}
-              <div className="absolute -inset-6 bg-gradient-to-br from-cyan-500/30 via-purple-500/20 to-emerald-500/30 rounded-[2rem] blur-2xl opacity-40 group-hover:opacity-100 transition-opacity duration-1000 animate-pulse"></div>
-              <div className="absolute -inset-4 bg-gradient-to-tr from-pink-500/20 via-blue-500/15 to-yellow-500/20 rounded-3xl blur-xl opacity-60 group-hover:opacity-90 transition-opacity duration-700 animate-[pulse_3s_ease-in-out_infinite]"></div>
-              <div className="absolute -inset-2 bg-gradient-to-r from-red-500/10 via-green-500/10 to-blue-500/10 rounded-2xl blur-lg opacity-80 group-hover:opacity-100 transition-opacity duration-500 animate-[pulse_1.5s_ease-in-out_infinite]"></div>
-              
-              {/* Floating particles */}
-              <div className="absolute -inset-8 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none">
-                <div className="absolute top-4 left-4 w-1 h-1 bg-cyan-400 rounded-full animate-[float_4s_ease-in-out_infinite] shadow-[0_0_4px_rgba(6,182,212,0.8)]"></div>
-                <div className="absolute top-8 right-6 w-1.5 h-1.5 bg-purple-400 rounded-full animate-[float_3s_ease-in-out_infinite] animation-delay-500 shadow-[0_0_6px_rgba(168,85,247,0.8)]"></div>
-                <div className="absolute bottom-6 left-8 w-0.5 h-0.5 bg-emerald-400 rounded-full animate-[float_5s_ease-in-out_infinite] animation-delay-1000 shadow-[0_0_3px_rgba(16,185,129,0.8)]"></div>
-                <div className="absolute bottom-12 right-4 w-1 h-1 bg-pink-400 rounded-full animate-[float_3.5s_ease-in-out_infinite] animation-delay-750 shadow-[0_0_4px_rgba(236,72,153,0.8)]"></div>
-              </div>
-              
-              {/* Main container with breathing effect */}
-              <div className="relative h-full bg-gradient-to-br from-white/70 via-gray-50/50 to-white/70 backdrop-blur-3xl rounded-2xl border border-black/8 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_8px_32px_rgba(0,0,0,0.15),0_32px_64px_rgba(0,0,0,0.1)] overflow-hidden group-hover:scale-[1.02] transition-transform duration-700">
+              <div className="relative h-full bg-gradient-to-br from-white/70 via-gray-50/50 to-white/70 backdrop-blur-xl border-0 shadow-none overflow-hidden rounded-none">
                 
                 <div className="relative p-4 h-full">
                   {/* Enhanced header with status indicators */}
@@ -423,7 +484,6 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            </div>
           </div>
 
           {/* Music Player - Liquid Glass Style */}
