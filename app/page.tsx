@@ -125,7 +125,7 @@ export default function Home() {
               <div className="space-y-1.5">
                 {[
                   { href: "/about", label: "About Me", icon: User, variant: "pastel-blue", bounce: 'about' },
-                  { href: "/projects", label: "Projects", icon: Briefcase, variant: "pastel-purple", bounce: '' },
+                  { href: "/essays", label: "Essays", icon: Briefcase, variant: "pastel-purple", bounce: '' },
                   { href: "/photography", label: "Photography", icon: Camera, variant: "pastel-pink", bounce: 'photography' }
                 ].map((item) => (
                   <Link href={item.href} key={item.label} className="block group">
@@ -166,7 +166,7 @@ export default function Home() {
                   <h2 className="text-sm font-medium text-gray-800">TL;DR</h2>
                 </div>
                 <div className="space-y-1.5 text-xs leading-relaxed text-gray-700">
-                  <p>↳ <span className="font-semibold text-blue-700">16</span> years old, working at a startup with <span className="font-semibold text-green-700">1 million users</span> called <span className="inline-flex items-center align-middle gap-1"><Logo src="/stealthlogo.jpg" alt="Penseum" className="rounded-full" /><Label>Penseum</Label></span>.</p>
+                  <p>↳ <span className="font-semibold text-blue-700">16</span> years old, working at a startup with <span className="font-semibold text-green-700">1 million users</span> called <span className="inline-flex items-center align-middle gap-1"><Logo src="/penseum-logo.avif" alt="Penseum" className="rounded-full" /><Label>Penseum</Label></span>.</p>
                   
                   <p>↳ Founded a non-profit <span className="font-semibold text-purple-700">Hackathons Canada</span> which has partnered with <span className="font-semibold text-blue-700">Google</span> and <span className="font-semibold text-blue-700">Microsoft</span> with <span className="font-semibold text-green-700">25 million views</span> across social media and <span className="font-semibold text-green-700">5,000 members</span> in its online community.</p>
                 </div>
@@ -185,7 +185,7 @@ export default function Home() {
                 <div className="space-y-1.5 text-xs leading-relaxed text-gray-700">
                   <div className="p-2 bg-white/10 rounded-lg backdrop-blur-sm">
                     <div className="flex items-center gap-1.5 mb-1">
-                      <Logo src="/stealthlogo.jpg" alt="Penseum" className="rounded-full" />
+                      <Logo src="/penseum-logo.avif" alt="Penseum" className="rounded-full" />
                       <span className="font-medium text-gray-800">Penseum</span>
                     </div>
                     <p className="text-xs">Educational platform helping 1M+ users learn.</p>
@@ -211,9 +211,8 @@ export default function Home() {
                   Experience Highlights
                 </h3>
                 <div className="space-y-1.5 text-xs leading-relaxed text-gray-700">
-                  <p>↳ Programming since <span className="font-semibold text-purple-700">age 5</span>, entrepreneur since <span className="font-semibold text-purple-700">age 11</span>.</p>
                   
-                  <p>↳ Product engineer at <span className="inline-flex items-center align-middle gap-1"><Logo src="/stealthlogo.jpg" alt="Penseum" className="rounded-full" /><Label>Penseum</Label></span>, helping <span className="font-semibold text-green-700">1M+ users learn</span>.</p>
+                  <p>↳ Product engineer at <span className="inline-flex items-center align-middle gap-1"><Logo src="/penseum-logo.avif" alt="Penseum" className="rounded-full" /><Label>Penseum</Label></span>, helping <span className="font-semibold text-green-700">1M+ users learn</span>.</p>
                   
                   <p>↳ Founder and Vice President at <span className="font-semibold text-purple-700">Hackathons Canada</span>.</p>
                   

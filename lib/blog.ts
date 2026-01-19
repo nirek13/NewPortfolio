@@ -110,7 +110,7 @@ Voyager-O continues to inspire people about space exploration and demonstrates h
     readTime: '4 min read',
     tags: ['nasa', 'space', 'innovation'],
     featured: true,
-    image: '/stealthlogo.jpg'
+    image: '/penseum-logo.avif'
   },
   {
     slug: 'young-entrepreneur-mindset',
