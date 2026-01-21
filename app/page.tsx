@@ -7,6 +7,7 @@ import { useNavigationBounce } from "../lib/useNavigationBounce";
 import { DynamicBackground } from "@/components/ui/dynamic-background";
 import { GlassCard, LiquidFlowButton, FlowingBorder, LiquidGlassPanel, FloatingGlassCard } from "@/components/ui/glass-components";
 import { GitCommitGraph } from "@/components/widgets/GitStatsWidget";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { useState, useEffect } from "react";
 
 
@@ -75,7 +76,7 @@ export default function Home() {
                 </div>
                 
                 <div className="flex items-center gap-3">
-                  <div className="text-xs text-gray-600 font-mono">
+                  <div className="text-xs text-gray-600 dark:text-gray-100 font-mono">
                     {currentTime.toLocaleTimeString('en-US', { 
                       timeZone: 'America/Toronto',
                       hour12: false,
@@ -83,30 +84,33 @@ export default function Home() {
                       minute: '2-digit'
                     })} YYZ
                   </div>
-                  <button
-                    onClick={() => setCursorEnabled(!cursorEnabled)}
-                    className={`p-1.5 rounded transition-all duration-200 ${cursorEnabled ? 'bg-gradient-to-r from-purple-100 to-pink-100' : ''}`}
-                    title={cursorEnabled ? "Disable cursor effects" : "Enable cursor effects"}
-                  >
-                    <Settings size={14} className={`${cursorEnabled ? 'text-purple-600' : 'text-gray-400'}`} />
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setCursorEnabled(!cursorEnabled)}
+                      className={`p-1.5 rounded transition-all duration-200 ${cursorEnabled ? 'bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30' : ''}`}
+                      title={cursorEnabled ? "Disable cursor effects" : "Enable cursor effects"}
+                    >
+                      <Settings size={14} className={`${cursorEnabled ? 'text-purple-600 dark:text-cyan-400' : 'text-gray-400 dark:text-gray-300'}`} />
+                    </button>
+                    <ThemeToggle />
+                  </div>
                 </div>
               </div>
               
               <div className="flex items-center justify-between">
                 <div>
-                  <h1 className="text-xl font-light text-gray-900 mb-1">Nirek Shetty</h1>
-                  <p className="text-gray-600 text-sm">Founder & Engineer</p>
+                  <h1 className="text-xl font-light text-gray-900 dark:text-white mb-1">Nirek Shetty</h1>
+                  <p className="text-gray-600 dark:text-gray-200 text-sm">Founder & Engineer</p>
                 </div>
                 
                 <div className="flex gap-2">
-                  <a href="mailto:Nirek.Shetty.business@gmail.com" className="p-2 text-gray-500 hover:text-blue-500 transition-colors">
+                  <a href="mailto:Nirek.Shetty.business@gmail.com" className="p-2 text-gray-500 dark:text-gray-200 hover:text-blue-500 dark:hover:text-cyan-300 transition-colors">
                     <Mail size={16} />
                   </a>
-                  <a href="https://github.com/Nirek116" target="_blank" rel="noreferrer" className="p-2 text-gray-500 hover:text-purple-500 transition-colors">
+                  <a href="https://github.com/Nirek116" target="_blank" rel="noreferrer" className="p-2 text-gray-500 dark:text-gray-200 hover:text-purple-500 dark:hover:text-purple-300 transition-colors">
                     <Github size={16} />
                   </a>
-                  <a href="https://www.linkedin.com/in/Nirek-Shetty/" target="_blank" rel="noreferrer" className="p-2 text-gray-500 hover:text-cyan-500 transition-colors">
+                  <a href="https://www.linkedin.com/in/Nirek-Shetty/" target="_blank" rel="noreferrer" className="p-2 text-gray-500 dark:text-gray-200 hover:text-cyan-500 dark:hover:text-cyan-300 transition-colors">
                     <Linkedin size={16} />
                   </a>
                 </div>
@@ -117,7 +121,7 @@ export default function Home() {
           {/* Navigation Cards */}
           <div className="col-span-12 md:col-span-4">
             <GlassCard className="p-2.5 h-full" intensity="subtle">
-              <h3 className="text-[10px] font-bold mb-2.5 flex items-center gap-1.5 text-gray-400 uppercase tracking-widest">
+              <h3 className="text-[10px] font-bold mb-2.5 flex items-center gap-1.5 text-gray-400 dark:text-gray-200 uppercase tracking-widest">
                 <User size={12} className="opacity-70" />
                 Navigation
               </h3>
@@ -162,13 +166,13 @@ export default function Home() {
             <GlassCard className="p-3 h-full" intensity="subtle">
               <div className="space-y-2">
                 <div className="flex items-center gap-1.5">
-                  <Sparkles className="text-blue-600" size={16} />
-                  <h2 className="text-sm font-medium text-gray-800">TL;DR</h2>
+                  <Sparkles className="text-blue-600 dark:text-cyan-400" size={16} />
+                  <h2 className="text-sm font-medium text-gray-800 dark:text-white">TL;DR</h2>
                 </div>
-                <div className="space-y-1.5 text-xs leading-relaxed text-gray-700">
-                  <p>↳ <span className="font-semibold text-blue-700">16</span> years old, working at a startup with <span className="font-semibold text-green-700">1 million users</span> called <span className="inline-flex items-center align-middle gap-1"><Logo src="/penseum-logo.avif" alt="Penseum" className="rounded-full" /><Label>Penseum</Label></span>.</p>
+                <div className="space-y-1.5 text-xs leading-relaxed text-gray-700 dark:text-gray-100">
+                  <p>↳ <span className="font-semibold text-blue-700 dark:text-cyan-300">16</span> years old, working at a startup with <span className="font-semibold text-green-700 dark:text-green-300">1 million users</span> called <span className="inline-flex items-center align-middle gap-1"><Logo src="/penseum-logo.avif" alt="Penseum" className="rounded-full" /><Label>Penseum</Label></span>.</p>
                   
-                  <p>↳ Founded a non-profit <span className="font-semibold text-purple-700">Hackathons Canada</span> which has partnered with <span className="font-semibold text-blue-700">Google</span> and <span className="font-semibold text-blue-700">Microsoft</span> with <span className="font-semibold text-green-700">25 million views</span> across social media and <span className="font-semibold text-green-700">5,000 members</span> in its online community.</p>
+                  <p>↳ Founded a non-profit <span className="font-semibold text-purple-700 dark:text-purple-300">Hackathons Canada</span> which has partnered with <span className="font-semibold text-blue-700 dark:text-cyan-300">Google</span> and <span className="font-semibold text-blue-700 dark:text-cyan-300">Microsoft</span> with <span className="font-semibold text-green-700 dark:text-green-300">25 million views</span> across social media and <span className="font-semibold text-green-700 dark:text-green-300">5,000 members</span> in its online community.</p>
                 </div>
                 </div>
               </GlassCard>
@@ -178,22 +182,22 @@ export default function Home() {
           <div className="col-span-12 md:col-span-6">
             <GlassCard className="p-3 h-full" intensity="subtle">
               <div className="space-y-2">
-                <h3 className="text-xs font-medium flex items-center gap-1.5 text-gray-800">
-                  <span className="text-green-600">🚀</span>
+                <h3 className="text-xs font-medium flex items-center gap-1.5 text-gray-800 dark:text-white">
+                  <span className="text-green-600 dark:text-green-300">🚀</span>
                   Currently Building
                 </h3>
-                <div className="space-y-1.5 text-xs leading-relaxed text-gray-700">
-                  <div className="p-2 bg-white/10 rounded-lg backdrop-blur-sm">
+                <div className="space-y-1.5 text-xs leading-relaxed text-gray-700 dark:text-gray-100">
+                  <div className="p-2 bg-white/10 dark:bg-white/5 rounded-lg backdrop-blur-sm">
                     <div className="flex items-center gap-1.5 mb-1">
                       <Logo src="/penseum-logo.avif" alt="Penseum" className="rounded-full" />
-                      <span className="font-medium text-gray-800">Penseum</span>
+                      <span className="font-medium text-gray-800 dark:text-white">Penseum</span>
                     </div>
                     <p className="text-xs">Educational platform helping 1M+ users learn.</p>
                   </div>
-                  <div className="p-2 bg-white/10 rounded-lg backdrop-blur-sm">
+                  <div className="p-2 bg-white/10 dark:bg-white/5 rounded-lg backdrop-blur-sm">
                     <div className="flex items-center gap-1.5 mb-1">
-                      <span className="text-purple-600">💼</span>
-                      <span className="font-medium text-purple-700">Contractual</span>
+                      <span className="text-purple-600 dark:text-purple-300">💼</span>
+                      <span className="font-medium text-purple-700 dark:text-purple-300">Contractual</span>
                     </div>
                     <p className="text-xs">AI-powered contract management platform.</p>
                   </div>
@@ -206,17 +210,17 @@ export default function Home() {
           <div className="col-span-12 md:col-span-6">
             <GlassCard className="p-3 h-full" intensity="subtle">
               <div className="space-y-2">
-                <h3 className="text-xs font-medium flex items-center gap-1.5 text-gray-800">
-                  <Briefcase size={14} className="text-purple-600" />
+                <h3 className="text-xs font-medium flex items-center gap-1.5 text-gray-800 dark:text-white">
+                  <Briefcase size={14} className="text-purple-600 dark:text-purple-300" />
                   Experience Highlights
                 </h3>
-                <div className="space-y-1.5 text-xs leading-relaxed text-gray-700">
+                <div className="space-y-1.5 text-xs leading-relaxed text-gray-700 dark:text-gray-100">
                   
-                  <p>↳ Product engineer at <span className="inline-flex items-center align-middle gap-1"><Logo src="/penseum-logo.avif" alt="Penseum" className="rounded-full" /><Label>Penseum</Label></span>, helping <span className="font-semibold text-green-700">1M+ users learn</span>.</p>
+                  <p>↳ Product engineer at <span className="inline-flex items-center align-middle gap-1"><Logo src="/penseum-logo.avif" alt="Penseum" className="rounded-full" /><Label>Penseum</Label></span>, helping <span className="font-semibold text-green-700 dark:text-green-300">1M+ users learn</span>.</p>
                   
-                  <p>↳ Founder and Vice President at <span className="font-semibold text-purple-700">Hackathons Canada</span>.</p>
+                  <p>↳ Founder and Vice President at <span className="font-semibold text-purple-700 dark:text-purple-300">Hackathons Canada</span>.</p>
                   
-                  <p>↳ Founder at <span className="font-semibold text-purple-700">Contractual</span>.</p>
+                  <p>↳ Founder at <span className="font-semibold text-purple-700 dark:text-purple-300">Contractual</span>.</p>
                 </div>
               </div>
             </GlassCard>
@@ -233,11 +237,11 @@ export default function Home() {
             <div className="grid grid-cols-2 gap-3 flex-1">
               {/* Connect Section */}
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-white/60 via-gray-50/40 to-white/60 backdrop-blur-2xl rounded-2xl border border-black/5 shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_1px_3px_rgba(0,0,0,0.05)]"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-white/60 via-gray-50/40 to-white/60 dark:from-black/80 dark:via-black/60 dark:to-black/80 backdrop-blur-2xl rounded-2xl border border-black/5 dark:border-cyan-400/20 shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_1px_3px_rgba(0,0,0,0.05)] dark:shadow-[inset_0_1px_0_rgba(100,200,255,0.3),0_4px_16px_rgba(0,0,0,0.8)]"></div>
                 
                 <div className="relative z-10 px-4 py-4 h-full flex flex-col justify-center min-h-[120px]">
                   <div className="text-center mb-3">
-                    <h3 className="text-xs font-medium text-gray-900" style={{
+                    <h3 className="text-xs font-medium text-gray-900 dark:text-white" style={{
                       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
                       fontWeight: 500,
                       letterSpacing: '-0.01em'
@@ -285,7 +289,7 @@ export default function Home() {
 
               {/* Apple-style Time Display */}
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-white/70 via-gray-50/50 to-white/70 backdrop-blur-2xl rounded-2xl border border-black/[0.06] shadow-[0_4px_16px_rgba(0,0,0,0.04),inset_0_1px_0_rgba(255,255,255,0.9)]"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-white/70 via-gray-50/50 to-white/70 dark:from-black/90 dark:via-black/70 dark:to-black/90 backdrop-blur-2xl rounded-2xl border border-black/[0.06] dark:border-purple-400/30 shadow-[0_4px_16px_rgba(0,0,0,0.04),inset_0_1px_0_rgba(255,255,255,0.9)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.9),inset_0_1px_0_rgba(200,100,255,0.4)]"></div>
                 
                 <div className="relative z-10 px-3 py-4 h-full flex flex-col items-center justify-center min-h-[120px]">
                   {/* Progress Ring */}
@@ -300,7 +304,7 @@ export default function Home() {
                           fill="none"
                           stroke="currentColor"
                           strokeWidth="2.5"
-                          className="text-gray-200/60"
+                          className="text-gray-200/60 dark:text-gray-600"
                         />
                       </svg>
                     </div>
@@ -316,7 +320,7 @@ export default function Home() {
                           stroke="currentColor"
                           strokeWidth="2.5"
                           strokeLinecap="round"
-                          className="text-orange-500"
+                          className="text-orange-500 dark:text-cyan-400"
                           strokeDasharray={`${(currentTime.getHours() % 12) * (150.7 / 12)} 150.7`}
                         />
                       </svg>
@@ -336,14 +340,14 @@ export default function Home() {
                   
                   {/* Apple-style Text */}
                   <div className="text-center">
-                    <div className="text-xl font-light text-gray-900 mb-1 tabular-nums" style={{
+                    <div className="text-xl font-light text-gray-900 dark:text-white mb-1 tabular-nums" style={{
                       fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
                       fontWeight: 200,
                       letterSpacing: '-0.02em'
                     }}>
                       {Math.round(((currentTime.getHours() % 12) / 12) * 100)}%
                     </div>
-                    <div className="text-[10px] font-medium text-gray-600 uppercase tracking-wide" style={{
+                    <div className="text-[10px] font-medium text-gray-600 dark:text-gray-200 uppercase tracking-wide" style={{
                       fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
                       letterSpacing: '0.05em'
                     }}>
@@ -364,29 +368,29 @@ export default function Home() {
 
           {/* ULTRA Epic Dog Photo */}
           <div className="col-span-12 md:col-span-6">
-              <div className="relative h-full bg-gradient-to-br from-white/70 via-gray-50/50 to-white/70 backdrop-blur-xl border-0 shadow-none overflow-hidden rounded-none">
+              <div className="relative h-full bg-gradient-to-br from-white/70 via-gray-50/50 to-white/70 dark:from-black/80 dark:via-black/60 dark:to-black/80 backdrop-blur-xl border-0 shadow-none overflow-hidden rounded-none">
                 
                 <div className="relative p-4 h-full">
                   {/* Enhanced header with status indicators */}
                   <div className="flex items-center gap-3 mb-4">
                     <div className="flex items-center gap-2">
-                      <div className="w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse shadow-[0_0_12px_rgba(34,197,94,0.9)] group-hover:shadow-[0_0_20px_rgba(34,197,94,1)]"></div>
-                      <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_12px_rgba(6,182,212,0.9)] animation-delay-150 group-hover:shadow-[0_0_20px_rgba(6,182,212,1)]"></div>
-                      <div className="w-2.5 h-2.5 rounded-full bg-purple-400 animate-pulse shadow-[0_0_12px_rgba(168,85,247,0.9)] animation-delay-300 group-hover:shadow-[0_0_20px_rgba(168,85,247,1)]"></div>
-                      <div className="w-2.5 h-2.5 rounded-full bg-pink-400 animate-pulse shadow-[0_0_12px_rgba(236,72,153,0.9)] animation-delay-450 group-hover:shadow-[0_0_20px_rgba(236,72,153,1)]"></div>
+                      <div className="w-2.5 h-2.5 rounded-full bg-green-400 dark:bg-green-300 animate-pulse shadow-[0_0_12px_rgba(34,197,94,0.9)] dark:shadow-[0_0_16px_rgba(34,197,94,1)] group-hover:shadow-[0_0_20px_rgba(34,197,94,1)]"></div>
+                      <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 dark:bg-cyan-300 animate-pulse shadow-[0_0_12px_rgba(6,182,212,0.9)] dark:shadow-[0_0_16px_rgba(6,182,212,1)] animation-delay-150 group-hover:shadow-[0_0_20px_rgba(6,182,212,1)]"></div>
+                      <div className="w-2.5 h-2.5 rounded-full bg-purple-400 dark:bg-purple-300 animate-pulse shadow-[0_0_12px_rgba(168,85,247,0.9)] dark:shadow-[0_0_16px_rgba(168,85,247,1)] animation-delay-300 group-hover:shadow-[0_0_20px_rgba(168,85,247,1)]"></div>
+                      <div className="w-2.5 h-2.5 rounded-full bg-pink-400 dark:bg-pink-300 animate-pulse shadow-[0_0_12px_rgba(236,72,153,0.9)] dark:shadow-[0_0_16px_rgba(236,72,153,1)] animation-delay-450 group-hover:shadow-[0_0_20px_rgba(236,72,153,1)]"></div>
                     </div>
-                    <div className="flex-1 h-px bg-gradient-to-r from-cyan-400/60 via-purple-400/40 via-pink-400/30 to-transparent animate-[shimmer_2s_ease-in-out_infinite]"></div>
+                    <div className="flex-1 h-px bg-gradient-to-r from-cyan-400/60 via-purple-400/40 via-pink-400/30 to-transparent dark:from-cyan-300/80 dark:via-purple-300/60 dark:via-pink-300/50 dark:to-transparent animate-[shimmer_2s_ease-in-out_infinite]"></div>
                   </div>
                   
                   {/* Photo container with INSANE effects */}
                   <div className="relative aspect-[4/3] overflow-hidden">
                     {/* Multiple animated borders */}
-                    <div className="absolute -inset-2 bg-gradient-to-r from-cyan-500/50 via-purple-500/50 via-pink-500/50 to-emerald-500/50 rounded-3xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-700 animate-[rotate_8s_linear_infinite]"></div>
-                    <div className="absolute -inset-1.5 bg-gradient-to-tr from-blue-500/40 via-red-500/40 to-yellow-500/40 rounded-2xl blur-sm opacity-0 group-hover:opacity-80 transition-opacity duration-500 animate-[rotate_6s_linear_infinite_reverse]"></div>
-                    <div className="absolute -inset-1 bg-gradient-to-br from-white/70 to-gray-100/50 rounded-xl"></div>
+                    <div className="absolute -inset-2 bg-gradient-to-r from-cyan-500/50 via-purple-500/50 via-pink-500/50 to-emerald-500/50 dark:from-cyan-400/70 dark:via-purple-400/70 dark:via-pink-400/70 dark:to-emerald-400/70 rounded-3xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-700 animate-[rotate_8s_linear_infinite]"></div>
+                    <div className="absolute -inset-1.5 bg-gradient-to-tr from-blue-500/40 via-red-500/40 to-yellow-500/40 dark:from-blue-400/60 dark:via-red-400/60 dark:to-yellow-400/60 rounded-2xl blur-sm opacity-0 group-hover:opacity-80 transition-opacity duration-500 animate-[rotate_6s_linear_infinite_reverse]"></div>
+                    <div className="absolute -inset-1 bg-gradient-to-br from-white/70 to-gray-100/50 dark:from-black/80 dark:to-black/60 rounded-xl"></div>
                     
                     {/* Main photo frame with matrix effect */}
-                    <div className="relative h-full bg-gradient-to-br from-gray-900/8 to-black/15 rounded-xl overflow-hidden shadow-[inset_0_2px_8px_rgba(0,0,0,0.2)] border border-white/50 group-hover:border-cyan-400/50 transition-colors duration-500">
+                    <div className="relative h-full bg-gradient-to-br from-gray-900/8 to-black/15 dark:from-black/40 dark:to-black/60 rounded-xl overflow-hidden shadow-[inset_0_2px_8px_rgba(0,0,0,0.2)] dark:shadow-[inset_0_3px_12px_rgba(0,0,0,0.8)] border border-white/50 dark:border-cyan-400/40 group-hover:border-cyan-400/50 dark:group-hover:border-cyan-300/70 transition-colors duration-500">
                       
                       {/* Matrix rain effect */}
                       <div className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-1000">
@@ -489,17 +493,17 @@ export default function Home() {
           <div className="col-span-12 mt-4">
             <div className="relative group">
               {/* Multi-layer glass glow effects */}
-              <div className="absolute -inset-2 bg-gradient-to-r from-cyan-500/15 via-purple-500/10 to-pink-500/15 rounded-2xl blur-lg opacity-40 group-hover:opacity-80 transition-opacity duration-700 animate-pulse"></div>
-              <div className="absolute -inset-1 bg-gradient-to-br from-white/20 via-gray-50/10 to-white/20 rounded-xl blur-sm opacity-60 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="absolute -inset-2 bg-gradient-to-r from-cyan-500/15 via-purple-500/10 to-pink-500/15 dark:from-cyan-400/25 dark:via-purple-400/20 dark:to-pink-400/25 rounded-2xl blur-lg opacity-40 group-hover:opacity-80 transition-opacity duration-700 animate-pulse"></div>
+              <div className="absolute -inset-1 bg-gradient-to-br from-white/20 via-gray-50/10 to-white/20 dark:from-black/40 dark:via-black/20 dark:to-black/40 rounded-xl blur-sm opacity-60 group-hover:opacity-100 transition-opacity duration-500"></div>
               
               {/* Main glass container */}
-              <div className="relative bg-gradient-to-br from-white/60 via-gray-50/40 to-white/60 backdrop-blur-2xl rounded-2xl border border-black/8 shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_8px_32px_rgba(0,0,0,0.12)] overflow-hidden">
+              <div className="relative bg-gradient-to-br from-white/60 via-gray-50/40 to-white/60 dark:from-black/80 dark:via-black/60 dark:to-black/80 backdrop-blur-2xl rounded-2xl border border-black/8 dark:border-cyan-400/30 shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_8px_32px_rgba(0,0,0,0.12)] dark:shadow-[inset_0_1px_0_rgba(100,200,255,0.4),0_12px_48px_rgba(0,0,0,0.9)] overflow-hidden">
                 
                 <div className="flex items-center p-4 gap-4">
                   {/* Album Art with glass effects */}
                   <div className="relative flex-shrink-0">
-                    <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400/40 via-purple-400/30 to-pink-400/40 rounded-xl blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <div className="relative w-16 h-16 rounded-xl overflow-hidden border border-white/40 shadow-[0_4px_16px_rgba(0,0,0,0.1)] bg-gradient-to-br from-white/20 to-gray-100/10">
+                    <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400/40 via-purple-400/30 to-pink-400/40 dark:from-cyan-300/60 dark:via-purple-300/50 dark:to-pink-300/60 rounded-xl blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="relative w-16 h-16 rounded-xl overflow-hidden border border-white/40 dark:border-cyan-400/40 shadow-[0_4px_16px_rgba(0,0,0,0.1)] dark:shadow-[0_6px_24px_rgba(0,0,0,0.8)] bg-gradient-to-br from-white/20 to-gray-100/10 dark:from-black/40 dark:to-black/20">
                       <Image
                         src="/college-dropout-cover.jpg"
                         alt="The College Dropout Album Art"
@@ -508,9 +512,9 @@ export default function Home() {
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                       {/* Glass overlay on album art */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-black/10 opacity-40"></div>
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-black/10 dark:from-cyan-400/20 dark:via-transparent dark:to-purple-400/10 opacity-40"></div>
                       {/* Corner glass accents */}
-                      <div className="absolute top-1 right-1 w-2 h-2 bg-gradient-to-br from-white/60 to-transparent rounded-full"></div>
+                      <div className="absolute top-1 right-1 w-2 h-2 bg-gradient-to-br from-white/60 to-transparent dark:from-cyan-300/80 dark:to-transparent rounded-full"></div>
                     </div>
                   </div>
                   
@@ -518,8 +522,8 @@ export default function Home() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between">
                       <div className="flex-1 min-w-0">
-                        <h3 className="text-sm font-medium text-gray-900 truncate" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>Family Business</h3>
-                        <p className="text-xs text-gray-600 truncate">Kanye West • The College Dropout</p>
+                        <h3 className="text-sm font-medium text-gray-900 dark:text-white truncate" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>Family Business</h3>
+                        <p className="text-xs text-gray-600 dark:text-gray-200 truncate">Kanye West • The College Dropout</p>
                       </div>
                       
                       {/* Glass audio visualizer */}
@@ -669,7 +673,7 @@ export default function Home() {
 
           {/* Apple-esque Footer */}
           <footer className="col-span-12 mt-6 relative">
-            <div className="absolute inset-0 bg-gradient-to-t from-gray-50/50 via-white/20 to-transparent backdrop-blur-xl rounded-2xl border border-gray-200/30"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-gray-50/50 via-white/20 to-transparent dark:from-black/80 dark:via-black/40 backdrop-blur-xl rounded-2xl border border-gray-200/30 dark:border-cyan-400/20"></div>
             
             <div className="relative z-10 px-5 py-6 text-center">
               {/* Signature */}
@@ -778,20 +782,20 @@ export default function Home() {
               </div>
               
               {/* Apple-style footer content */}
-              <div className="border-t border-gray-300/20 pt-3">
-                <div className="flex flex-col md:flex-row items-center justify-center gap-1 md:gap-4 text-xs text-gray-600 font-light">
+              <div className="border-t border-gray-300/20 dark:border-cyan-400/30 pt-3">
+                <div className="flex flex-col md:flex-row items-center justify-center gap-1 md:gap-4 text-xs text-gray-600 dark:text-gray-100 font-light">
                   <p className="flex items-center gap-1">
                     <span>Made with</span>
                     <span className="text-red-500 text-xs animate-pulse">♥</span>
                     <span>in Toronto</span>
                   </p>
-                  <span className="hidden md:block text-gray-400">•</span>
+                  <span className="hidden md:block text-gray-400 dark:text-gray-200">•</span>
                   <p className="flex items-center gap-1">
                     <span>Built with</span>
-                    <span className="font-medium text-blue-600">Next.js</span>
+                    <span className="font-medium text-blue-600 dark:text-cyan-300">Next.js</span>
                   </p>
-                  <span className="hidden md:block text-gray-400">•</span>
-                  <p className="text-gray-500">© 2024 Nirek Shetty</p>
+                  <span className="hidden md:block text-gray-400 dark:text-gray-200">•</span>
+                  <p className="text-gray-500 dark:text-gray-200">© 2024 Nirek Shetty</p>
                 </div>
               </div>
             </div>
