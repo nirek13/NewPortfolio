@@ -147,12 +147,14 @@ export function MacOSWindow({
             </div>
             <div className="p-6">
               <div className="text-center">
-                <div className="text-4xl mb-3">💻</div>
+                <div className="text-4xl mb-3 w-12 h-12 mx-auto bg-gray-100 rounded-lg flex items-center justify-center">
+                  <div className="w-6 h-6 bg-gray-600 rounded"></div>
+                </div>
                 <div className="text-sm text-gray-700 mb-4">
                   Just kidding! This is a portfolio website, not a real macOS window. 
                   <br />
                   <span className="text-xs text-gray-500 mt-2 block">
-                    Pretty convincing though, right? 😉
+                    Pretty convincing though, right?
                   </span>
                 </div>
               </div>

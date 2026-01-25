@@ -1,6 +1,5 @@
 'use client';
 
-import { Moon, Sun } from 'lucide-react';
 import { useTheme } from '@/lib/theme-context';
 
 export function ThemeToggle() {
@@ -17,28 +16,33 @@ export function ThemeToggle() {
       title={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
     >
       <div className="relative w-[14px] h-[14px] flex items-center justify-center">
-        <Sun 
-          size={14} 
-          className={`absolute transition-all duration-300 transform
+        {/* Light mode icon - simple circle */}
+        <div 
+          className={`absolute w-2 h-2 rounded-full transition-all duration-300 transform
                      ${theme === 'light' 
                        ? 'opacity-100 rotate-0 scale-100' 
                        : 'opacity-0 rotate-90 scale-0'
                      } ${theme === 'light' 
-                       ? 'text-amber-600 dark:text-amber-400' 
-                       : 'text-gray-400 dark:text-gray-300'
+                       ? 'bg-amber-600 dark:bg-amber-400' 
+                       : 'bg-gray-400 dark:bg-gray-300'
                      }`}
         />
         
-        <Moon 
-          size={14} 
-          className={`absolute transition-all duration-300 transform
+        {/* Dark mode icon - simple crescent */}
+        <div 
+          className={`absolute w-2 h-2 rounded-full transition-all duration-300 transform
                      ${theme === 'dark' 
                        ? 'opacity-100 rotate-0 scale-100' 
                        : 'opacity-0 -rotate-90 scale-0'
                      } ${theme === 'dark' 
-                       ? 'text-blue-600 dark:text-blue-400' 
-                       : 'text-gray-400 dark:text-gray-300'
+                       ? 'bg-blue-600 dark:bg-blue-400' 
+                       : 'bg-gray-400 dark:bg-gray-300'
                      }`}
+          style={{
+            background: theme === 'dark' 
+              ? `radial-gradient(circle at 20% 20%, transparent 35%, #2563eb 35%)`
+              : `radial-gradient(circle at 20% 20%, transparent 35%, #6b7280 35%)`
+          }}
         />
       </div>
     </button>
@@ -59,27 +63,33 @@ export function CompactThemeToggle() {
       title={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
     >
       <div className="relative w-[14px] h-[14px] flex items-center justify-center">
-        <Sun 
-          size={14} 
-          className={`absolute transition-all duration-300 transform
+        {/* Light mode icon - simple circle */}
+        <div 
+          className={`absolute w-2 h-2 rounded-full transition-all duration-300 transform
                      ${theme === 'light' 
                        ? 'opacity-100 rotate-0 scale-100' 
                        : 'opacity-0 rotate-90 scale-0'
                      } ${theme === 'light' 
-                       ? 'text-amber-600 dark:text-amber-400' 
-                       : 'text-gray-400 dark:text-gray-300'
+                       ? 'bg-amber-600 dark:bg-amber-400' 
+                       : 'bg-gray-400 dark:bg-gray-300'
                      }`}
         />
-        <Moon 
-          size={14} 
-          className={`absolute transition-all duration-300 transform
+        
+        {/* Dark mode icon - simple crescent */}
+        <div 
+          className={`absolute w-2 h-2 rounded-full transition-all duration-300 transform
                      ${theme === 'dark' 
                        ? 'opacity-100 rotate-0 scale-100' 
                        : 'opacity-0 -rotate-90 scale-0'
                      } ${theme === 'dark' 
-                       ? 'text-blue-600 dark:text-blue-400' 
-                       : 'text-gray-400 dark:text-gray-300'
+                       ? 'bg-blue-600 dark:bg-blue-400' 
+                       : 'bg-gray-400 dark:bg-gray-300'
                      }`}
+          style={{
+            background: theme === 'dark' 
+              ? `radial-gradient(circle at 20% 20%, transparent 35%, #2563eb 35%)`
+              : `radial-gradient(circle at 20% 20%, transparent 35%, #6b7280 35%)`
+          }}
         />
       </div>
     </button>

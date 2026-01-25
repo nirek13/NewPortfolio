@@ -5,7 +5,7 @@ import { SplashCursor } from '@/components/ui/splash-cursor'
 import { Analytics } from '@vercel/analytics/react'
 import { ThemeProvider } from '@/lib/theme-context'
 
-const inter = Inter({ subsets: ['latin'], weight: ['200','300'] })
+const charm = { className: 'font-charm' }
 
 export const metadata: Metadata = {
   title: "Nirek's Portfolio",
@@ -23,9 +23,9 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Kapakana:wght@300..400&family=My+Soul&display=swap" rel="stylesheet" />
       </head>
-      <body className={`${inter.className} antialiased`}>
+      <body className={`${charm.className} antialiased text-base`} style={{ fontFamily: 'Charm, sans-serif', fontSize: '1.1rem' }}>
         <ThemeProvider>
           <SplashCursor />
           {children}

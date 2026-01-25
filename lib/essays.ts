@@ -153,12 +153,12 @@ For me, it was the right choice. But I encourage anyone considering this path to
 ];
 
 export const categories = [
-  { id: 'all', label: 'All Essays', icon: '📝' },
-  { id: 'tech', label: 'Technology', icon: '💻' },
-  { id: 'entrepreneurship', label: 'Entrepreneurship', icon: '🚀' },
-  { id: 'personal', label: 'Personal', icon: '🌱' },
-  { id: 'thoughts', label: 'Thoughts', icon: '💭' },
-  { id: 'ai', label: 'AI & ML', icon: '🤖' }
+  { id: 'all', label: 'All Essays', icon: 'All' },
+  { id: 'tech', label: 'Technology', icon: 'Tech' },
+  { id: 'entrepreneurship', label: 'Entrepreneurship', icon: 'Business' },
+  { id: 'personal', label: 'Personal', icon: 'Personal' },
+  { id: 'thoughts', label: 'Thoughts', icon: 'Ideas' },
+  { id: 'ai', label: 'AI & ML', icon: 'AI' }
 ];
 
 export function getEssayById(id: string): Essay | undefined {

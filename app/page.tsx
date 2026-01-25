@@ -99,7 +99,7 @@ export default function Home() {
               
               <div className="flex items-center justify-between">
                 <div>
-                  <h1 className="text-xl font-light text-gray-900 dark:text-white mb-1">Nirek Shetty</h1>
+                  <h1 className="text-3xl font-normal mb-0.5 bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-400 leading-tight tracking-wider transform scale-x-110 origin-left" style={{ fontFamily: 'Kapakana, sans-serif', textShadow: '0 1px 2px rgba(0,0,0,0.1)' }}>Nirek Shetty</h1>
                   <p className="text-gray-600 dark:text-gray-200 text-sm">Founder & Engineer</p>
                 </div>
                 
@@ -183,7 +183,7 @@ export default function Home() {
             <GlassCard className="p-3 h-full" intensity="subtle">
               <div className="space-y-2">
                 <h3 className="text-xs font-medium flex items-center gap-1.5 text-gray-800 dark:text-white">
-                  <span className="text-green-600 dark:text-green-300">🚀</span>
+                  <span className="text-green-600 dark:text-green-300">•</span>
                   Currently Building
                 </h3>
                 <div className="space-y-1.5 text-xs leading-relaxed text-gray-700 dark:text-gray-100">
@@ -287,79 +287,120 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Apple-style Time Display */}
+              {/* Word Search Time Display */}
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-white/70 via-gray-50/50 to-white/70 dark:from-black/90 dark:via-black/70 dark:to-black/90 backdrop-blur-2xl rounded-2xl border border-black/[0.06] dark:border-purple-400/30 shadow-[0_4px_16px_rgba(0,0,0,0.04),inset_0_1px_0_rgba(255,255,255,0.9)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.9),inset_0_1px_0_rgba(200,100,255,0.4)]"></div>
                 
-                <div className="relative z-10 px-3 py-4 h-full flex flex-col items-center justify-center min-h-[120px]">
-                  {/* Progress Ring */}
-                  <div className="relative w-14 h-14 mb-2">
-                    {/* Background Ring */}
-                    <div className="absolute inset-0">
-                      <svg className="w-14 h-14 transform -rotate-90" viewBox="0 0 56 56">
-                        <circle
-                          cx="28"
-                          cy="28"
-                          r="24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2.5"
-                          className="text-gray-200/60 dark:text-gray-600"
-                        />
-                      </svg>
-                    </div>
-                    
-                    {/* Progress Ring */}
-                    <div className="absolute inset-0">
-                      <svg className="w-14 h-14 transform -rotate-90" viewBox="0 0 56 56">
-                        <circle
-                          cx="28"
-                          cy="28"
-                          r="24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2.5"
-                          strokeLinecap="round"
-                          className="text-orange-500 dark:text-cyan-400"
-                          strokeDasharray={`${(currentTime.getHours() % 12) * (150.7 / 12)} 150.7`}
-                        />
-                      </svg>
-                    </div>
-                    
-                    {/* Center Content */}
-                    <div className="absolute inset-0 flex flex-col items-center justify-center">
-                      <div className="w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm shadow-[0_1px_4px_rgba(0,0,0,0.08)] flex items-center justify-center border border-black/[0.04]">
-                        {currentTime.getHours() >= 6 && currentTime.getHours() < 18 ? (
-                          <span className="text-sm">☀️</span>
-                        ) : (
-                          <span className="text-sm">🌙</span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Apple-style Text */}
-                  <div className="text-center">
-                    <div className="text-xl font-light text-gray-900 dark:text-white mb-1 tabular-nums" style={{
-                      fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
-                      fontWeight: 200,
-                      letterSpacing: '-0.02em'
-                    }}>
-                      {Math.round(((currentTime.getHours() % 12) / 12) * 100)}%
-                    </div>
-                    <div className="text-[10px] font-medium text-gray-600 dark:text-gray-200 uppercase tracking-wide" style={{
-                      fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
-                      letterSpacing: '0.05em'
-                    }}>
-                      {currentTime.getHours() >= 6 && currentTime.getHours() < 12 
-                        ? 'Morning'
-                        : currentTime.getHours() >= 12 && currentTime.getHours() < 18
-                        ? 'Day'
-                        : currentTime.getHours() >= 18 && currentTime.getHours() < 22
-                        ? 'Evening'
-                        : 'Night'
-                      }
-                    </div>
+                <div className="relative z-10 px-0.5 py-0.5 h-full flex flex-col items-center justify-center min-h-[80px]">
+                  {/* Word Search Grid */}
+                  <div className="grid grid-rows-6 grid-flow-col gap-0 font-mono leading-none w-full h-full">
+                    {/* Column 1 */}
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${true ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>I</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${true ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>T</span>
+                    <span className="w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] text-gray-400 dark:text-gray-500">L</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${true ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>I</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${true ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>S</span>
+                    <span className="w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] text-gray-400 dark:text-gray-500">A</span>
+
+                    {/* Column 2 */}
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getMinutes() >= 20 && currentTime.getMinutes() < 30 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>T</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getMinutes() >= 20 && currentTime.getMinutes() < 30 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>W</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getMinutes() >= 20 && currentTime.getMinutes() < 30 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>E</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getMinutes() >= 20 && currentTime.getMinutes() < 30 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>N</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getMinutes() >= 20 && currentTime.getMinutes() < 30 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>T</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getMinutes() >= 20 && currentTime.getMinutes() < 30 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>Y</span>
+
+                    {/* Column 3 */}
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getMinutes() >= 5 && currentTime.getMinutes() < 10 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>F</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getMinutes() >= 5 && currentTime.getMinutes() < 10 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>I</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getMinutes() >= 5 && currentTime.getMinutes() < 10 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>V</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getMinutes() >= 5 && currentTime.getMinutes() < 10 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>E</span>
+                    <span className="w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] text-gray-400 dark:text-gray-500">X</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getMinutes() >= 10 && currentTime.getMinutes() < 15 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>T</span>
+
+                    {/* Column 4 */}
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getMinutes() >= 10 && currentTime.getMinutes() < 15 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>E</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getMinutes() >= 10 && currentTime.getMinutes() < 15 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>N</span>
+                    <span className="w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] text-gray-400 dark:text-gray-500">Q</span>
+                    <span className="w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] text-gray-400 dark:text-gray-500">U</span>
+                    <span className="w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] text-gray-400 dark:text-gray-500">A</span>
+                    <span className="w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] text-gray-400 dark:text-gray-500">R</span>
+
+                    {/* Column 5 */}
+                    <span className="w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] text-gray-400 dark:text-gray-500">T</span>
+                    <span className="w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] text-gray-400 dark:text-gray-500">E</span>
+                    <span className="w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] text-gray-400 dark:text-gray-500">R</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getMinutes() >= 30 && currentTime.getMinutes() < 35 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>H</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getMinutes() >= 30 && currentTime.getMinutes() < 35 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>A</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getMinutes() >= 30 && currentTime.getMinutes() < 35 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>L</span>
+
+                    {/* Column 6 */}
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getMinutes() >= 30 && currentTime.getMinutes() < 35 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>F</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getMinutes() >= 30 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>P</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getMinutes() >= 30 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>A</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getMinutes() >= 30 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>S</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getMinutes() >= 30 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>T</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getMinutes() === 0 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>O</span>
+
+                    {/* Column 7 - Hours */}
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 1 || currentTime.getHours() === 13 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>O</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 1 || currentTime.getHours() === 13 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>N</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 1 || currentTime.getHours() === 13 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>E</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 2 || currentTime.getHours() === 14 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>T</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 2 || currentTime.getHours() === 14 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>W</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 2 || currentTime.getHours() === 14 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>O</span>
+
+                    {/* Remaining columns 8-20 */}
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 3 || currentTime.getHours() === 15 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>T</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 3 || currentTime.getHours() === 15 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>H</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 3 || currentTime.getHours() === 15 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>R</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 3 || currentTime.getHours() === 15 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>E</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 3 || currentTime.getHours() === 15 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>E</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 4 || currentTime.getHours() === 16 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>F</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 4 || currentTime.getHours() === 16 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>O</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 4 || currentTime.getHours() === 16 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>U</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 4 || currentTime.getHours() === 16 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>R</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 5 || currentTime.getHours() === 17 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>F</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 5 || currentTime.getHours() === 17 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>I</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 5 || currentTime.getHours() === 17 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>V</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 5 || currentTime.getHours() === 17 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>E</span>
+
+                    {/* Continue remaining columns for other hours and minutes... */}
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 6 || currentTime.getHours() === 18 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>S</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 6 || currentTime.getHours() === 18 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>I</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 6 || currentTime.getHours() === 18 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>X</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 7 || currentTime.getHours() === 19 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>S</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 7 || currentTime.getHours() === 19 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>E</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 7 || currentTime.getHours() === 19 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>V</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 7 || currentTime.getHours() === 19 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>E</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 7 || currentTime.getHours() === 19 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>N</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 8 || currentTime.getHours() === 20 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>E</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 8 || currentTime.getHours() === 20 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>I</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 8 || currentTime.getHours() === 20 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>G</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 8 || currentTime.getHours() === 20 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>H</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 8 || currentTime.getHours() === 20 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>T</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 9 || currentTime.getHours() === 21 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>N</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 9 || currentTime.getHours() === 21 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>I</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 9 || currentTime.getHours() === 21 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>N</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 9 || currentTime.getHours() === 21 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>E</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 10 || currentTime.getHours() === 22 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>T</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 10 || currentTime.getHours() === 22 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>E</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 10 || currentTime.getHours() === 22 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>N</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 11 || currentTime.getHours() === 23 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>E</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 11 || currentTime.getHours() === 23 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>L</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 11 || currentTime.getHours() === 23 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>E</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 11 || currentTime.getHours() === 23 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>V</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 12 || currentTime.getHours() === 0 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>T</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 12 || currentTime.getHours() === 0 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>W</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 12 || currentTime.getHours() === 0 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>E</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 12 || currentTime.getHours() === 0 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>L</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 12 || currentTime.getHours() === 0 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>V</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getHours() === 0 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>E</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getMinutes() === 0 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>C</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getMinutes() === 0 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>L</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getMinutes() === 0 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>O</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getMinutes() === 0 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>C</span>
+                    <span className={`w-2 h-2 sm:w-3 sm:h-3 flex items-center justify-center text-[8px] sm:text-[10px] ${currentTime.getMinutes() === 0 ? 'text-orange-500' : 'text-gray-400 dark:text-gray-500'}`}>K</span>
                   </div>
                 </div>
               </div>

@@ -83,7 +83,9 @@ export default function AdminPage() {
                 href="/admin/create"
                 className="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-lg text-center transition-colors"
               >
-                <div className="text-xl mb-2">✏️</div>
+                <div className="text-xl mb-2 w-8 h-8 mx-auto bg-white/20 rounded-lg flex items-center justify-center">
+                  <div className="w-4 h-4 bg-white rounded"></div>
+                </div>
                 <div>Create New Post</div>
               </a>
               
@@ -91,7 +93,9 @@ export default function AdminPage() {
                 href="/admin/manage"
                 className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-lg text-center transition-colors"
               >
-                <div className="text-xl mb-2">📝</div>
+                <div className="text-xl mb-2 w-8 h-8 mx-auto bg-white/20 rounded-lg flex items-center justify-center">
+                  <div className="w-4 h-4 bg-white rounded"></div>
+                </div>
                 <div>Manage Posts</div>
               </a>
               

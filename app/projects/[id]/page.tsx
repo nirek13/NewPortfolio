@@ -231,13 +231,13 @@ export default function EssayDetailPage({ params }: { params: { id: string } }) 
               <h3 className="text-lg font-light mb-3">Share This Essay</h3>
               <div className="space-y-2">
                 <button className="w-full text-left p-2 rounded-lg hover:bg-white/50 transition-colors text-sm">
-                  📜 Copy Link
+                  Copy Link
                 </button>
                 <button className="w-full text-left p-2 rounded-lg hover:bg-white/50 transition-colors text-sm">
-                  📱 Share on Twitter
+                  Share on Twitter
                 </button>
                 <button className="w-full text-left p-2 rounded-lg hover:bg-white/50 transition-colors text-sm">
-                  💼 Share on LinkedIn
+                  Share on LinkedIn
                 </button>
               </div>
             </GlassCard>
