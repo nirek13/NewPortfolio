@@ -303,12 +303,6 @@ export default function Home() {
                     <span className="w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center text-[10px] sm:text-[12px] font-medium transition-colors duration-200 text-gray-400 dark:text-gray-500">A</span>
 
                     {/* Column 2 */}
-                    <span className={`w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center text-[10px] sm:text-[12px] font-medium transition-colors duration-200 ${currentTime.getMinutes() >= 20 && currentTime.getMinutes() < 30 ? 'text-orange-400 drop-shadow-sm font-semibold' : 'text-gray-400 dark:text-gray-500'}`}>T</span>
-                    <span className={`w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center text-[10px] sm:text-[12px] font-medium transition-colors duration-200 ${currentTime.getMinutes() >= 20 && currentTime.getMinutes() < 30 ? 'text-orange-400 drop-shadow-sm font-semibold' : 'text-gray-400 dark:text-gray-500'}`}>W</span>
-                    <span className={`w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center text-[10px] sm:text-[12px] font-medium transition-colors duration-200 ${currentTime.getMinutes() >= 20 && currentTime.getMinutes() < 30 ? 'text-orange-400 drop-shadow-sm font-semibold' : 'text-gray-400 dark:text-gray-500'}`}>E</span>
-                    <span className={`w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center text-[10px] sm:text-[12px] font-medium transition-colors duration-200 ${currentTime.getMinutes() >= 20 && currentTime.getMinutes() < 30 ? 'text-orange-400 drop-shadow-sm font-semibold' : 'text-gray-400 dark:text-gray-500'}`}>N</span>
-                    <span className={`w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center text-[10px] sm:text-[12px] font-medium transition-colors duration-200 ${currentTime.getMinutes() >= 20 && currentTime.getMinutes() < 30 ? 'text-orange-400 drop-shadow-sm font-semibold' : 'text-gray-400 dark:text-gray-500'}`}>T</span>
-                    <span className={`w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center text-[10px] sm:text-[12px] font-medium transition-colors duration-200 ${currentTime.getMinutes() >= 20 && currentTime.getMinutes() < 30 ? 'text-orange-400 drop-shadow-sm font-semibold' : 'text-gray-400 dark:text-gray-500'}`}>Y</span>
 
                     {/* Column 3 */}
                     <span className={`w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center text-[10px] sm:text-[12px] font-medium transition-colors duration-200 ${currentTime.getMinutes() >= 5 && currentTime.getMinutes() < 10 ? 'text-orange-400 drop-shadow-sm font-semibold' : 'text-gray-400 dark:text-gray-500'}`}>F</span>
@@ -329,13 +323,15 @@ export default function Home() {
                     {/* Column 5 */}
                     <span className="w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center text-[10px] sm:text-[12px] font-medium transition-colors duration-200 text-gray-400 dark:text-gray-500">T</span>
                     <span className="w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center text-[10px] sm:text-[12px] font-medium transition-colors duration-200 text-gray-400 dark:text-gray-500">E</span>
-                    <span className="w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center text-[10px] sm:text-[12px] font-medium transition-colors duration-200 text-gray-400 dark:text-gray-500">R</span>
+
                     <span className={`w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center text-[10px] sm:text-[12px] font-medium transition-colors duration-200 ${currentTime.getMinutes() >= 30 && currentTime.getMinutes() < 35 ? 'text-orange-400 drop-shadow-sm font-semibold' : 'text-gray-400 dark:text-gray-500'}`}>H</span>
                     <span className={`w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center text-[10px] sm:text-[12px] font-medium transition-colors duration-200 ${currentTime.getMinutes() >= 30 && currentTime.getMinutes() < 35 ? 'text-orange-400 drop-shadow-sm font-semibold' : 'text-gray-400 dark:text-gray-500'}`}>A</span>
+                    
                     <span className={`w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center text-[10px] sm:text-[12px] font-medium transition-colors duration-200 ${currentTime.getMinutes() >= 30 && currentTime.getMinutes() < 35 ? 'text-orange-400 drop-shadow-sm font-semibold' : 'text-gray-400 dark:text-gray-500'}`}>L</span>
+                    <span className={`w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center text-[10px] sm:text-[12px] font-medium transition-colors duration-200 ${currentTime.getMinutes() >= 30 && currentTime.getMinutes() < 35 ? 'text-orange-400 drop-shadow-sm font-semibold' : 'text-gray-400 dark:text-gray-500'}`}>F</span>
 
                     {/* Column 6 */}
-                    <span className={`w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center text-[10px] sm:text-[12px] font-medium transition-colors duration-200 ${currentTime.getMinutes() >= 30 && currentTime.getMinutes() < 35 ? 'text-orange-400 drop-shadow-sm font-semibold' : 'text-gray-400 dark:text-gray-500'}`}>F</span>
+                                        <span className="w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center text-[10px] sm:text-[12px] font-medium transition-colors duration-200 text-gray-400 dark:text-gray-500">R</span>
                     <span className={`w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center text-[10px] sm:text-[12px] font-medium transition-colors duration-200 ${currentTime.getMinutes() >= 30 ? 'text-orange-400 drop-shadow-sm font-semibold' : 'text-gray-400 dark:text-gray-500'}`}>P</span>
                     <span className={`w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center text-[10px] sm:text-[12px] font-medium transition-colors duration-200 ${currentTime.getMinutes() >= 30 ? 'text-orange-400 drop-shadow-sm font-semibold' : 'text-gray-400 dark:text-gray-500'}`}>A</span>
                     <span className={`w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center text-[10px] sm:text-[12px] font-medium transition-colors duration-200 ${currentTime.getMinutes() >= 30 ? 'text-orange-400 drop-shadow-sm font-semibold' : 'text-gray-400 dark:text-gray-500'}`}>S</span>
@@ -401,6 +397,15 @@ export default function Home() {
                     <span className={`w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center text-[10px] sm:text-[12px] font-medium transition-colors duration-200 ${currentTime.getMinutes() === 0 ? 'text-orange-400 drop-shadow-sm font-semibold' : 'text-gray-400 dark:text-gray-500'}`}>O</span>
                     <span className={`w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center text-[10px] sm:text-[12px] font-medium transition-colors duration-200 ${currentTime.getMinutes() === 0 ? 'text-orange-400 drop-shadow-sm font-semibold' : 'text-gray-400 dark:text-gray-500'}`}>C</span>
                     <span className={`w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center text-[10px] sm:text-[12px] font-medium transition-colors duration-200 ${currentTime.getMinutes() === 0 ? 'text-orange-400 drop-shadow-sm font-semibold' : 'text-gray-400 dark:text-gray-500'}`}>K</span>
+                    
+
+                    <span className={`w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center text-[10px] sm:text-[12px] font-medium transition-colors duration-200 ${currentTime.getMinutes() >= 20 && currentTime.getMinutes() < 30 ? 'text-orange-400 drop-shadow-sm font-semibold' : 'text-gray-400 dark:text-gray-500'}`}>T</span>
+                    <span className={`w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center text-[10px] sm:text-[12px] font-medium transition-colors duration-200 ${currentTime.getMinutes() >= 20 && currentTime.getMinutes() < 30 ? 'text-orange-400 drop-shadow-sm font-semibold' : 'text-gray-400 dark:text-gray-500'}`}>W</span>
+                    <span className={`w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center text-[10px] sm:text-[12px] font-medium transition-colors duration-200 ${currentTime.getMinutes() >= 20 && currentTime.getMinutes() < 30 ? 'text-orange-400 drop-shadow-sm font-semibold' : 'text-gray-400 dark:text-gray-500'}`}>E</span>
+                    <span className={`w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center text-[10px] sm:text-[12px] font-medium transition-colors duration-200 ${currentTime.getMinutes() >= 20 && currentTime.getMinutes() < 30 ? 'text-orange-400 drop-shadow-sm font-semibold' : 'text-gray-400 dark:text-gray-500'}`}>N</span>
+                    <span className={`w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center text-[10px] sm:text-[12px] font-medium transition-colors duration-200 ${currentTime.getMinutes() >= 20 && currentTime.getMinutes() < 30 ? 'text-orange-400 drop-shadow-sm font-semibold' : 'text-gray-400 dark:text-gray-500'}`}>T</span>
+                    <span className={`w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center text-[10px] sm:text-[12px] font-medium transition-colors duration-200 ${currentTime.getMinutes() >= 20 && currentTime.getMinutes() < 30 ? 'text-orange-400 drop-shadow-sm font-semibold' : 'text-gray-400 dark:text-gray-500'}`}>Y</span>
+
                   </div>
                 </div>
               </div>

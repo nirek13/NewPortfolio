@@ -35,7 +35,7 @@
   }
 
   .dark {
-    --background: 0 0% 0%;
+    --background: 0 0% 100%;
     --foreground: 0 0% 98%;
     --card: 0 0% 3%;
     --card-foreground: 0 0% 98%;
@@ -75,18 +75,13 @@
 
 /* Faint grid background */
 @layer utilities {
-  .bg-grid {
-    background-image:
-      linear-gradient(to right, hsl(var(--grid) / 0.35) 1px, transparent 1px),
-      linear-gradient(to bottom, hsl(var(--grid) / 0.35) 1px, transparent 1px);
-    background-size: 24px 24px;
-  }
+
 
   /* Textured 3D background */
   .bg-textured-3d {
     background-image:
       /* Main texture layer */
-      radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 0%, transparent 50%),
+      radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 0%, transparent 100%),
       radial-gradient(circle at 75% 75%, rgba(0,0,0,0.05) 0%, transparent 50%),
       /* Depth pattern */
       repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(255,255,255,0.02) 2px, rgba(255,255,255,0.02) 4px),
@@ -94,19 +89,19 @@
       /* Fine noise texture */
       repeating-conic-gradient(from 0deg at 50% 50%, rgba(255,255,255,0.008) 0deg, transparent 5deg, rgba(0,0,0,0.008) 10deg, transparent 15deg),
       /* Base grid for depth */
-      linear-gradient(to right, rgba(0,0,0,0.01) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(0,0,0,0.01) 1px, transparent 1px);
+      linear-gradient(to right, rgba(0,0,0,0.01) 0px, transparent 0px),
+      linear-gradient(to bottom, rgba(0,0,0,0.01) 0px, transparent 0px);
     background-size: 
-      200px 200px,
-      180px 180px,
-      8px 8px,
-      12px 12px,
-      40px 40px,
+      1000px 1000px,
+      1800px 1800px,
+      8000px 8000px,
+      12000px 12000px,
+      4000px 4000px,
       20px 20px,
       20px 20px;
     background-position:
       0 0,
-      100px 100px,
+      1000px 1000px,
       0 0,
       6px 6px,
       0 0,
