@@ -19,7 +19,7 @@ const blogPosts: BlogPost[] = [
     title: 'Ranking Kanye Albums',
     date: '2024-01-20',
     readTime: '10 min',
-    preview: 'My definitive ranking of Kanye West\'s discography. From The College Dropout to My Beautiful Dark Twisted Fantasy, breaking down what makes each album legendary (or not).'
+    preview: ''
   }
 ];
 
