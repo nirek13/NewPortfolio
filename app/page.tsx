@@ -413,128 +413,80 @@ export default function Home() {
           </div>
 
           {/* ULTRA Epic Dog Photo */}
-          <div className="col-span-12 md:col-span-6">
-              <div className="relative h-full bg-gradient-to-br from-white/70 via-gray-50/50 to-white/70 dark:from-black/80 dark:via-black/60 dark:to-black/80 backdrop-blur-xl border-0 shadow-none overflow-hidden rounded-none">
-                
-                <div className="relative p-4 h-full">
-                  {/* Enhanced header with status indicators */}
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2.5 h-2.5 rounded-full bg-green-400 dark:bg-green-300 animate-pulse shadow-[0_0_12px_rgba(34,197,94,0.9)] dark:shadow-[0_0_16px_rgba(34,197,94,1)] group-hover:shadow-[0_0_20px_rgba(34,197,94,1)]"></div>
-                      <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 dark:bg-cyan-300 animate-pulse shadow-[0_0_12px_rgba(6,182,212,0.9)] dark:shadow-[0_0_16px_rgba(6,182,212,1)] animation-delay-150 group-hover:shadow-[0_0_20px_rgba(6,182,212,1)]"></div>
-                      <div className="w-2.5 h-2.5 rounded-full bg-purple-400 dark:bg-purple-300 animate-pulse shadow-[0_0_12px_rgba(168,85,247,0.9)] dark:shadow-[0_0_16px_rgba(168,85,247,1)] animation-delay-300 group-hover:shadow-[0_0_20px_rgba(168,85,247,1)]"></div>
-                      <div className="w-2.5 h-2.5 rounded-full bg-pink-400 dark:bg-pink-300 animate-pulse shadow-[0_0_12px_rgba(236,72,153,0.9)] dark:shadow-[0_0_16px_rgba(236,72,153,1)] animation-delay-450 group-hover:shadow-[0_0_20px_rgba(236,72,153,1)]"></div>
-                    </div>
-                    <div className="flex-1 h-px bg-gradient-to-r from-cyan-400/60 via-purple-400/40 via-pink-400/30 to-transparent dark:from-cyan-300/80 dark:via-purple-300/60 dark:via-pink-300/50 dark:to-transparent animate-[shimmer_2s_ease-in-out_infinite]"></div>
-                  </div>
-                  
-                  {/* Photo container with INSANE effects */}
-                  <div className="relative aspect-[4/3] overflow-hidden">
-                    {/* Multiple animated borders */}
-                    <div className="absolute -inset-2 bg-gradient-to-r from-cyan-500/50 via-purple-500/50 via-pink-500/50 to-emerald-500/50 dark:from-cyan-400/70 dark:via-purple-400/70 dark:via-pink-400/70 dark:to-emerald-400/70 rounded-3xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-700 animate-[rotate_8s_linear_infinite]"></div>
-                    <div className="absolute -inset-1.5 bg-gradient-to-tr from-blue-500/40 via-red-500/40 to-yellow-500/40 dark:from-blue-400/60 dark:via-red-400/60 dark:to-yellow-400/60 rounded-2xl blur-sm opacity-0 group-hover:opacity-80 transition-opacity duration-500 animate-[rotate_6s_linear_infinite_reverse]"></div>
-                    <div className="absolute -inset-1 bg-gradient-to-br from-white/70 to-gray-100/50 dark:from-black/80 dark:to-black/60 rounded-xl"></div>
-                    
-                    {/* Main photo frame with matrix effect */}
-                    <div className="relative h-full bg-gradient-to-br from-gray-900/8 to-black/15 dark:from-black/40 dark:to-black/60 rounded-xl overflow-hidden shadow-[inset_0_2px_8px_rgba(0,0,0,0.2)] dark:shadow-[inset_0_3px_12px_rgba(0,0,0,0.8)] border border-white/50 dark:border-cyan-400/40 group-hover:border-cyan-400/50 dark:group-hover:border-cyan-300/70 transition-colors duration-500">
-                      
-                      {/* Matrix rain effect */}
-                      <div className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-1000">
-                        <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-green-400/0 via-green-400/60 to-green-400/0 animate-[matrix_3s_linear_infinite]"></div>
-                        <div className="absolute top-0 left-2/4 w-px h-full bg-gradient-to-b from-cyan-400/0 via-cyan-400/60 to-cyan-400/0 animate-[matrix_2.5s_linear_infinite] animation-delay-500"></div>
-                        <div className="absolute top-0 left-3/4 w-px h-full bg-gradient-to-b from-purple-400/0 via-purple-400/60 to-purple-400/0 animate-[matrix_3.5s_linear_infinite] animation-delay-1000"></div>
-                      </div>
-                      
-                      {/* Holographic rainbow overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-tr from-red-500/15 via-yellow-500/10 via-green-500/10 via-cyan-500/15 via-blue-500/10 via-purple-500/15 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 mix-blend-overlay animate-[rainbow_4s_ease-in-out_infinite]"></div>
-                      
-                      {/* Multiple scanline effects */}
-                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-400/8 to-transparent animate-[scan_2s_ease-in-out_infinite] pointer-events-none"></div>
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-400/6 to-transparent animate-[scan-horizontal_3s_ease-in-out_infinite] pointer-events-none animation-delay-1000"></div>
-                      </div>
-                      
-                      {/* Main image with advanced filters */}
-                      <Image
-                        src="/dog-with-collar.jpg"
-                        alt="Neural-enhanced cyberpunk companion with quantum collar"
-                        width={400}
-                        height={300}
-                        className="w-full h-full object-cover transition-all duration-1000 ease-out group-hover:scale-110 group-hover:contrast-125 group-hover:brightness-110 group-hover:saturate-125 group-hover:hue-rotate-15"
-                      />
-                      
-                      {/* Enhanced glitch effects */}
-                      <div className="absolute inset-0 opacity-0 group-hover:opacity-40 transition-opacity duration-300">
-                        <div className="absolute top-1/6 left-0 right-0 h-1.5 bg-cyan-400/90 transform skew-x-12 animate-glitch-1 shadow-[0_0_8px_rgba(6,182,212,0.8)]"></div>
-                        <div className="absolute top-2/5 left-0 right-0 h-0.5 bg-purple-400/80 transform -skew-x-6 animate-glitch-2 shadow-[0_0_6px_rgba(168,85,247,0.8)]"></div>
-                        <div className="absolute top-3/4 left-0 right-0 h-1 bg-pink-400/70 transform skew-x-3 animate-glitch-3 shadow-[0_0_4px_rgba(236,72,153,0.8)]"></div>
-                      </div>
-                      
-                      {/* Animated corner brackets with circuit patterns */}
-                      <div className="absolute top-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                        <div className="w-8 h-8 border-t-2 border-l-2 border-cyan-400/80 shadow-[0_0_8px_rgba(6,182,212,0.6)]"></div>
-                        <div className="absolute top-2 left-2 w-1 h-1 bg-cyan-400 rounded-full animate-pulse"></div>
-                      </div>
-                      <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 animation-delay-100">
-                        <div className="w-8 h-8 border-t-2 border-r-2 border-purple-400/80 shadow-[0_0_8px_rgba(168,85,247,0.6)]"></div>
-                        <div className="absolute top-2 right-2 w-1 h-1 bg-purple-400 rounded-full animate-pulse animation-delay-300"></div>
-                      </div>
-                      <div className="absolute bottom-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 animation-delay-200">
-                        <div className="w-8 h-8 border-b-2 border-l-2 border-emerald-400/80 shadow-[0_0_8px_rgba(16,185,129,0.6)]"></div>
-                        <div className="absolute bottom-2 left-2 w-1 h-1 bg-emerald-400 rounded-full animate-pulse animation-delay-600"></div>
-                      </div>
-                      <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 animation-delay-300">
-                        <div className="w-8 h-8 border-b-2 border-r-2 border-pink-400/80 shadow-[0_0_8px_rgba(236,72,153,0.6)]"></div>
-                        <div className="absolute bottom-2 right-2 w-1 h-1 bg-pink-400 rounded-full animate-pulse animation-delay-900"></div>
-                      </div>
-                      
-                      {/* Enhanced status indicators */}
-                      <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-                        <div className="flex flex-col gap-1 bg-black/40 backdrop-blur-sm rounded p-2 border border-cyan-400/30">
-                          <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse shadow-[0_0_4px_rgba(34,197,94,0.8)]"></div>
-                          <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse animation-delay-200 shadow-[0_0_4px_rgba(6,182,212,0.8)]"></div>
-                          <div className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse animation-delay-400 shadow-[0_0_4px_rgba(168,85,247,0.8)]"></div>
-                          <div className="w-1.5 h-1.5 rounded-full bg-pink-400 animate-pulse animation-delay-600 shadow-[0_0_4px_rgba(236,72,153,0.8)]"></div>
-                        </div>
-                      </div>
-                      
-                      {/* Side data panels */}
-                      <div className="absolute left-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                        <div className="bg-black/50 backdrop-blur-sm rounded p-1 border border-cyan-400/30">
-                          <div className="w-1 h-1 bg-cyan-400 rounded-full animate-pulse mb-1"></div>
-                          <div className="w-1 h-1 bg-emerald-400 rounded-full animate-pulse mb-1 animation-delay-200"></div>
-                          <div className="w-1 h-1 bg-purple-400 rounded-full animate-pulse animation-delay-400"></div>
-                        </div>
-                      </div>
-                      
-                      {/* Enhanced bottom info bar */}
-                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                        <div className="p-3">
-                          <div className="flex items-center justify-between">
-                            <div className="flex gap-2">
-                              <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
-                              <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse animation-delay-200"></div>
-                              <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse animation-delay-400"></div>
-                            </div>
-                            <div className="flex gap-2">
-                              <div className="w-1.5 h-1.5 bg-pink-400 rounded-full animate-pulse"></div>
-                              <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full animate-pulse animation-delay-300"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      {/* DNA helix animation overlay */}
-                      <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-1000 pointer-events-none">
-                        <div className="absolute left-1/4 top-0 w-0.5 h-full bg-gradient-to-b from-transparent via-green-400/60 to-transparent animate-[dna_4s_ease-in-out_infinite] transform rotate-45"></div>
-                        <div className="absolute right-1/4 top-0 w-0.5 h-full bg-gradient-to-b from-transparent via-blue-400/60 to-transparent animate-[dna_4s_ease-in-out_infinite] animation-delay-500 transform -rotate-45"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-          </div>
+<div className="col-span-12 md:col-span-6 h-[500px] flex flex-col gap-3">
+  {/* 1. MINIMALIST QUOTE BOX (TOP) */}
 
+
+  {/* 2. INTERACTIVE TURTLE ANIMATION (BOTTOM) */}
+{/* 2. INTERACTIVE TURTLE ANIMATION (BOTTOM) */}
+<div className="col-span-12 md:col-span-6 h-[500px] flex flex-col gap-3">
+  {/* 1. MINIMALIST QUOTE BOX (TOP) */}
+  <div className="flex-[0.4] bg-white dark:bg-[#0a0a0a] rounded-[2rem] border border-gray-100 dark:border-white/5 p-8 flex flex-col justify-center relative overflow-hidden group">
+    <div className="relative z-10">
+      <h2 className="text-xl md:text-2xl font-semibold tracking-tight text-gray-900 dark:text-white leading-tight">
+        "This is a rat race. <br />
+        <span className="text-gray-300 dark:text-gray-600 group-hover:text-orange-500 transition-colors duration-500">But I'm no rat."</span>
+      </h2>
+      <p className="mt-2 text-sm font-medium text-gray-400 dark:text-gray-500 italic">
+        I'm a f***ing turtle, <span className="text-gray-900 dark:text-white not-italic font-bold uppercase">ninja turtle.</span>
+      </p>
+    </div>
+  </div>
+
+  {/* 2. APPLICATIONS DIV (BOTTOM) */}
+  <div className="flex-[0.6] bg-[#f5f5f7] dark:bg-[#111] rounded-[2rem] border border-gray-200 dark:border-white/5 p-8 flex flex-col relative group overflow-hidden">
+    
+    {/* Header */}
+    <div className="flex justify-between items-center mb-6">
+      <h3 className="text-[12px] font-bold tracking-[0.2em] text-gray-400 uppercase">Applications</h3>
+      <div className="px-2 py-1 bg-orange-500/10 rounded-md">
+        <span className="text-[9px] font-bold text-orange-600 uppercase">2 Open Slots</span>
+      </div>
+    </div>
+
+    {/* Main Application Card: Hackathons Canada */}
+    <div className="flex-1 flex flex-col justify-between">
+      <div className="space-y-4">
+        <div className="flex items-start gap-4">
+          {/* Using your Turtle Mascot as a branding element */}
+          <div className="w-12 h-12 rounded-2xl bg-white dark:bg-white/5 flex items-center justify-center shadow-sm border border-gray-100 dark:border-white/10 group-hover:scale-110 transition-transform duration-500">
+             <div className="w-6 h-6 bg-orange-500 rounded-lg flex items-center justify-center overflow-hidden">
+                <div className="w-full h-1.5 bg-black" /> {/* Mini Mask Icon */}
+             </div>
+          </div>
+          
+          <div>
+            <h4 className="text-lg font-bold text-gray-900 dark:text-white">Hackathons Canada</h4>
+            <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+              Join the core team to help build the future of Canadian student innovation.
+            </p>
+          </div>
+        </div>
+      </div>
+
+{/* Updated Interactive CTA */}
+<a 
+  href="mailto:shettynirek@gmail.com?subject=hackathons%20canada%20application"
+  className="block w-full mt-6"
+>
+  <button className="w-full py-4 px-6 bg-gray-900 dark:bg-white text-white dark:text-black rounded-2xl font-bold text-sm transition-all hover:bg-orange-500 hover:dark:bg-orange-500 hover:text-white hover:shadow-lg hover:shadow-orange-500/20 active:scale-[0.98]">
+    Apply for Core Team
+  </button>
+</a>
+    </div>
+
+    {/* Subtle Background Detail */}
+    <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-orange-500/5 blur-3xl rounded-full group-hover:bg-orange-500/10 transition-colors duration-700" />
+  </div>
+</div>
+
+  <style dangerouslySetInnerHTML={{ __html: `
+    @keyframes orbit {
+      from { transform: rotate(0deg) translateX(60px) rotate(0deg); }
+      to { transform: rotate(360deg) translateX(60px) rotate(-360deg); }
+    }
+  `}} />
+</div>
           {/* Music Player - Liquid Glass Style */}
           <div className="col-span-12 mt-4">
             <div className="relative group">
