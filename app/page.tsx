@@ -66,58 +66,68 @@ export default function Home() {
         <div className="max-w-5xl lg:max-w-none lg:w-[90%] mx-auto grid grid-cols-12 gap-2 min-h-screen">
           
           {/* Zen Header - Compact Design with Rainbow Theme */}
-          <div className="col-span-12">
-            <GlassCard className="p-3" intensity="subtle">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-red-400"></div>
-                  <div className="w-2 h-2 rounded-full bg-yellow-400"></div>
-                  <div className="w-2 h-2 rounded-full bg-green-400"></div>
-                </div>
-                
-                <div className="flex items-center gap-3">
-                  <div className="text-xs text-gray-600 dark:text-gray-100 font-mono">
-                    {currentTime.toLocaleTimeString('en-US', { 
-                      timeZone: 'America/Toronto',
-                      hour12: false,
-                      hour: '2-digit',
-                      minute: '2-digit'
-                    })} YYZ
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => setCursorEnabled(!cursorEnabled)}
-                      className={`p-1.5 rounded transition-all duration-200 ${cursorEnabled ? 'bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30' : ''}`}
-                      title={cursorEnabled ? "Disable cursor effects" : "Enable cursor effects"}
-                    >
-                      <Settings size={14} className={`${cursorEnabled ? 'text-purple-600 dark:text-cyan-400' : 'text-gray-400 dark:text-gray-300'}`} />
-                    </button>
-                    <ThemeToggle />
-                  </div>
-                </div>
-              </div>
-              
-              <div className="flex items-center justify-between">
-                <div>
-                  <h1 className="text-3xl font-normal mb-0.5 bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-400 leading-tight tracking-wider transform scale-x-110 origin-left" style={{ fontFamily: 'Kapakana, sans-serif', textShadow: '0 1px 2px rgba(0,0,0,0.1)' }}>Nirek Shetty</h1>
-                  <p className="text-gray-600 dark:text-gray-200 text-sm">Founder & Engineer</p>
-                </div>
-                
-                <div className="flex gap-2">
-                  <a href="mailto:Nirek.Shetty.business@gmail.com" className="p-2 text-gray-500 dark:text-gray-200 hover:text-blue-500 dark:hover:text-cyan-300 transition-colors">
-                    <Mail size={16} />
-                  </a>
-                  <a href="https://github.com/Nirek116" target="_blank" rel="noreferrer" className="p-2 text-gray-500 dark:text-gray-200 hover:text-purple-500 dark:hover:text-purple-300 transition-colors">
-                    <Github size={16} />
-                  </a>
-                  <a href="https://www.linkedin.com/in/Nirek-Shetty/" target="_blank" rel="noreferrer" className="p-2 text-gray-500 dark:text-gray-200 hover:text-cyan-500 dark:hover:text-cyan-300 transition-colors">
-                    <Linkedin size={16} />
-                  </a>
-                </div>
-              </div>
-              </GlassCard>
-          </div>
-
+<div className="col-span-12">
+  <GlassCard className="px-5 py-3.5" intensity="subtle">
+    {/* Top Bar: Integrated System Info */}
+    <div className="flex items-center justify-between mb-3">
+      <div className="flex items-center gap-1.5">
+        <div className="w-2.5 h-2.5 rounded-full bg-[#FF5F57]" />
+        <div className="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]" />
+        <div className="w-2.5 h-2.5 rounded-full bg-[#28C840]" />
+        <span className="ml-2 text-[9px] font-bold tracking-[0.15em] text-gray-400 uppercase font-mono">
+          YYZ-SRV-01
+        </span>
+      </div>
+      
+      <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1.5 text-[10px] font-mono text-gray-500 font-medium">
+          <span className="w-1 h-1 rounded-full bg-green-500 animate-pulse" />
+          {currentTime.toLocaleTimeString('en-US', { 
+            timeZone: 'America/Toronto',
+            hour12: false,
+            hour: '2-digit',
+            minute: '2-digit'
+          })}
+        </div>
+        <div className="flex items-center gap-1 border-l border-gray-200 dark:border-white/10 pl-3">
+          <button
+            onClick={() => setCursorEnabled(!cursorEnabled)}
+            className={`p-1 rounded-md transition-colors ${cursorEnabled ? 'text-orange-500' : 'text-gray-400 hover:text-gray-600'}`}
+          >
+            <Settings size={12} />
+          </button>
+          <ThemeToggle />
+        </div>
+      </div>
+    </div>
+    
+    {/* Bottom Bar: Core Identity & Socials */}
+    <div className="flex items-center justify-between">
+      <div className="flex items-baseline gap-3">
+        <h1 className="text-2xl font-bold tracking-tighter text-gray-900 dark:text-white leading-none" 
+            style={{ fontFamily: 'Kapakana, sans-serif' }}>
+          Nirek Shetty
+        </h1>
+        <p className="text-[11px] font-medium text-gray-400 dark:text-gray-500 tracking-tight">
+          Founder & Engineer <span className="text-orange-500/50 mx-1">/</span> Hackathons Canada
+        </p>
+      </div>
+      
+      {/* Social Cluster - Tighter spacing */}
+      <div className="flex items-center gap-0.5">
+        <a href="mailto:Nirek.Shetty.business@gmail.com" className="p-2 text-gray-400 hover:text-blue-500 transition-colors">
+          <Mail size={16} />
+        </a>
+        <a href="https://github.com/Nirek116" target="_blank" rel="noreferrer" className="p-2 text-gray-400 hover:text-black dark:hover:text-white transition-colors">
+          <Github size={16} />
+        </a>
+        <a href="https://www.linkedin.com/in/Nirek-Shetty/" target="_blank" rel="noreferrer" className="p-2 text-gray-400 hover:text-[#0077b5] transition-colors">
+          <Linkedin size={16} />
+        </a>
+      </div>
+    </div>
+  </GlassCard>
+</div>
           {/* Navigation Cards */}
           <div className="col-span-12 md:col-span-4">
             <GlassCard className="p-2.5 h-full" intensity="subtle">
