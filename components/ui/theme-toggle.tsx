@@ -5,6 +5,9 @@ import { Palette } from 'lucide-react';
 
 export function ThemeIndicator() {
   const { glassTint, cycleTheme, currentTintConfig } = useTheme();
+  
+  console.log('ThemeIndicator: Current tint:', glassTint);
+  console.log('ThemeIndicator: Current config:', currentTintConfig);
 
   return (
     <button

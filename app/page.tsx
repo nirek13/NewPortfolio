@@ -150,7 +150,7 @@ export default function Home() {
               relative overflow-visible
               /* 1. Base State: Flat-ish with a slight rim light */
               border-t border-white/50 border-l border-white/30
-              bg-white/10 backdrop-blur-sm
+              glass-tinted
               shadow-[2px_2px_5px_rgba(0,0,0,0.05)]
               
               /* 2. Popping Effect on Hover */
@@ -197,14 +197,14 @@ export default function Home() {
                   Currently Building
                 </h3>
                 <div className="space-y-1.5 text-xs leading-relaxed text-gray-700 dark:text-gray-100">
-                  <div className="p-2 bg-white/10 dark:bg-white/5 rounded-lg backdrop-blur-sm">
+                  <div className="p-2 glass-tinted rounded-lg">
                     <div className="flex items-center gap-1.5 mb-1">
                       <Logo src="/penseum-logo.avif" alt="Penseum" className="rounded-full" />
                       <span className="font-medium text-gray-800 dark:text-white">Penseum</span>
                     </div>
                     <p className="text-xs">Educational platform helping 1M+ users learn.</p>
                   </div>
-                  <div className="p-2 bg-white/10 dark:bg-white/5 rounded-lg backdrop-blur-sm">
+                  <div className="p-2 glass-tinted rounded-lg">
                     <div className="flex items-center gap-1.5 mb-1">
                       <span className="text-purple-600 dark:text-purple-300">💼</span>
                       <span className="font-medium text-purple-700 dark:text-purple-300">Contractual</span>
@@ -247,7 +247,7 @@ export default function Home() {
             <div className="grid grid-cols-2 gap-3 flex-1">
               {/* Connect Section */}
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-white/60 via-gray-50/40 to-white/60 dark:from-black/80 dark:via-black/60 dark:to-black/80 backdrop-blur-2xl rounded-2xl border border-black/5 dark:border-cyan-400/20 shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_1px_3px_rgba(0,0,0,0.05)] dark:shadow-[inset_0_1px_0_rgba(100,200,255,0.3),0_4px_16px_rgba(0,0,0,0.8)]"></div>
+                <div className="absolute inset-0 glass-tinted rounded-2xl"></div>
                 
                 <div className="relative z-10 px-4 py-4 h-full flex flex-col justify-center min-h-[120px]">
                   <div className="text-center mb-3">
@@ -266,7 +266,7 @@ export default function Home() {
                       href="https://github.com/nirek13" 
                       target="_blank" 
                       rel="noreferrer" 
-                      className="group relative flex items-center justify-center w-10 h-10 rounded-xl bg-white/90 backdrop-blur-sm border border-black/[0.08] shadow-[0_1px_2px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] hover:shadow-[0_3px_12px_rgba(0,0,0,0.12)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                      className="group relative flex items-center justify-center w-10 h-10 rounded-xl glass-tinted transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
                     >
                       <Github size={14} className="text-gray-800 transition-transform duration-200 group-hover:scale-105" />
                     </a>
@@ -275,21 +275,21 @@ export default function Home() {
                       href="https://www.linkedin.com/in/nirekshetty/" 
                       target="_blank" 
                       rel="noreferrer" 
-                      className="group relative flex items-center justify-center w-10 h-10 rounded-xl bg-white/90 backdrop-blur-sm border border-black/[0.08] shadow-[0_1px_2px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] hover:shadow-[0_3px_12px_rgba(0,0,0,0.12)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                      className="group relative flex items-center justify-center w-10 h-10 rounded-xl glass-tinted transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
                     >
                       <Linkedin size={14} className="text-[#0077b5] transition-transform duration-200 group-hover:scale-105" />
                     </a>
                     
                     <a 
                       href="mailto:shettynirek@gmail.com" 
-                      className="group relative flex items-center justify-center w-10 h-10 rounded-xl bg-white/90 backdrop-blur-sm border border-black/[0.08] shadow-[0_1px_2px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] hover:shadow-[0_3px_12px_rgba(0,0,0,0.12)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                      className="group relative flex items-center justify-center w-10 h-10 rounded-xl glass-tinted transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
                     >
                       <Mail size={14} className="text-[#ea4335] transition-transform duration-200 group-hover:scale-105" />
                     </a>
                     
                     <a 
                       href="mailto:nirek@penseum.com" 
-                      className="group relative flex items-center justify-center w-10 h-10 rounded-xl bg-white/90 backdrop-blur-sm border border-black/[0.08] shadow-[0_1px_2px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)] hover:shadow-[0_3px_12px_rgba(0,0,0,0.12)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                      className="group relative flex items-center justify-center w-10 h-10 rounded-xl glass-tinted transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
                     >
                       <Briefcase size={14} className="text-[#16a34a] transition-transform duration-200 group-hover:scale-105" />
                     </a>
@@ -299,11 +299,11 @@ export default function Home() {
 
               {/* Word Search Time Display */}
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-white/70 via-gray-50/50 to-white/70 dark:from-black/90 dark:via-black/70 dark:to-black/90 backdrop-blur-2xl rounded-2xl border border-black/[0.06] dark:border-purple-400/30 shadow-[0_4px_16px_rgba(0,0,0,0.04),inset_0_1px_0_rgba(255,255,255,0.9)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.9),inset_0_1px_0_rgba(200,100,255,0.4)]"></div>
+                <div className="absolute inset-0 glass-tinted rounded-2xl"></div>
                 
                 <div className="relative z-10 p-1 h-full flex flex-col items-center justify-center min-h-[90px]">
                   {/* Word Search Grid */}
-                  <div className="grid grid-rows-6 grid-flow-col font-mono leading-none w-full h-full items-center justify-items-center bg-gradient-to-br from-white/20 to-transparent dark:from-black/20 dark:to-transparent rounded-xl p-2 backdrop-blur-sm">
+                  <div className="grid grid-rows-6 grid-flow-col font-mono leading-none w-full h-full items-center justify-items-center glass-tinted rounded-xl p-2">
                     {/* Column 1 */}
                     <span className={`w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center text-[10px] sm:text-[12px] font-medium transition-colors duration-200 ${true ? 'text-orange-400 drop-shadow-sm font-semibold' : 'text-gray-400 dark:text-gray-500'}`}>I</span>
                     <span className={`w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center text-[10px] sm:text-[12px] font-medium transition-colors duration-200 ${true ? 'text-orange-400 drop-shadow-sm font-semibold' : 'text-gray-400 dark:text-gray-500'}`}>T</span>
