@@ -49,9 +49,15 @@ function FlowingParticle({ delay, x, y, size }: FlowingParticleProps) {
 
 export function DynamicBackground() {
   return (
-    <div className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
-      {/* Pure white background */}
-      <div className="absolute inset-0 bg-white" />
+    <div className="fixed inset-0 pointer-events-none z-[2] overflow-hidden">
+      {/* Very subtle tint overlay that won't interfere with cursor animation */}
+      <div 
+        className="absolute inset-0 opacity-3 transition-all duration-500"
+        style={{
+          background: 'var(--tint-gradient, linear-gradient(135deg, rgba(0, 245, 255, 0.08), rgba(168, 85, 247, 0.04), rgba(236, 72, 155, 0.06))',
+          mixBlendMode: 'multiply'
+        }}
+      />
     </div>
   );
 }

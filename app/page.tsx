@@ -7,7 +7,7 @@ import { useNavigationBounce } from "../lib/useNavigationBounce";
 import { DynamicBackground } from "@/components/ui/dynamic-background";
 import { GlassCard, LiquidFlowButton, FlowingBorder, LiquidGlassPanel, FloatingGlassCard } from "@/components/ui/glass-components";
 import { GitCommitGraph } from "@/components/widgets/GitStatsWidget";
-import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { ThemeIndicator } from "@/components/ui/theme-toggle";
 import { useState, useEffect } from "react";
 
 
@@ -61,7 +61,7 @@ export default function Home() {
     <main className="relative min-h-screen bg-textured-3d">
       <DynamicBackground />
       
-      <div className="relative z-[1] min-h-screen p-1.5 lg:p-2">
+      <div className="relative z-[10] min-h-screen p-1.5 lg:p-2">
         {/* Compact Apple-like Glass Grid Layout */}
         <div className="max-w-5xl lg:max-w-none lg:w-[90%] mx-auto grid grid-cols-12 gap-2 min-h-screen">
           
@@ -96,7 +96,7 @@ export default function Home() {
           >
             <Settings size={12} />
           </button>
-          <ThemeToggle />
+          <ThemeIndicator />
         </div>
       </div>
     </div>

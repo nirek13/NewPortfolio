@@ -22,7 +22,13 @@ function SplashCursor({
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) {
+      console.log('SplashCursor: Canvas ref not found');
+      return;
+    }
+    
+    console.log('SplashCursor: Initializing with canvas:', canvas);
+    console.log('SplashCursor: Canvas dimensions:', canvas.clientWidth, 'x', canvas.clientHeight);
 
     let config = {
       SIM_RESOLUTION,
@@ -56,7 +62,11 @@ function SplashCursor({
     }];
 
     const { gl, ext } = getWebGLContext(canvas);
+    console.log('SplashCursor: WebGL context created:', gl);
+    console.log('SplashCursor: Extensions:', ext);
+    
     if (!ext.supportLinearFiltering) {
+      console.log('SplashCursor: Linear filtering not supported, adjusting config');
       config.DYE_RESOLUTION = 256;
       config.SHADING = false;
     }
@@ -836,12 +846,14 @@ function SplashCursor({
 
     function startAnimation() {
       if (!isAnimating) {
+        console.log('SplashCursor: Starting animation loop');
         isAnimating = true;
         animationId = requestAnimationFrame(updateFrame);
       }
     }
     
     // Start animation automatically for ghost mouse
+    console.log('SplashCursor: Auto-starting background animation');
     startAnimation();
 
     function calcDeltaTime() {
@@ -1014,6 +1026,10 @@ function SplashCursor({
       gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
       gl.enable(gl.BLEND);
       drawDisplay(target);
+      // Add a simple test to see if we're rendering
+      if (Math.random() < 0.001) { // Log occasionally to avoid spam
+        console.log('SplashCursor: Rendering frame');
+      }
     }
 
     function drawDisplay(target: any) {
@@ -1413,6 +1429,7 @@ function SplashCursor({
     }
 
     window.addEventListener("mousedown", (e) => {
+      console.log('SplashCursor: Mouse down at', e.clientX, e.clientY);
       lastUserActivity = Date.now();
       let pointer = pointers[0];
       let posX = scaleByPixelRatio(e.clientX);
@@ -1723,7 +1740,7 @@ function SplashCursor({
   ]);
 
   return (
-    <div className="fixed top-0 left-0 z-[0] pointer-events-none">
+    <div className="fixed top-0 left-0 z-[1] pointer-events-none">
       <canvas ref={canvasRef} id="fluid" className="w-screen h-screen" />
     </div>
   );

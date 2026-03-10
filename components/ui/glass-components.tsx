@@ -15,9 +15,9 @@ export function GlassCard({
   ...props 
 }: GlassCardProps) {
   const intensityClasses = {
-    subtle: 'glass-subtle glass-ripple-effect',
-    normal: 'glass-card glass-ripple-effect',
-    intense: 'glass-intense glass-ripple-effect'
+    subtle: 'glass-tinted glass-ripple-effect',
+    normal: 'glass-tinted glass-ripple-effect',
+    intense: 'glass-tinted glass-ripple-effect'
   };
 
   return (
@@ -38,7 +38,7 @@ export function GlassHeader({ children, className, ...props }: GlassHeaderProps)
   return (
     <header 
       className={cn(
-        "glass-subtle backdrop-blur-xl border-b border-white/10 sticky top-0 z-50",
+        "glass-tinted backdrop-blur-xl border-b sticky top-0 z-50",
         className
       )} 
       {...props}
@@ -60,9 +60,9 @@ export function GlassButton({
   ...props 
 }: GlassButtonProps) {
   const variantClasses = {
-    primary: 'glass-card bg-gradient-to-r from-violet-500/20 to-purple-500/20 hover:from-violet-500/30 hover:to-purple-500/30 border-violet-500/30',
-    secondary: 'glass-subtle hover:glass-card border-white/20',
-    ghost: 'glass-subtle hover:bg-white/10 border-transparent'
+    primary: 'glass-tinted hover:scale-105',
+    secondary: 'glass-tinted opacity-80 hover:opacity-100',
+    ghost: 'glass-tinted bg-opacity-50 hover:bg-opacity-100 border-transparent'
   };
 
   return (
@@ -82,7 +82,7 @@ export function GlassButton({
 export function GlassSection({ children, className, ...props }: React.HTMLAttributes<HTMLElement>) {
   return (
     <section 
-      className={cn("glass-card p-6 md:p-8", className)} 
+      className={cn("glass-tinted p-6 md:p-8", className)} 
       {...props}
     >
       {children}
@@ -110,7 +110,7 @@ export function FloatingGlassOrb({
   return (
     <div 
       className={cn(
-        "absolute rounded-full glass-subtle opacity-20 pointer-events-none",
+        "absolute rounded-full glass-tinted opacity-20 pointer-events-none",
         sizeClasses[size],
         animations,
         className
@@ -240,7 +240,7 @@ export function LiquidGlassPanel({
   return (
     <div 
       className={cn(
-        "liquid-glass-panel",
+        "glass-tinted",
         animate && "animate-[liquidFloat_8s_ease-in-out_infinite]",
         className
       )} 
@@ -265,9 +265,9 @@ export function FloatingGlassCard({
   ...props 
 }: FloatingGlassCardProps) {
   const intensityClasses = {
-    subtle: 'glass-subtle',
-    normal: 'glass-card',
-    intense: 'glass-intense'
+    subtle: 'glass-tinted opacity-80',
+    normal: 'glass-tinted',
+    intense: 'glass-tinted'
   };
 
   return (
