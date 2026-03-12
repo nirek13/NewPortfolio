@@ -59,6 +59,112 @@ const CurrentTimeDisplay = memo(function CurrentTimeDisplay() {
   );
 });
 
+const FuturisticClock = memo(function FuturisticClock() {
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000); // Update every second for smooth animation
+    return () => clearInterval(timer);
+  }, []);
+
+  const seconds = currentTime.getSeconds();
+  const minutes = currentTime.getMinutes();
+  const hours = currentTime.getHours() % 12;
+
+  // Calculate rotation angles
+  const secondAngle = (seconds * 6) - 90; // 360/60 = 6 degrees per second
+  const minuteAngle = (minutes * 6) + (seconds * 0.1) - 90; // Include seconds for smooth movement
+  const hourAngle = (hours * 30) + (minutes * 0.5) - 90; // 360/12 = 30 degrees per hour
+
+  return (
+    <div className="relative w-full h-full flex items-center justify-center">
+      {/* Outer glow ring */}
+      <div className="absolute inset-2 rounded-full bg-gradient-to-br from-cyan-400/20 via-purple-400/10 to-pink-400/20 dark:from-cyan-300/30 dark:via-purple-300/20 dark:to-pink-300/30 animate-pulse blur-sm"></div>
+      
+      {/* Main clock container */}
+      <div className="relative w-20 h-20 rounded-full bg-gradient-to-br from-white/40 via-white/20 to-white/10 dark:from-black/60 dark:via-black/40 dark:to-black/20 backdrop-blur-xl border border-white/30 dark:border-cyan-400/40 shadow-[inset_0_2px_4px_rgba(255,255,255,0.3),0_8px_32px_rgba(0,0,0,0.1)] dark:shadow-[inset_0_2px_4px_rgba(100,200,255,0.3),0_12px_48px_rgba(0,0,0,0.8)] clock-glow">
+        
+        {/* Hour markers */}
+        {[...Array(12)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-0.5 h-3 bg-gradient-to-b from-gray-600 to-gray-400 dark:from-cyan-300 dark:to-cyan-500 origin-bottom"
+            style={{
+              top: '6px',
+              left: '50%',
+              transformOrigin: '50% 34px',
+              transform: `translateX(-50%) rotate(${i * 30}deg)`,
+              opacity: i % 3 === 0 ? 1 : 0.6,
+              height: i % 3 === 0 ? '8px' : '6px',
+              boxShadow: i % 3 === 0 ? '0 0 4px rgba(6,182,212,0.6)' : 'none'
+            }}
+          />
+        ))}
+
+        {/* Center dot */}
+        <div className="absolute top-1/2 left-1/2 w-1.5 h-1.5 bg-gradient-to-br from-orange-400 to-red-500 rounded-full transform -translate-x-1/2 -translate-y-1/2 z-30 shadow-[0_0_8px_rgba(251,146,60,0.8)]"></div>
+
+        {/* Hour hand */}
+        <div
+          className="absolute w-0.5 bg-gradient-to-t from-gray-800 to-gray-600 dark:from-white dark:to-gray-300 rounded-full origin-bottom z-20 transition-transform duration-1000 ease-out shadow-[0_0_4px_rgba(0,0,0,0.5)]"
+          style={{
+            height: '20px',
+            top: '20px',
+            left: '50%',
+            transformOrigin: '50% 20px',
+            transform: `translateX(-50%) rotate(${hourAngle}deg)`
+          }}
+        />
+
+        {/* Minute hand */}
+        <div
+          className="absolute w-0.5 bg-gradient-to-t from-blue-600 to-cyan-400 dark:from-cyan-400 dark:to-cyan-200 rounded-full origin-bottom z-20 transition-transform duration-500 ease-out shadow-[0_0_6px_rgba(6,182,212,0.6)]"
+          style={{
+            height: '28px',
+            top: '12px',
+            left: '50%',
+            transformOrigin: '50% 28px',
+            transform: `translateX(-50%) rotate(${minuteAngle}deg)`
+          }}
+        />
+
+        {/* Second hand */}
+        <div
+          className="absolute w-0.5 bg-gradient-to-t from-red-500 to-orange-400 rounded-full origin-bottom z-30 transition-transform duration-75 ease-out shadow-[0_0_8px_rgba(239,68,68,0.8)]"
+          style={{
+            height: '32px',
+            top: '8px',
+            left: '50%',
+            transformOrigin: '50% 32px',
+            transform: `translateX(-50%) rotate(${secondAngle}deg)`
+          }}
+        />
+
+        {/* Floating particles */}
+        <div className="absolute -top-1 -left-1 w-1 h-1 bg-cyan-400 rounded-full clock-particle opacity-70"></div>
+        <div className="absolute -top-1 -right-1 w-1 h-1 bg-purple-400 rounded-full clock-particle opacity-70" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute -bottom-1 -left-1 w-1 h-1 bg-pink-400 rounded-full clock-particle opacity-70" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute -bottom-1 -right-1 w-1 h-1 bg-yellow-400 rounded-full clock-particle opacity-70" style={{ animationDelay: '3s' }}></div>
+      </div>
+
+      {/* Digital time display */}
+      <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-black/80 dark:bg-white/10 backdrop-blur-md px-2 py-1 rounded-lg border border-cyan-400/30 shadow-[0_4px_12px_rgba(0,0,0,0.3)]">
+        <div className="text-[8px] font-mono text-cyan-300 dark:text-cyan-400 tracking-wide">
+          {currentTime.toLocaleTimeString('en-US', { 
+            timeZone: 'America/Toronto',
+            hour12: false,
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+          })}
+        </div>
+      </div>
+    </div>
+  );
+});
+
 const Navigation = memo(function Navigation() {
   const { shouldBounce } = useNavigationBounce('home');
   return (
@@ -243,15 +349,13 @@ const GitStats = memo(function GitStats() {
           </div>
         </div>
 
-        {/* Word Search Time Display */}
+        {/* Futuristic Clock Display */}
         <div className="relative">
           <div className="absolute inset-0 glass-tinted rounded-2xl"></div>
           
-          <div className="relative z-10 p-1 h-full flex flex-col items-center justify-center min-h-[90px]">
-            {/* Word Search Grid */}
-            <div className="grid grid-rows-6 grid-flow-col font-mono leading-none w-full h-full items-center justify-items-center glass-tinted rounded-xl p-2">
-              {/* Columns of letters */}
-            </div>
+          <div className="relative z-10 p-3 h-full flex flex-col items-center justify-center min-h-[120px]">
+            {/* Futuristic Analog Clock */}
+            <FuturisticClock />
           </div>
         </div>
       </div>
@@ -424,6 +528,7 @@ const Header = memo(function Header() {
             <div className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-600 transition-colors cursor-pointer"></div>
           </div>
           <div className="flex items-center gap-3">
+            <ThemeIndicator />
             <div className="text-xs text-gray-500 dark:text-gray-400 font-mono">nireks-portfolio</div>
             <CurrentTimeDisplay />
           </div>
