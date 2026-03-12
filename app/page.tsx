@@ -38,13 +38,24 @@ const FallbackLogo = memo(function FallbackLogo({ alt }: { alt: string }) {
 
 const CurrentTimeDisplay = memo(function CurrentTimeDisplay() {
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const timer = setInterval(() => {
       setCurrentTime(new Date());
     }, 60000);
     return () => clearInterval(timer);
   }, []);
+
+  if (!mounted) {
+    return (
+      <div className="flex items-center gap-1.5 text-[10px] font-mono text-gray-500 font-medium">
+        <span className="w-1 h-1 rounded-full bg-green-500 animate-pulse" />
+        --:--
+      </div>
+    );
+  }
 
   return (
     <div className="flex items-center gap-1.5 text-[10px] font-mono text-gray-500 font-medium">
@@ -61,8 +72,10 @@ const CurrentTimeDisplay = memo(function CurrentTimeDisplay() {
 
 const FuturisticClock = memo(function FuturisticClock() {
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const timer = setInterval(() => {
       setCurrentTime(new Date());
     }, 1000); // Update every second for smooth animation
@@ -78,13 +91,32 @@ const FuturisticClock = memo(function FuturisticClock() {
   const minuteAngle = (minutes * 6) + (seconds * 0.1) - 90; // Include seconds for smooth movement
   const hourAngle = (hours * 30) + (minutes * 0.5) - 90; // 360/12 = 30 degrees per hour
 
+  if (!mounted) {
+    return (
+      <div className="flex flex-col items-center justify-center gap-4">
+        {/* Static clock placeholder */}
+        <div className="relative w-20 h-20 rounded-full glass-tinted">
+          <div className="absolute top-1/2 left-1/2 w-1.5 h-1.5 bg-gradient-to-br from-orange-400 to-red-500 rounded-full transform -translate-x-1/2 -translate-y-1/2 z-30"></div>
+        </div>
+        {/* Digital time placeholder */}
+        <div className="glass-tinted px-3 py-1.5 rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.3)]">
+          <div className="text-[10px] font-mono text-cyan-300 dark:text-cyan-400 tracking-wide">
+            --:--:--
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="relative w-full h-full flex items-center justify-center">
-      {/* Outer glow ring */}
-      <div className="absolute inset-2 rounded-full bg-gradient-to-br from-cyan-400/20 via-purple-400/10 to-pink-400/20 dark:from-cyan-300/30 dark:via-purple-300/20 dark:to-pink-300/30 animate-pulse blur-sm"></div>
-      
-      {/* Main clock container */}
-      <div className="relative w-20 h-20 rounded-full bg-gradient-to-br from-white/40 via-white/20 to-white/10 dark:from-black/60 dark:via-black/40 dark:to-black/20 backdrop-blur-xl border border-white/30 dark:border-cyan-400/40 shadow-[inset_0_2px_4px_rgba(255,255,255,0.3),0_8px_32px_rgba(0,0,0,0.1)] dark:shadow-[inset_0_2px_4px_rgba(100,200,255,0.3),0_12px_48px_rgba(0,0,0,0.8)] clock-glow">
+    <div className="flex flex-col items-center justify-center gap-4">
+      {/* Clock Section */}
+      <div className="relative flex items-center justify-center">
+        {/* Outer glow ring */}
+        <div className="absolute inset-2 rounded-full bg-gradient-to-br from-cyan-400/20 via-purple-400/10 to-pink-400/20 dark:from-cyan-300/30 dark:via-purple-300/20 dark:to-pink-300/30 animate-pulse blur-sm"></div>
+        
+        {/* Main clock container */}
+        <div className="relative w-20 h-20 rounded-full bg-gradient-to-br from-white/40 via-white/20 to-white/10 dark:from-black/60 dark:via-black/40 dark:to-black/20 backdrop-blur-xl border border-white/30 dark:border-cyan-400/40 shadow-[inset_0_2px_4px_rgba(255,255,255,0.3),0_8px_32px_rgba(0,0,0,0.1)] dark:shadow-[inset_0_2px_4px_rgba(100,200,255,0.3),0_12px_48px_rgba(0,0,0,0.8)] clock-glow">
         
         {/* Hour markers */}
         {[...Array(12)].map((_, i) => (
@@ -147,11 +179,12 @@ const FuturisticClock = memo(function FuturisticClock() {
         <div className="absolute -top-1 -right-1 w-1 h-1 bg-purple-400 rounded-full clock-particle opacity-70" style={{ animationDelay: '1s' }}></div>
         <div className="absolute -bottom-1 -left-1 w-1 h-1 bg-pink-400 rounded-full clock-particle opacity-70" style={{ animationDelay: '2s' }}></div>
         <div className="absolute -bottom-1 -right-1 w-1 h-1 bg-yellow-400 rounded-full clock-particle opacity-70" style={{ animationDelay: '3s' }}></div>
+        </div>
       </div>
 
       {/* Digital time display */}
-      <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-black/80 dark:bg-white/10 backdrop-blur-md px-2 py-1 rounded-lg border border-cyan-400/30 shadow-[0_4px_12px_rgba(0,0,0,0.3)]">
-        <div className="text-[8px] font-mono text-cyan-300 dark:text-cyan-400 tracking-wide">
+      <div className="glass-tinted px-3 py-1.5 rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.3)]">
+        <div className="text-[10px] font-mono text-cyan-300 dark:text-cyan-400 tracking-wide">
           {currentTime.toLocaleTimeString('en-US', { 
             timeZone: 'America/Toronto',
             hour12: false,
@@ -299,9 +332,7 @@ const GitStats = memo(function GitStats() {
       <div className="grid grid-cols-2 gap-3 flex-1">
         {/* Connect Section */}
         <div className="relative">
-          <div className="absolute inset-0 glass-tinted rounded-2xl"></div>
-          
-          <div className="relative z-10 px-4 py-4 h-full flex flex-col justify-center min-h-[120px]">
+          <GlassCard className="p-4 h-full" intensity="subtle">
             <div className="text-center mb-3">
               <h3 className="text-xs font-medium text-gray-900 dark:text-white" style={{
                 fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
@@ -320,7 +351,7 @@ const GitStats = memo(function GitStats() {
                 rel="noreferrer" 
                 className="group relative flex items-center justify-center w-10 h-10 rounded-xl glass-tinted transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
               >
-                <Github size={14} className="text-gray-800 transition-transform duration-200 group-hover:scale-105" />
+                <Github size={14} className="text-gray-800 dark:text-gray-200 transition-transform duration-200 group-hover:scale-105" />
               </a>
               
               <a 
@@ -329,34 +360,34 @@ const GitStats = memo(function GitStats() {
                 rel="noreferrer" 
                 className="group relative flex items-center justify-center w-10 h-10 rounded-xl glass-tinted transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
               >
-                <Linkedin size={14} className="text-[#0077b5] transition-transform duration-200 group-hover:scale-105" />
+                <Linkedin size={14} className="text-[#0077b5] dark:text-blue-400 transition-transform duration-200 group-hover:scale-105" />
               </a>
               
               <a 
                 href="mailto:shettynirek@gmail.com" 
                 className="group relative flex items-center justify-center w-10 h-10 rounded-xl glass-tinted transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
               >
-                <Mail size={14} className="text-[#ea4335] transition-transform duration-200 group-hover:scale-105" />
+                <Mail size={14} className="text-[#ea4335] dark:text-red-400 transition-transform duration-200 group-hover:scale-105" />
               </a>
               
               <a 
                 href="mailto:nirek@penseum.com" 
                 className="group relative flex items-center justify-center w-10 h-10 rounded-xl glass-tinted transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
               >
-                <Briefcase size={14} className="text-[#16a34a] transition-transform duration-200 group-hover:scale-105" />
+                <Briefcase size={14} className="text-[#16a34a] dark:text-green-400 transition-transform duration-200 group-hover:scale-105" />
               </a>
             </div>
-          </div>
+          </GlassCard>
         </div>
 
         {/* Futuristic Clock Display */}
         <div className="relative">
-          <div className="absolute inset-0 glass-tinted rounded-2xl"></div>
-          
-          <div className="relative z-10 p-3 h-full flex flex-col items-center justify-center min-h-[120px]">
-            {/* Futuristic Analog Clock */}
-            <FuturisticClock />
-          </div>
+          <GlassCard className="p-3 h-full" intensity="subtle">
+            <div className="flex flex-col items-center justify-center min-h-[120px]">
+              {/* Futuristic Analog Clock */}
+              <FuturisticClock />
+            </div>
+          </GlassCard>
         </div>
       </div>
     </div>
@@ -367,7 +398,7 @@ const TurtleSection = memo(function TurtleSection() {
   return (
     <div className="col-span-12 md:col-span-6 h-[500px] flex flex-col gap-3">
       {/* 1. MINIMALIST QUOTE BOX (TOP) */}
-      <div className="flex-[0.4] bg-white dark:bg-[#0a0a0a] rounded-[2rem] border border-gray-100 dark:border-white/5 p-8 flex flex-col justify-center relative overflow-hidden group">
+      <div className="flex-[0.4] glass-tinted rounded-[2rem] p-8 flex flex-col justify-center relative overflow-hidden group">
         <div className="relative z-10">
           <h2 className="text-xl md:text-2xl font-semibold tracking-tight text-gray-900 dark:text-white leading-tight">
             "This is a rat race. <br />
@@ -380,13 +411,13 @@ const TurtleSection = memo(function TurtleSection() {
       </div>
 
       {/* 2. APPLICATIONS DIV (BOTTOM) */}
-      <div className="flex-[0.6] bg-[#f5f5f7] dark:bg-[#111] rounded-[2rem] border border-gray-200 dark:border-white/5 p-8 flex flex-col relative group overflow-hidden">
+      <div className="flex-[0.6] glass-tinted rounded-[2rem] p-8 flex flex-col relative group overflow-hidden">
         
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
           <h3 className="text-[12px] font-bold tracking-[0.2em] text-gray-400 uppercase">Applications</h3>
-          <div className="px-2 py-1 bg-orange-500/10 rounded-md">
-            <span className="text-[9px] font-bold text-orange-600 uppercase">2 Open Slots</span>
+          <div className="px-2 py-1 glass-tinted rounded-md border border-orange-400/20">
+            <span className="text-[9px] font-bold text-orange-600 dark:text-orange-400 uppercase">2 Open Slots</span>
           </div>
         </div>
 
@@ -395,7 +426,7 @@ const TurtleSection = memo(function TurtleSection() {
           <div className="space-y-4">
             <div className="flex items-start gap-4">
               {/* Using your Turtle Mascot as a branding element */}
-              <div className="w-12 h-12 rounded-2xl bg-white dark:bg-white/5 flex items-center justify-center shadow-sm border border-gray-100 dark:border-white/10 group-hover:scale-110 transition-transform duration-500">
+              <div className="w-12 h-12 rounded-2xl glass-tinted flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-500">
                  <div className="w-6 h-6 bg-orange-500 rounded-lg flex items-center justify-center overflow-hidden">
                     <div className="w-full h-1.5 bg-black" /> {/* Mini Mask Icon */}
                  </div>
