@@ -29,7 +29,7 @@ const Logo = memo(function Logo({ src, alt, size = 18, className = "" }: { src: 
 });
 
 const Label = memo(function Label({ children }: { children: React.ReactNode }) {
-  <span className="relative -top-[1px] leading-none align-middle">{children}</span>
+  return <span className="relative -top-[1px] leading-none align-middle">{children}</span>;
 });
 
 const FallbackLogo = memo(function FallbackLogo({ alt }: { alt: string }) {
@@ -476,19 +476,12 @@ const TurtleSection = memo(function TurtleSection() {
 const MusicPlayer = memo(function MusicPlayer() {
   return (
     <div className="col-span-12 mt-4">
-      <div className="relative group">
-        {/* Multi-layer glass glow effects */}
-        <div className="absolute -inset-2 bg-gradient-to-r from-cyan-500/15 via-purple-500/10 to-pink-500/15 dark:from-cyan-400/25 dark:via-purple-400/20 dark:to-pink-400/25 rounded-2xl blur-lg opacity-40 group-hover:opacity-80 transition-opacity duration-700 animate-pulse"></div>
-        <div className="absolute -inset-1 bg-gradient-to-br from-white/20 via-gray-50/10 to-white/20 dark:from-black/40 dark:via-black/20 dark:to-black/40 rounded-xl blur-sm opacity-60 group-hover:opacity-100 transition-opacity duration-500"></div>
-        
-        {/* Main glass container */}
-        <div className="relative bg-gradient-to-br from-white/60 via-gray-50/40 to-white/60 dark:from-black/80 dark:via-black/60 dark:to-black/80 backdrop-blur-2xl rounded-2xl border border-black/8 dark:border-cyan-400/30 shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_8px_32px_rgba(0,0,0,0.12)] dark:shadow-[inset_0_1px_0_rgba(100,200,255,0.4),0_12px_48px_rgba(0,0,0,0.9)] overflow-hidden">
-          
-          <div className="flex items-center p-4 gap-4">
+      <GlassCard className="p-4 group overflow-hidden" intensity="subtle">
+        <div className="flex items-center gap-4">
             {/* Album Art with glass effects */}
             <div className="relative flex-shrink-0">
               <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400/40 via-purple-400/30 to-pink-400/40 dark:from-cyan-300/60 dark:via-purple-300/50 dark:to-pink-300/60 rounded-xl blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="relative w-16 h-16 rounded-xl overflow-hidden border border-white/40 dark:border-cyan-400/40 shadow-[0_4px_16px_rgba(0,0,0,0.1)] dark:shadow-[0_6px_24px_rgba(0,0,0,0.8)] bg-gradient-to-br from-white/20 to-gray-100/10 dark:from-black/40 dark:to-black/20">
+              <div className="relative w-16 h-16 rounded-xl overflow-hidden glass-tinted shadow-[0_4px_16px_rgba(0,0,0,0.1)] dark:shadow-[0_6px_24px_rgba(0,0,0,0.8)]">
                 <Image
                   src="/college-dropout-cover.jpg"
                   alt="The College Dropout Album Art"
@@ -541,9 +534,8 @@ const MusicPlayer = memo(function MusicPlayer() {
                 <div className="absolute inset-0.5 bg-white/30 rounded-full"></div>
               </div>
             </div>
-          </div>
         </div>
-      </div>
+      </GlassCard>
     </div>
   );
 });
@@ -647,7 +639,7 @@ export default function Home() {
     <main className="relative min-h-screen bg-textured-3d">
       {/* <DynamicBackground /> */}
       
-      <div className="relative z-[10] min-h-screen p-1.5 lg:p-2">
+      <div className="relative z-[10] min-h-screen p-1.5 lg:p-2 pb-20">
         {/* Compact Apple-like Glass Grid Layout */}
         <div className="max-w-5xl lg:max-w-none lg:w-[90%] mx-auto grid grid-cols-12 gap-2 min-h-screen">
           
