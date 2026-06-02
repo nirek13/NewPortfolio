@@ -2,10 +2,19 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Mail, Github, Twitter, Linkedin, Briefcase, Camera, User, Sparkles, Settings } from "lucide-react";
+import { Mail, Github, Briefcase, Camera, User, Sparkles } from "lucide-react";
+
+function LinkedinIcon({ size = 14, className = "" }: { size?: number; className?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
+      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+      <rect x="2" y="9" width="4" height="12"/>
+      <circle cx="4" cy="4" r="2"/>
+    </svg>
+  );
+}
 import { useNavigationBounce } from "../lib/useNavigationBounce";
-import { DynamicBackground } from "@/components/ui/dynamic-background";
-import { GlassCard, LiquidFlowButton, FlowingBorder, LiquidGlassPanel, FloatingGlassCard } from "@/components/ui/glass-components";
+import { GlassCard, LiquidFlowButton } from "@/components/ui/glass-components";
 import { GitCommitGraph } from "@/components/widgets/GitStatsWidget";
 import { ThemeIndicator } from "@/components/ui/theme-toggle";
 import { useState, useEffect, memo } from "react";
@@ -215,29 +224,13 @@ const Navigation = memo(function Navigation() {
             { href: "/photography", label: "Photography", icon: Camera, variant: "pastel-pink", bounce: 'photography' }
           ].map((item) => (
             <Link href={item.href} key={item.label} className="block group">
-              <LiquidFlowButton 
-                variant={item.variant as "pastel-blue" | "pastel-purple" | "pastel-pink" | "pastel-green"} 
-                className={`
-                  w-full justify-start py-1.5 px-3 text-[11px] font-semibold transition-all duration-300 ease-out
-        relative overflow-visible
-        /* 1. Base State: Flat-ish with a slight rim light */
-        border-t border-white/50 border-l border-white/30
-        glass-tinted
-        shadow-[2px_2px_5px_rgba(0,0,0,0.05)]
-        
-        /* 2. Popping Effect on Hover */
-        hover:-translate-y-1 hover:translate-x-0.5
-        hover:shadow-[8px_12px_20px_rgba(0,0,0,0.15),-2px_-2px_10px_rgba(255,255,255,0.8)]
-        hover:border-white/80
-        
-        /* 3. Click compression */
-        active:translate-y-0.5 active:translate-x-0 active:shadow-inner
-        ${item.bounce && shouldBounce(item.bounce) ? 'nav-bounce' : ''}
-      `}
-                >
-                  <item.icon size={13} className="mr-2 group-hover:scale-110 group-hover:rotate-3 transition-transform" />
-                  {item.label}
-                </LiquidFlowButton>
+              <LiquidFlowButton
+                variant={item.variant as "pastel-blue" | "pastel-purple" | "pastel-pink" | "pastel-green"}
+                className={`w-full justify-start py-1.5 px-3 text-[11px] font-semibold border-t border-white/50 border-l border-white/30 hover:-translate-y-1 hover:translate-x-0.5 hover:shadow-[8px_12px_20px_rgba(0,0,0,0.15),-2px_-2px_10px_rgba(255,255,255,0.8)] hover:border-white/80 active:translate-y-0.5 active:shadow-inner${item.bounce && shouldBounce(item.bounce) ? ' nav-bounce' : ''}`}
+              >
+                <item.icon size={13} className="mr-2 group-hover:scale-110 group-hover:rotate-3 transition-transform" />
+                {item.label}
+              </LiquidFlowButton>
               </Link>
             ))}
           </div>
@@ -270,25 +263,24 @@ const CurrentlyBuilding = memo(function CurrentlyBuilding() {
   return (
     <div className="col-span-12 md:col-span-6">
       <GlassCard className="p-3 h-full" intensity="subtle">
-        <div className="space-y-2">
-          <h3 className="text-xs font-medium flex items-center gap-1.5 text-gray-800 dark:text-white">
-            <span className="text-green-600 dark:text-green-300">•</span>
-            Currently Building
-          </h3>
-          <div className="space-y-1.5 text-xs leading-relaxed text-gray-700 dark:text-gray-100">
-            <div className="p-2 glass-tinted rounded-lg">
-              <div className="flex items-center gap-1.5 mb-1">
-                <Logo src="/penseum-logo.avif" alt="Penseum" className="rounded-full" />
-                <span className="font-medium text-gray-800 dark:text-white">Penseum</span>
-              </div>
-              <p className="text-xs">Educational platform helping 1M+ users learn.</p>
+        <h3 className="text-xs font-medium flex items-center gap-1.5 text-gray-800 dark:text-white mb-3">
+          <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
+          Currently Building
+        </h3>
+        <div className="space-y-2.5">
+          <div className="flex items-start gap-2.5">
+            <Logo src="/penseum-logo.avif" alt="Penseum" className="rounded-full mt-0.5 flex-shrink-0" />
+            <div>
+              <p className="text-xs font-semibold text-gray-800 dark:text-white leading-none mb-0.5">Penseum</p>
+              <p className="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Educational platform helping 1M+ users learn.</p>
             </div>
-            <div className="p-2 glass-tinted rounded-lg">
-              <div className="flex items-center gap-1.5 mb-1">
-                <span className="text-purple-600 dark:text-purple-300">💼</span>
-                <span className="font-medium text-purple-700 dark:text-purple-300">Contractual</span>
-              </div>
-              <p className="text-xs">AI-powered contract management platform.</p>
+          </div>
+          <div className="border-t border-gray-100/60 dark:border-white/5" />
+          <div className="flex items-start gap-2.5">
+            <span className="text-sm flex-shrink-0 mt-0.5">💼</span>
+            <div>
+              <p className="text-xs font-semibold text-purple-700 dark:text-purple-300 leading-none mb-0.5">Contractual</p>
+              <p className="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">AI-powered contract management platform.</p>
             </div>
           </div>
         </div>
@@ -345,36 +337,36 @@ const GitStats = memo(function GitStats() {
             
             {/* 2x2 Grid of Connect Buttons */}
             <div className="grid grid-cols-2 gap-2 max-w-[96px] mx-auto">
-              <a 
-                href="https://github.com/nirek13" 
-                target="_blank" 
-                rel="noreferrer" 
-                className="group relative flex items-center justify-center w-10 h-10 rounded-xl glass-tinted transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+              <a
+                href="https://github.com/nirek13"
+                target="_blank"
+                rel="noreferrer"
+                className="group relative flex items-center justify-center w-10 h-10 rounded-xl glass-tinted btn-tactile"
               >
-                <Github size={14} className="text-gray-800 dark:text-gray-200 transition-transform duration-200 group-hover:scale-105" />
+                <Github size={14} className="text-gray-800 dark:text-gray-200 relative z-10 transition-transform duration-150 group-hover:scale-110" />
               </a>
-              
-              <a 
-                href="https://www.linkedin.com/in/nirekshetty/" 
-                target="_blank" 
-                rel="noreferrer" 
-                className="group relative flex items-center justify-center w-10 h-10 rounded-xl glass-tinted transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+
+              <a
+                href="https://www.linkedin.com/in/nirekshetty/"
+                target="_blank"
+                rel="noreferrer"
+                className="group relative flex items-center justify-center w-10 h-10 rounded-xl glass-tinted btn-tactile"
               >
-                <Linkedin size={14} className="text-[#0077b5] dark:text-blue-400 transition-transform duration-200 group-hover:scale-105" />
+                <LinkedinIcon size={14} className="text-[#0077b5] dark:text-blue-400 relative z-10 transition-transform duration-150 group-hover:scale-110" />
               </a>
-              
-              <a 
-                href="mailto:shettynirek@gmail.com" 
-                className="group relative flex items-center justify-center w-10 h-10 rounded-xl glass-tinted transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+
+              <a
+                href="mailto:shettynirek@gmail.com"
+                className="group relative flex items-center justify-center w-10 h-10 rounded-xl glass-tinted btn-tactile"
               >
-                <Mail size={14} className="text-[#ea4335] dark:text-red-400 transition-transform duration-200 group-hover:scale-105" />
+                <Mail size={14} className="text-[#ea4335] dark:text-red-400 relative z-10 transition-transform duration-150 group-hover:scale-110" />
               </a>
-              
-              <a 
-                href="mailto:nirek@penseum.com" 
-                className="group relative flex items-center justify-center w-10 h-10 rounded-xl glass-tinted transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+
+              <a
+                href="mailto:nirek@penseum.com"
+                className="group relative flex items-center justify-center w-10 h-10 rounded-xl glass-tinted btn-tactile"
               >
-                <Briefcase size={14} className="text-[#16a34a] dark:text-green-400 transition-transform duration-200 group-hover:scale-105" />
+                <Briefcase size={14} className="text-[#16a34a] dark:text-green-400 relative z-10 transition-transform duration-150 group-hover:scale-110" />
               </a>
             </div>
           </GlassCard>
@@ -398,7 +390,7 @@ const TurtleSection = memo(function TurtleSection() {
   return (
     <div className="col-span-12 md:col-span-6 h-[500px] flex flex-col gap-3">
       {/* 1. MINIMALIST QUOTE BOX (TOP) */}
-      <div className="flex-[0.4] glass-tinted rounded-[2rem] p-8 flex flex-col justify-center relative overflow-hidden group">
+      <div className="flex-[0.4] glass-tinted surface-rough raised-surface rounded-[2rem] p-8 flex flex-col justify-center relative overflow-hidden group">
         <div className="relative z-10">
           <h2 className="text-xl md:text-2xl font-semibold tracking-tight text-gray-900 dark:text-white leading-tight">
             "This is a rat race. <br />
@@ -411,7 +403,7 @@ const TurtleSection = memo(function TurtleSection() {
       </div>
 
       {/* 2. APPLICATIONS DIV (BOTTOM) */}
-      <div className="flex-[0.6] glass-tinted rounded-[2rem] p-8 flex flex-col relative group overflow-hidden">
+      <div className="flex-[0.6] glass-tinted raised-surface rounded-[2rem] p-8 flex flex-col relative group overflow-hidden">
         
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
@@ -446,21 +438,13 @@ const TurtleSection = memo(function TurtleSection() {
       href="mailto:shettynirek@gmail.com?subject=hackathons%20canada%20application"
       className="block w-full mt-6"
     >
-      <button className="w-full py-4 px-6 bg-gradient-to-br from-gray-800 via-gray-900 to-black dark:bg-gradient-to-br dark:from-white dark:via-gray-100 dark:to-gray-200 text-white dark:text-gray-900 rounded-2xl font-bold text-sm transition-all duration-300 ease-out
-                   /* 3D Base State */
-                   shadow-[0_8px_20px_rgba(0,0,0,0.25),0_3px_8px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.1)]
+      <button className="w-full py-4 px-6 bg-gradient-to-br from-gray-800 via-gray-900 to-black dark:bg-gradient-to-br dark:from-white dark:via-gray-100 dark:to-gray-200 text-white dark:text-gray-900 rounded-2xl font-bold text-sm
                    border border-gray-700/50 dark:border-gray-300/50
-                   
-                   /* 3D Hover Effects */
-                   hover:shadow-[0_12px_32px_rgba(249,115,22,0.4),0_6px_16px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.2)]
+                   btn-tactile
                    hover:bg-gradient-to-br hover:from-orange-600 hover:via-orange-500 hover:to-orange-400
                    hover:dark:bg-gradient-to-br hover:dark:from-orange-500 hover:dark:via-orange-400 hover:dark:to-orange-300
                    hover:text-white hover:dark:text-white
-                   hover:-translate-y-1 hover:scale-[1.02]
-                   hover:border-orange-400/60
-                   
-                   /* 3D Active/Press State */
-                   active:translate-y-0 active:scale-[0.98] active:shadow-[0_4px_12px_rgba(0,0,0,0.2),inset_0_2px_4px_rgba(0,0,0,0.1)]">
+                   hover:border-orange-400/60">
         Apply for Core Team
       </button>
     </a>
@@ -562,14 +546,14 @@ const Header = memo(function Header() {
             <p className="text-gray-600 dark:text-gray-300 text-xs mt-0.5">Founder & Engineer</p>
           </div>
           <div className="flex gap-2 mt-2 md:mt-0">
-            <a href="mailto:shettynirek@gmail.com" className="p-2 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-500 rounded-lg transition-all duration-200 text-gray-700 dark:text-gray-300">
-              <Mail size={16} />
+            <a href="mailto:shettynirek@gmail.com" className="p-2 glass-tinted btn-tactile rounded-lg text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
+              <Mail size={16} className="relative z-10" />
             </a>
-            <a href="https://github.com/nirek13" target="_blank" rel="noreferrer" className="p-2 hover:bg-gray-800 hover:text-white dark:hover:bg-gray-600 rounded-lg transition-all duration-200 text-gray-700 dark:text-gray-300">
-              <Github size={16} />
+            <a href="https://github.com/nirek13" target="_blank" rel="noreferrer" className="p-2 glass-tinted btn-tactile rounded-lg text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
+              <Github size={16} className="relative z-10" />
             </a>
-            <a href="https://www.linkedin.com/in/nirekshetty/" target="_blank" rel="noreferrer" className="p-2 hover:bg-blue-700 hover:text-white dark:hover:bg-blue-600 rounded-lg transition-all duration-200 text-gray-700 dark:text-gray-300">
-              <Linkedin size={16} />
+            <a href="https://www.linkedin.com/in/nirekshetty/" target="_blank" rel="noreferrer" className="p-2 glass-tinted btn-tactile rounded-lg text-gray-700 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-400">
+              <LinkedinIcon size={16} className="relative z-10" />
             </a>
           </div>
         </div>
@@ -585,37 +569,44 @@ const Footer = memo(function Footer() {
       
       <div className="relative z-10 px-5 py-6 text-center">
         {/* Signature */}
-        <div className="mb-4">
-          <h1 className="text-3xl md:text-4xl tracking-wider font-light" style={{ fontFamily: '"Playfair Display", serif' }}>
-            <div className="flex justify-center items-center gap-1">
-              <span className="inline-block cursor-pointer transition-all duration-500 ease-out hover:-translate-y-2 hover:scale-105 hover:rotate-2 active:rotate-180 active:scale-90" style={{ 
-                color: 'transparent', 
-                WebkitTextStroke: '1.5px rgba(255,120,150,0.6)',
-                background: 'linear-gradient(135deg, rgba(255,180,200,0.2), rgba(255,120,150,0.1))',
-                WebkitBackgroundClip: 'text',
-                filter: 'drop-shadow(0 0 15px rgba(255,120,150,0.3))',
-                textShadow: '0 0 25px rgba(255,255,255,0.4)'
-              }}>N</span>
-              {/* ... more letters ... */}
-            </div>
-          </h1>
+        <div className="mb-5">
+          <p className="text-3xl md:text-4xl tracking-[0.18em] font-light select-none" style={{ fontFamily: '"My Soul", cursive' }}>
+            <span className="flex justify-center items-center flex-wrap gap-0">
+              {['N','i','r','e','k','','S','h','e','t','t','y'].map((char, i) =>
+                char === '' ? (
+                  <span key={`sp-${i}`} className="w-4 md:w-5 inline-block" />
+                ) : (
+                  <span
+                    key={i}
+                    className="inline-block cursor-default transition-all duration-300 ease-out hover:-translate-y-2 hover:scale-110"
+                    style={{
+                      color: 'transparent',
+                      WebkitTextStroke: '1px rgba(100, 80, 130, 0.4)',
+                      transitionDelay: `${i * 28}ms`,
+                    }}
+                  >
+                    {char}
+                  </span>
+                )
+              )}
+            </span>
+          </p>
         </div>
-        
-        {/* Apple-style footer content */}
-        <div className="border-t border-gray-300/20 dark:border-cyan-400/30 pt-3">
-          <div className="flex flex-col md:flex-row items-center justify-center gap-1 md:gap-4 text-xs text-gray-600 dark:text-gray-100 font-light">
+
+        <div className="border-t border-gray-200/30 dark:border-white/10 pt-3">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-1 md:gap-4 text-xs text-gray-500 dark:text-gray-400 font-light">
             <p className="flex items-center gap-1">
               <span>Made with</span>
-              <span className="text-red-500 text-xs animate-pulse">♥</span>
+              <span className="text-red-400 animate-pulse">♥</span>
               <span>in Toronto</span>
             </p>
-            <span className="hidden md:block text-gray-400 dark:text-gray-200">•</span>
+            <span className="hidden md:block opacity-30">·</span>
             <p className="flex items-center gap-1">
               <span>Built with</span>
-              <span className="font-medium text-blue-600 dark:text-cyan-300">Next.js</span>
+              <span className="font-medium text-blue-500 dark:text-blue-400">Next.js</span>
             </p>
-            <span className="hidden md:block text-gray-400 dark:text-gray-200">•</span>
-            <p className="text-gray-500 dark:text-gray-200">© 2024 Nirek Shetty</p>
+            <span className="hidden md:block opacity-30">·</span>
+            <p>© {new Date().getFullYear()} Nirek Shetty</p>
           </div>
         </div>
       </div>
@@ -624,21 +615,8 @@ const Footer = memo(function Footer() {
 });
 
 export default function Home() {
-  const { shouldBounce } = useNavigationBounce('home');
-  const [cursorEnabled, setCursorEnabled] = useState(true);
-
-  // Toggle cursor effect in the DOM
-  // useEffect(() => {
-  //   const splashCursor = document.getElementById('fluid');
-  //   if (splashCursor) {
-  //     splashCursor.style.display = cursorEnabled ? 'block' : 'none';
-  //   }
-  // }, [cursorEnabled]);
-
   return (
     <main className="relative min-h-screen bg-textured-3d">
-      {/* <DynamicBackground /> */}
-      
       <div className="relative z-[10] min-h-screen p-1.5 lg:p-2 pb-20">
         {/* Compact Apple-like Glass Grid Layout */}
         <div className="max-w-5xl lg:max-w-none lg:w-[90%] mx-auto grid grid-cols-12 gap-2 min-h-screen">

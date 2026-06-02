@@ -95,26 +95,15 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const root = window.document.documentElement;
     
-    console.log('ThemeContext: Updating DOM with tint:', glassTint);
-    
-    // Remove all previous tint classes
-    tintOrder.forEach(tint => {
-      root.classList.remove(`tint-${tint}`);
-    });
-    
-    // Add current tint class
+    tintOrder.forEach(tint => root.classList.remove(`tint-${tint}`));
     root.classList.add(`tint-${glassTint}`);
-    console.log('ThemeContext: Added class tint-' + glassTint + ' to root element');
-    
-    // Set CSS custom properties for the current tint
+
     const tintConfig = glassTints[glassTint];
     root.style.setProperty('--tint-color', tintConfig.color);
     root.style.setProperty('--tint-gradient', tintConfig.gradient);
     root.style.setProperty('--tint-bg', tintConfig.background);
     root.style.setProperty('--tint-glass', tintConfig.glass);
     root.style.setProperty('--tint-border', tintConfig.border);
-    
-    console.log('ThemeContext: Set CSS variables for tint:', glassTint, tintConfig);
     
     localStorage.setItem('glassTint', glassTint);
   }, [glassTint]);
@@ -123,7 +112,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const currentIndex = tintOrder.indexOf(glassTint);
     const nextIndex = (currentIndex + 1) % tintOrder.length;
     const nextTint = tintOrder[nextIndex];
-    console.log('ThemeContext: Cycling from', glassTint, 'to', nextTint);
     setGlassTint(nextTint);
   };
 

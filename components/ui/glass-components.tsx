@@ -1,28 +1,54 @@
 'use client';
 
-import React from 'react';
+import React, { useRef, useCallback } from 'react';
 import { cn } from '@/lib/utils';
 
 interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   intensity?: 'subtle' | 'normal' | 'intense';
+  tilt?: boolean;
 }
 
-export function GlassCard({ 
-  children, 
-  className, 
+export function GlassCard({
+  children,
+  className,
   intensity = 'normal',
-  ...props 
+  tilt = true,
+  ...props
 }: GlassCardProps) {
-  const intensityClasses = {
-    subtle: 'glass-tinted glass-ripple-effect',
-    normal: 'glass-tinted glass-ripple-effect',
-    intense: 'glass-tinted glass-ripple-effect'
-  };
+  const ref = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
+    el.style.setProperty('--tilt-x', `${((y - 0.5) * 9).toFixed(2)}deg`);
+    el.style.setProperty('--tilt-y', `${((0.5 - x) * 9).toFixed(2)}deg`);
+    el.style.setProperty('--shine-x', `${(x * 100).toFixed(1)}%`);
+    el.style.setProperty('--shine-y', `${(y * 100).toFixed(1)}%`);
+    el.style.setProperty('--shine-opacity', '1');
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    const el = ref.current;
+    if (!el) return;
+    el.style.setProperty('--tilt-x', '0deg');
+    el.style.setProperty('--tilt-y', '0deg');
+    el.style.setProperty('--shine-opacity', '0');
+  }, []);
 
   return (
-    <div 
-      className={cn(intensityClasses[intensity], className)} 
+    <div
+      ref={ref}
+      className={cn(
+        'glass-tinted glass-ripple-effect raised-surface',
+        tilt && 'tactile-tilt',
+        className
+      )}
+      onMouseMove={tilt ? handleMouseMove : undefined}
+      onMouseLeave={tilt ? handleMouseLeave : undefined}
       {...props}
     >
       {children}
@@ -147,16 +173,15 @@ export function LiquidFlowButton({
   };
 
   return (
-    <button 
+    <button
       className={cn(
         "liquid-button liquid-button-enhanced relative overflow-hidden px-6 py-3 rounded-2xl",
-        "backdrop-blur-md border border-white/20 transition-all duration-500",
-        "hover:scale-105 hover:rotate-1 active:scale-95 hover-glow",
-        "shadow-lg hover:shadow-xl",
+        "backdrop-blur-md border border-white/20",
+        "btn-tactile hover-glow",
         variantClasses[variant],
         speedClasses[flowSpeed],
         className
-      )} 
+      )}
       {...props}
     >
       <span className="relative z-10 font-medium tracking-wide text-gray-900 dark:text-white drop-shadow-sm">

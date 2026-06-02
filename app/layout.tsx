@@ -1,11 +1,13 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import dynamic from 'next/dynamic'
 import './globals.css'
-import { SplashCursor } from '@/components/ui/splash-cursor'
 import { Analytics } from '@vercel/analytics/react'
 import { ThemeProvider } from '@/lib/theme-context'
 
-const charm = { className: 'font-charm' }
+const SplashCursor = dynamic(
+  () => import('@/components/ui/splash-cursor').then(m => ({ default: m.SplashCursor })),
+  { ssr: false }
+)
 
 export const metadata: Metadata = {
   title: "Nirek's Portfolio",
@@ -23,9 +25,9 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Kapakana:wght@300..400&family=My+Soul&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=My+Soul&display=swap" rel="stylesheet" />
       </head>
-      <body className={`${charm.className} antialiased text-base`} style={{ fontFamily: 'Charm, sans-serif', fontSize: '1.1rem' }}>
+      <body className="antialiased" style={{ fontFamily: 'Charm, sans-serif', fontSize: '1.1rem' }}>
         <ThemeProvider>
           <SplashCursor />
           {children}
