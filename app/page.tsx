@@ -402,56 +402,24 @@ const TurtleSection = memo(function TurtleSection() {
         </div>
       </div>
 
-      {/* 2. APPLICATIONS DIV (BOTTOM) */}
-      <div className="flex-[0.6] glass-tinted raised-surface rounded-[2rem] p-8 flex flex-col relative group overflow-hidden">
-        
-        {/* Header */}
-        <div className="flex justify-between items-center mb-6">
-          <h3 className="text-[12px] font-bold tracking-[0.2em] text-gray-400 uppercase">Applications</h3>
-          <div className="px-2 py-1 glass-tinted rounded-md border border-orange-400/20">
-            <span className="text-[9px] font-bold text-orange-600 dark:text-orange-400 uppercase">2 Open Slots</span>
-          </div>
+      {/* 2. RESUME */}
+      <div className="flex-[0.6] glass-tinted raised-surface rounded-[2rem] p-8 flex flex-col justify-between relative group overflow-hidden">
+
+        <div>
+          <p className="text-[10px] tracking-[0.25em] text-gray-400 uppercase mb-4">Résumé</p>
+          <p className="text-base font-light text-gray-700 dark:text-gray-300 leading-relaxed">
+            Engineer · Founder · Builder.<br />
+            <span className="text-gray-400 dark:text-gray-500 text-sm">Available for the right opportunity.</span>
+          </p>
         </div>
 
-        {/* Main Application Card: Hackathons Canada */}
-        <div className="flex-1 flex flex-col justify-between">
-          <div className="space-y-4">
-            <div className="flex items-start gap-4">
-              {/* Using your Turtle Mascot as a branding element */}
-              <div className="w-12 h-12 rounded-2xl glass-tinted flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-500">
-                 <div className="w-6 h-6 bg-orange-500 rounded-lg flex items-center justify-center overflow-hidden">
-                    <div className="w-full h-1.5 bg-black" /> {/* Mini Mask Icon */}
-                 </div>
-              </div>
-              
-              <div>
-                <h4 className="text-lg font-bold text-gray-900 dark:text-white">Hackathons Canada</h4>
-                <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
-                  Join the core team to help build the future of Canadian student innovation.
-                </p>
-              </div>
-            </div>
-          </div>
-
-    {/* Updated Interactive CTA */}
-    <a 
-      href="mailto:shettynirek@gmail.com?subject=hackathons%20canada%20application"
-      className="block w-full mt-6"
-    >
-      <button className="w-full py-4 px-6 bg-gradient-to-br from-gray-800 via-gray-900 to-black dark:bg-gradient-to-br dark:from-white dark:via-gray-100 dark:to-gray-200 text-white dark:text-gray-900 rounded-2xl font-bold text-sm
-                   border border-gray-700/50 dark:border-gray-300/50
-                   btn-tactile
-                   hover:bg-gradient-to-br hover:from-orange-600 hover:via-orange-500 hover:to-orange-400
-                   hover:dark:bg-gradient-to-br hover:dark:from-orange-500 hover:dark:via-orange-400 hover:dark:to-orange-300
-                   hover:text-white hover:dark:text-white
-                   hover:border-orange-400/60">
-        Apply for Core Team
-      </button>
-    </a>
-        </div>
-
-        {/* Subtle Background Detail */}
-        <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-orange-500/5 blur-3xl rounded-full group-hover:bg-orange-500/10 transition-colors duration-700" />
+        <Link href="/coming-soon">
+          <button className="w-full py-2.5 px-5 rounded-xl text-sm font-medium text-white
+                             bg-gray-900 dark:bg-white dark:text-gray-900
+                             hover:opacity-80 transition-opacity duration-200 btn-tactile">
+            View ↗
+          </button>
+        </Link>
       </div>
     </div>
   );

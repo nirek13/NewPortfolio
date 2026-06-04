@@ -9,6 +9,7 @@ const SplashCursor = dynamic(
   { ssr: false }
 )
 
+
 export const metadata: Metadata = {
   title: "Nirek's Portfolio",
   description: 'Built by Nirek Y.',
