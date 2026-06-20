@@ -403,23 +403,8 @@ const TurtleSection = memo(function TurtleSection() {
       </div>
 
       {/* 2. RESUME */}
-      <div className="flex-[0.6] glass-tinted raised-surface rounded-[2rem] p-8 flex flex-col justify-between relative group overflow-hidden">
-
-        <div>
-          <p className="text-[10px] tracking-[0.25em] text-gray-400 uppercase mb-4">Résumé</p>
-          <p className="text-base font-light text-gray-700 dark:text-gray-300 leading-relaxed">
-            Engineer · Founder · Builder.<br />
-            <span className="text-gray-400 dark:text-gray-500 text-sm">Available for the right opportunity.</span>
-          </p>
-        </div>
-
-        <Link href="/coming-soon">
-          <button className="w-full py-2.5 px-5 rounded-xl text-sm font-medium text-white
-                             bg-gray-900 dark:bg-white dark:text-gray-900
-                             hover:opacity-80 transition-opacity duration-200 btn-tactile">
-            View ↗
-          </button>
-        </Link>
+      <div className="flex-[0.6] glass-tinted raised-surface rounded-[2rem] p-8 flex items-center justify-center relative group overflow-hidden">
+        <p className="text-base font-light text-gray-700 dark:text-gray-300">resume</p>
       </div>
     </div>
   );
