@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 
 interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -17,33 +17,79 @@ export function GlassCard({
   ...props
 }: GlassCardProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number>(0);
+  const hoveringRef = useRef(false);
+  const targetRef = useRef({ tx: 0, ty: 0, shineX: 50, shineY: 50, shineOp: 0 });
+  const currentRef = useRef({ tx: 0, ty: 0, shineX: 50, shineY: 50, shineOp: 0 });
+
+  const applyTilt = useCallback(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const cur = currentRef.current;
+    const tgt = targetRef.current;
+    const ease = hoveringRef.current ? 0.14 : 0.08;
+
+    cur.tx += (tgt.tx - cur.tx) * ease;
+    cur.ty += (tgt.ty - cur.ty) * ease;
+    cur.shineX += (tgt.shineX - cur.shineX) * ease;
+    cur.shineY += (tgt.shineY - cur.shineY) * ease;
+    cur.shineOp += (tgt.shineOp - cur.shineOp) * ease;
+
+    el.style.setProperty('--tilt-x', `${cur.tx.toFixed(2)}deg`);
+    el.style.setProperty('--tilt-y', `${cur.ty.toFixed(2)}deg`);
+    el.style.setProperty('--shine-x', `${cur.shineX.toFixed(1)}%`);
+    el.style.setProperty('--shine-y', `${cur.shineY.toFixed(1)}%`);
+    el.style.setProperty('--shine-opacity', cur.shineOp.toFixed(3));
+
+    const settled =
+      Math.abs(cur.tx - tgt.tx) < 0.02 &&
+      Math.abs(cur.ty - tgt.ty) < 0.02 &&
+      Math.abs(cur.shineOp - tgt.shineOp) < 0.02;
+
+    if (!settled || hoveringRef.current) {
+      rafRef.current = requestAnimationFrame(applyTilt);
+    }
+  }, []);
+
+  const startTiltLoop = useCallback(() => {
+    cancelAnimationFrame(rafRef.current);
+    rafRef.current = requestAnimationFrame(applyTilt);
+  }, [applyTilt]);
+
+  useEffect(() => () => cancelAnimationFrame(rafRef.current), []);
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     const el = ref.current;
     if (!el) return;
+
+    hoveringRef.current = true;
     const rect = el.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width;
     const y = (e.clientY - rect.top) / rect.height;
-    el.style.setProperty('--tilt-x', `${((y - 0.5) * 9).toFixed(2)}deg`);
-    el.style.setProperty('--tilt-y', `${((0.5 - x) * 9).toFixed(2)}deg`);
-    el.style.setProperty('--shine-x', `${(x * 100).toFixed(1)}%`);
-    el.style.setProperty('--shine-y', `${(y * 100).toFixed(1)}%`);
-    el.style.setProperty('--shine-opacity', '1');
-  }, []);
+
+    targetRef.current = {
+      tx: (y - 0.5) * 5,
+      ty: (0.5 - x) * 5,
+      shineX: x * 100,
+      shineY: y * 100,
+      shineOp: 0.65,
+    };
+
+    startTiltLoop();
+  }, [startTiltLoop]);
 
   const handleMouseLeave = useCallback(() => {
-    const el = ref.current;
-    if (!el) return;
-    el.style.setProperty('--tilt-x', '0deg');
-    el.style.setProperty('--tilt-y', '0deg');
-    el.style.setProperty('--shine-opacity', '0');
-  }, []);
+    hoveringRef.current = false;
+    targetRef.current = { tx: 0, ty: 0, shineX: 50, shineY: 50, shineOp: 0 };
+    startTiltLoop();
+  }, [startTiltLoop]);
 
   return (
     <div
       ref={ref}
       className={cn(
-        'glass-tinted glass-ripple-effect raised-surface',
+        'glass-tinted raised-surface',
         tilt && 'tactile-tilt',
         className
       )}

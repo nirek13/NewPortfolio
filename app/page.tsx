@@ -226,9 +226,9 @@ const Navigation = memo(function Navigation() {
             <Link href={item.href} key={item.label} className="block group">
               <LiquidFlowButton
                 variant={item.variant as "pastel-blue" | "pastel-purple" | "pastel-pink" | "pastel-green"}
-                className={`w-full justify-start py-1.5 px-3 text-sm font-semibold border-t border-white/50 border-l border-white/30 hover:-translate-y-1 hover:translate-x-0.5 hover:shadow-[8px_12px_20px_rgba(0,0,0,0.15),-2px_-2px_10px_rgba(255,255,255,0.8)] hover:border-white/80 active:translate-y-0.5 active:shadow-inner${item.bounce && shouldBounce(item.bounce) ? ' nav-bounce' : ''}`}
+                className={`w-full justify-start py-1.5 px-3 text-sm font-semibold border-t border-white/50 border-l border-white/30 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:translate-x-0.5 hover:shadow-[6px_10px_18px_rgba(0,0,0,0.12),-2px_-2px_10px_rgba(255,255,255,0.8)] hover:border-white/80 active:translate-y-0 active:shadow-inner${item.bounce && shouldBounce(item.bounce) ? ' nav-bounce' : ''}`}
               >
-                <item.icon size={13} className="mr-2 group-hover:scale-110 group-hover:rotate-3 transition-transform" />
+                <item.icon size={13} className="mr-2 group-hover:scale-105 group-hover:rotate-2 transition-transform duration-300 ease-out" />
                 {item.label}
               </LiquidFlowButton>
               </Link>
