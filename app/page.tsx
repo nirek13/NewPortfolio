@@ -59,7 +59,7 @@ const CurrentTimeDisplay = memo(function CurrentTimeDisplay() {
 
   if (!mounted) {
     return (
-      <div className="flex items-center gap-1.5 text-[10px] font-mono text-gray-500 font-medium">
+      <div className="flex items-center gap-1.5 text-xs font-mono text-gray-500 font-medium">
         <span className="w-1 h-1 rounded-full bg-green-500 animate-pulse" />
         --:--
       </div>
@@ -67,7 +67,7 @@ const CurrentTimeDisplay = memo(function CurrentTimeDisplay() {
   }
 
   return (
-    <div className="flex items-center gap-1.5 text-[10px] font-mono text-gray-500 font-medium">
+    <div className="flex items-center gap-1.5 text-xs font-mono text-gray-500 font-medium">
       <span className="w-1 h-1 rounded-full bg-green-500 animate-pulse" />
       {currentTime.toLocaleTimeString('en-US', { 
         timeZone: 'America/Toronto',
@@ -109,7 +109,7 @@ const FuturisticClock = memo(function FuturisticClock() {
         </div>
         {/* Digital time placeholder */}
         <div className="glass-tinted px-3 py-1.5 rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.3)]">
-          <div className="text-[10px] font-mono text-cyan-300 dark:text-cyan-400 tracking-wide">
+          <div className="text-xs font-mono text-cyan-300 dark:text-cyan-400 tracking-wide">
             --:--:--
           </div>
         </div>
@@ -193,7 +193,7 @@ const FuturisticClock = memo(function FuturisticClock() {
 
       {/* Digital time display */}
       <div className="glass-tinted px-3 py-1.5 rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.3)]">
-        <div className="text-[10px] font-mono text-cyan-300 dark:text-cyan-400 tracking-wide">
+        <div className="text-xs font-mono text-cyan-300 dark:text-cyan-400 tracking-wide">
           {currentTime.toLocaleTimeString('en-US', { 
             timeZone: 'America/Toronto',
             hour12: false,
@@ -212,7 +212,7 @@ const Navigation = memo(function Navigation() {
   return (
     <div className="col-span-12 md:col-span-4">
       <GlassCard className="p-2.5 h-full" intensity="subtle">
-        <h3 className="text-[10px] font-bold mb-2.5 flex items-center gap-1.5 text-gray-400 dark:text-gray-200 uppercase tracking-widest">
+        <h3 className="text-xs font-bold mb-2.5 flex items-center gap-1.5 text-gray-400 dark:text-gray-200 uppercase tracking-widest">
           <User size={12} className="opacity-70" />
           Navigation
         </h3>
@@ -226,7 +226,7 @@ const Navigation = memo(function Navigation() {
             <Link href={item.href} key={item.label} className="block group">
               <LiquidFlowButton
                 variant={item.variant as "pastel-blue" | "pastel-purple" | "pastel-pink" | "pastel-green"}
-                className={`w-full justify-start py-1.5 px-3 text-[11px] font-semibold border-t border-white/50 border-l border-white/30 hover:-translate-y-1 hover:translate-x-0.5 hover:shadow-[8px_12px_20px_rgba(0,0,0,0.15),-2px_-2px_10px_rgba(255,255,255,0.8)] hover:border-white/80 active:translate-y-0.5 active:shadow-inner${item.bounce && shouldBounce(item.bounce) ? ' nav-bounce' : ''}`}
+                className={`w-full justify-start py-1.5 px-3 text-sm font-semibold border-t border-white/50 border-l border-white/30 hover:-translate-y-1 hover:translate-x-0.5 hover:shadow-[8px_12px_20px_rgba(0,0,0,0.15),-2px_-2px_10px_rgba(255,255,255,0.8)] hover:border-white/80 active:translate-y-0.5 active:shadow-inner${item.bounce && shouldBounce(item.bounce) ? ' nav-bounce' : ''}`}
               >
                 <item.icon size={13} className="mr-2 group-hover:scale-110 group-hover:rotate-3 transition-transform" />
                 {item.label}
@@ -272,7 +272,7 @@ const CurrentlyBuilding = memo(function CurrentlyBuilding() {
             <Logo src="/penseum-logo.avif" alt="Penseum" className="rounded-full mt-0.5 flex-shrink-0" />
             <div>
               <p className="text-xs font-semibold text-gray-800 dark:text-white leading-none mb-0.5">Penseum</p>
-              <p className="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">Educational platform helping 1M+ users learn.</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400 leading-snug">Educational platform helping 1M+ users learn.</p>
             </div>
           </div>
           <div className="border-t border-gray-100/60 dark:border-white/5" />
@@ -280,7 +280,7 @@ const CurrentlyBuilding = memo(function CurrentlyBuilding() {
             <span className="text-sm flex-shrink-0 mt-0.5">💼</span>
             <div>
               <p className="text-xs font-semibold text-purple-700 dark:text-purple-300 leading-none mb-0.5">Contractual</p>
-              <p className="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">AI-powered contract management platform.</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400 leading-snug">AI-powered contract management platform.</p>
             </div>
           </div>
         </div>
@@ -403,8 +403,16 @@ const TurtleSection = memo(function TurtleSection() {
       </div>
 
       {/* 2. RESUME */}
-      <div className="flex-[0.6] glass-tinted raised-surface rounded-[2rem] p-8 flex items-center justify-center relative group overflow-hidden">
-        <p className="text-base font-light text-gray-700 dark:text-gray-300">resume</p>
+      <div className="flex-[0.6] glass-tinted surface-rough raised-surface rounded-[2rem] p-8 flex flex-col justify-between relative group overflow-hidden">
+        <p className="relative z-10 text-lg font-light text-gray-700 dark:text-gray-300">resume</p>
+
+        <Link href="/coming-soon" className="relative z-10">
+          <button className="w-full py-2.5 px-5 rounded-xl text-sm font-medium text-white
+                             bg-gray-900 dark:bg-white dark:text-gray-900
+                             hover:opacity-80 transition-opacity duration-200 btn-tactile">
+            View Resume ↗
+          </button>
+        </Link>
       </div>
     </div>
   );

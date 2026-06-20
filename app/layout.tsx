@@ -28,7 +28,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=My+Soul&display=swap" rel="stylesheet" />
       </head>
-      <body className="antialiased" style={{ fontFamily: 'Charm, sans-serif', fontSize: '1.1rem' }}>
+      <body className="antialiased site-waxy" style={{ fontFamily: 'Charm, sans-serif' }}>
         <ThemeProvider>
           <SplashCursor />
           {children}
