@@ -23,9 +23,9 @@ export function ModernArtLoader({
   if (variant === 'minimal') {
     return (
       <div className={cn('relative', sizeClasses[size], className)}>
-        <div className="absolute inset-0 rounded-full border-2 border-blue-200/30" />
-        <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-blue-400 animate-spin" />
-        <div className="absolute inset-2 rounded-full border-2 border-transparent border-t-purple-400 animate-spin animate-reverse" 
+        <div className="absolute inset-0 rounded-full border-2 border-teal-200/30" />
+        <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-teal-500 animate-spin" />
+        <div className="absolute inset-2 rounded-full border-2 border-transparent border-t-orange-400 animate-spin animate-reverse"
              style={{ animationDuration: '1.5s' }} />
       </div>
     );
@@ -35,11 +35,11 @@ export function ModernArtLoader({
     return (
       <div className={cn('relative', sizeClasses[size], className)}>
         <div className="absolute inset-0 rounded-2xl overflow-hidden">
-          <div className="liquid-morph-loader w-full h-full bg-gradient-to-r from-blue-400/60 to-purple-500/60 rounded-2xl" />
+          <div className="liquid-morph-loader w-full h-full bg-gradient-to-r from-teal-400/60 to-slate-500/60 rounded-2xl" />
         </div>
         <div className="absolute inset-1 rounded-xl bg-white/90 backdrop-blur-sm" />
         <div className="absolute inset-3 rounded-lg overflow-hidden">
-          <div className="w-full h-full bg-gradient-to-r from-pink-300/40 to-orange-300/40 animate-liquid-pulse" />
+          <div className="w-full h-full bg-gradient-to-r from-orange-300/40 to-amber-300/40 animate-liquid-pulse" />
         </div>
       </div>
     );
@@ -49,10 +49,10 @@ export function ModernArtLoader({
   return (
     <div className={cn('relative', sizeClasses[size], className)}>
       {/* Outer morphing ring */}
-      <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-300/40 to-purple-400/40 animate-art-morph" />
-      
+      <div className="absolute inset-0 rounded-full bg-gradient-to-r from-teal-300/40 to-teal-500/40 animate-art-morph" />
+
       {/* Middle flowing ring */}
-      <div className="absolute inset-2 rounded-full bg-gradient-to-r from-pink-300/40 to-orange-300/40 animate-art-flow" 
+      <div className="absolute inset-2 rounded-full bg-gradient-to-r from-orange-300/40 to-amber-300/40 animate-art-flow"
            style={{ animationDelay: '0.5s' }} />
       
       {/* Inner pulsing core */}
@@ -83,7 +83,7 @@ export function LiquidLoadingBar({
     )}>
       <div 
         className={cn(
-          'h-full bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 rounded-full transition-all duration-500',
+          'h-full bg-gradient-to-r from-teal-600 via-teal-400 to-orange-400 rounded-full transition-all duration-500',
           animated && 'animate-liquid-flow'
         )}
         style={{ width: `${progress}%` }}
@@ -104,7 +104,7 @@ interface FlowingDotsProps {
 export function FlowingDots({ 
   className, 
   dotCount = 5,
-  colors = ['#93c5fd', '#c4b5fd', '#f9a8d4', '#a7f3d0', '#fed7aa']
+  colors = ['#5ec8ae', '#8498a0', '#e09864', '#40a08a', '#c9a870']
 }: FlowingDotsProps) {
   return (
     <div className={cn('flex items-center space-x-2', className)}>
@@ -160,7 +160,7 @@ export function MorphingShape({
   return (
     <div 
       className={cn(
-        'bg-gradient-to-br from-blue-400/60 to-purple-500/60 transition-all duration-1000 ease-in-out',
+        'bg-gradient-to-br from-teal-400/60 to-slate-500/60 transition-all duration-1000 ease-in-out',
         getShapeClass(shapes[currentShape]),
         className
       )}
@@ -194,13 +194,13 @@ export function MacOSHelloLoader({
   
   const text = "hello";
   const colors = [
-    '#FF6B35', // Orange-red
-    '#F7931E', // Orange
-    '#FFD23F', // Yellow
-    '#67B26F', // Green
-    '#4ECDC4', // Teal
-    '#45B7D1', // Blue
-    '#9B59B6', // Purple
+    '#b05c3a', // Rust
+    '#c47e4e', // Copper
+    '#c9a870', // Brass
+    '#5f9e6e', // Patina
+    '#40a08a', // Verdigris
+    '#5e8091', // Steel
+    '#877e94', // Tarnish
   ];
 
   const sizeClasses = {
@@ -304,7 +304,7 @@ export function ArtisticPageLoader({
   return (
     <div className={cn(
       'fixed inset-0 z-50 flex items-center justify-center',
-      'bg-gradient-to-br from-white via-blue-50/50 to-purple-50/50',
+      'bg-gradient-to-br from-white via-teal-50/50 to-orange-50/40',
       'backdrop-blur-sm',
       stage === 'morphing' && 'animate-fade-out',
       className

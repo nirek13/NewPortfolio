@@ -60,7 +60,7 @@ const CurrentTimeDisplay = memo(function CurrentTimeDisplay() {
   if (!mounted) {
     return (
       <div className="flex items-center gap-1.5 text-xs font-mono text-gray-500 font-medium">
-        <span className="w-1 h-1 rounded-full bg-green-500 animate-pulse" />
+        <span className="w-1 h-1 rounded-full bg-teal-500 animate-pulse" />
         --:--
       </div>
     );
@@ -68,8 +68,8 @@ const CurrentTimeDisplay = memo(function CurrentTimeDisplay() {
 
   return (
     <div className="flex items-center gap-1.5 text-xs font-mono text-gray-500 font-medium">
-      <span className="w-1 h-1 rounded-full bg-green-500 animate-pulse" />
-      {currentTime.toLocaleTimeString('en-US', { 
+      <span className="w-1 h-1 rounded-full bg-teal-500 animate-pulse" />
+      {currentTime.toLocaleTimeString('en-US', {
         timeZone: 'America/Toronto',
         hour12: false,
         hour: '2-digit',
@@ -105,11 +105,11 @@ const FuturisticClock = memo(function FuturisticClock() {
       <div className="flex flex-col items-center justify-center gap-4">
         {/* Static clock placeholder */}
         <div className="relative w-20 h-20 rounded-full glass-tinted">
-          <div className="absolute top-1/2 left-1/2 w-1.5 h-1.5 bg-gradient-to-br from-orange-400 to-red-500 rounded-full transform -translate-x-1/2 -translate-y-1/2 z-30"></div>
+          <div className="absolute top-1/2 left-1/2 w-1.5 h-1.5 bg-gradient-to-br from-amber-400 to-orange-600 rounded-full transform -translate-x-1/2 -translate-y-1/2 z-30"></div>
         </div>
         {/* Digital time placeholder */}
         <div className="glass-tinted px-3 py-1.5 rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.3)]">
-          <div className="text-xs font-mono text-cyan-300 dark:text-cyan-400 tracking-wide">
+          <div className="text-xs font-mono text-teal-700 dark:text-teal-300 tracking-wide">
             --:--:--
           </div>
         </div>
@@ -122,16 +122,16 @@ const FuturisticClock = memo(function FuturisticClock() {
       {/* Clock Section */}
       <div className="relative flex items-center justify-center">
         {/* Outer glow ring */}
-        <div className="absolute inset-2 rounded-full bg-gradient-to-br from-cyan-400/20 via-purple-400/10 to-pink-400/20 dark:from-cyan-300/30 dark:via-purple-300/20 dark:to-pink-300/30 animate-pulse blur-sm"></div>
-        
+        <div className="absolute inset-2 rounded-full bg-gradient-to-br from-teal-400/20 via-slate-400/10 to-orange-400/20 dark:from-teal-300/30 dark:via-slate-300/15 dark:to-orange-300/25 animate-pulse blur-sm"></div>
+
         {/* Main clock container */}
-        <div className="relative w-20 h-20 rounded-full bg-gradient-to-br from-white/40 via-white/20 to-white/10 dark:from-black/60 dark:via-black/40 dark:to-black/20 backdrop-blur-xl border border-white/30 dark:border-cyan-400/40 shadow-[inset_0_2px_4px_rgba(255,255,255,0.3),0_8px_32px_rgba(0,0,0,0.1)] dark:shadow-[inset_0_2px_4px_rgba(100,200,255,0.3),0_12px_48px_rgba(0,0,0,0.8)] clock-glow">
+        <div className="relative w-20 h-20 rounded-full bg-gradient-to-br from-white/40 via-white/20 to-white/10 dark:from-black/60 dark:via-black/40 dark:to-black/20 backdrop-blur-xl border border-white/30 dark:border-teal-400/40 shadow-[inset_0_2px_4px_rgba(255,255,255,0.3),0_8px_32px_rgba(0,0,0,0.1)] dark:shadow-[inset_0_2px_4px_rgba(94,200,174,0.3),0_12px_48px_rgba(0,0,0,0.8)] clock-glow">
         
         {/* Hour markers */}
         {[...Array(12)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-0.5 h-3 bg-gradient-to-b from-gray-600 to-gray-400 dark:from-cyan-300 dark:to-cyan-500 origin-bottom"
+            className="absolute w-0.5 h-3 bg-gradient-to-b from-gray-600 to-gray-400 dark:from-teal-300 dark:to-teal-500 origin-bottom"
             style={{
               top: '6px',
               left: '50%',
@@ -139,13 +139,13 @@ const FuturisticClock = memo(function FuturisticClock() {
               transform: `translateX(-50%) rotate(${i * 30}deg)`,
               opacity: i % 3 === 0 ? 1 : 0.6,
               height: i % 3 === 0 ? '8px' : '6px',
-              boxShadow: i % 3 === 0 ? '0 0 4px rgba(6,182,212,0.6)' : 'none'
+              boxShadow: i % 3 === 0 ? '0 0 4px rgba(64,160,138,0.6)' : 'none'
             }}
           />
         ))}
 
         {/* Center dot */}
-        <div className="absolute top-1/2 left-1/2 w-1.5 h-1.5 bg-gradient-to-br from-orange-400 to-red-500 rounded-full transform -translate-x-1/2 -translate-y-1/2 z-30 shadow-[0_0_8px_rgba(251,146,60,0.8)]"></div>
+        <div className="absolute top-1/2 left-1/2 w-1.5 h-1.5 bg-gradient-to-br from-amber-400 to-orange-600 rounded-full transform -translate-x-1/2 -translate-y-1/2 z-30 shadow-[0_0_8px_rgba(196,126,78,0.8)]"></div>
 
         {/* Hour hand */}
         <div
@@ -161,7 +161,7 @@ const FuturisticClock = memo(function FuturisticClock() {
 
         {/* Minute hand */}
         <div
-          className="absolute w-0.5 bg-gradient-to-t from-blue-600 to-cyan-400 dark:from-cyan-400 dark:to-cyan-200 rounded-full origin-bottom z-20 transition-transform duration-500 ease-out shadow-[0_0_6px_rgba(6,182,212,0.6)]"
+          className="absolute w-0.5 bg-gradient-to-t from-teal-700 to-teal-400 dark:from-teal-400 dark:to-teal-200 rounded-full origin-bottom z-20 transition-transform duration-500 ease-out shadow-[0_0_6px_rgba(64,160,138,0.6)]"
           style={{
             height: '28px',
             top: '12px',
@@ -173,7 +173,7 @@ const FuturisticClock = memo(function FuturisticClock() {
 
         {/* Second hand */}
         <div
-          className="absolute w-0.5 bg-gradient-to-t from-red-500 to-orange-400 rounded-full origin-bottom z-30 transition-transform duration-75 ease-out shadow-[0_0_8px_rgba(239,68,68,0.8)]"
+          className="absolute w-0.5 bg-gradient-to-t from-orange-600 to-amber-400 rounded-full origin-bottom z-30 transition-transform duration-75 ease-out shadow-[0_0_8px_rgba(196,126,78,0.8)]"
           style={{
             height: '32px',
             top: '8px',
@@ -184,17 +184,17 @@ const FuturisticClock = memo(function FuturisticClock() {
         />
 
         {/* Floating particles */}
-        <div className="absolute -top-1 -left-1 w-1 h-1 bg-cyan-400 rounded-full clock-particle opacity-70"></div>
-        <div className="absolute -top-1 -right-1 w-1 h-1 bg-purple-400 rounded-full clock-particle opacity-70" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute -bottom-1 -left-1 w-1 h-1 bg-pink-400 rounded-full clock-particle opacity-70" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute -bottom-1 -right-1 w-1 h-1 bg-yellow-400 rounded-full clock-particle opacity-70" style={{ animationDelay: '3s' }}></div>
+        <div className="absolute -top-1 -left-1 w-1 h-1 bg-teal-400 rounded-full clock-particle opacity-70"></div>
+        <div className="absolute -top-1 -right-1 w-1 h-1 bg-slate-400 rounded-full clock-particle opacity-70" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute -bottom-1 -left-1 w-1 h-1 bg-orange-400 rounded-full clock-particle opacity-70" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute -bottom-1 -right-1 w-1 h-1 bg-amber-400 rounded-full clock-particle opacity-70" style={{ animationDelay: '3s' }}></div>
         </div>
       </div>
 
       {/* Digital time display */}
       <div className="glass-tinted px-3 py-1.5 rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.3)]">
-        <div className="text-xs font-mono text-cyan-300 dark:text-cyan-400 tracking-wide">
-          {currentTime.toLocaleTimeString('en-US', { 
+        <div className="text-xs font-mono text-teal-700 dark:text-teal-300 tracking-wide">
+          {currentTime.toLocaleTimeString('en-US', {
             timeZone: 'America/Toronto',
             hour12: false,
             hour: '2-digit',
@@ -245,13 +245,13 @@ const TLDR = memo(function TLDR() {
       <GlassCard className="p-3 h-full" intensity="subtle">
         <div className="space-y-2">
           <div className="flex items-center gap-1.5">
-            <Sparkles className="text-blue-600 dark:text-cyan-400" size={16} />
+            <Sparkles className="text-teal-700 dark:text-teal-300" size={16} />
             <h2 className="text-sm font-medium text-gray-800 dark:text-white">TL;DR</h2>
           </div>
           <div className="space-y-1.5 text-xs leading-relaxed text-gray-700 dark:text-gray-100">
-            <p>↳ <span className="font-semibold text-blue-700 dark:text-cyan-300">16</span> years old, working at a startup with <span className="font-semibold text-green-700 dark:text-green-300">1 million users</span> called <span className="inline-flex items-center align-middle gap-1"><Logo src="/penseum-logo.avif" alt="Penseum" className="rounded-full" /><Label>Penseum</Label></span>.</p>
-            
-            <p>↳ Founded a non-profit <span className="font-semibold text-purple-700 dark:text-purple-300">Hackathons Canada</span> which has partnered with <span className="font-semibold text-blue-700 dark:text-cyan-300">Google</span> and <span className="font-semibold text-blue-700 dark:text-cyan-300">Microsoft</span> with <span className="font-semibold text-green-700 dark:text-green-300">25 million views</span> across social media and <span className="font-semibold text-green-700 dark:text-green-300">5,000 members</span> in its online community.</p>
+            <p>↳ <span className="font-semibold text-teal-700 dark:text-teal-300">16</span> years old, working at a startup with <span className="font-semibold text-teal-700 dark:text-teal-300">1 million users</span> called <span className="inline-flex items-center align-middle gap-1"><Logo src="/penseum-logo.avif" alt="Penseum" className="rounded-full" /><Label>Penseum</Label></span>.</p>
+
+            <p>↳ Founded a non-profit <span className="font-semibold text-orange-800 dark:text-orange-300">Hackathons Canada</span> which has partnered with <span className="font-semibold text-teal-700 dark:text-teal-300">Google</span> and <span className="font-semibold text-teal-700 dark:text-teal-300">Microsoft</span> with <span className="font-semibold text-teal-700 dark:text-teal-300">25 million views</span> across social media and <span className="font-semibold text-teal-700 dark:text-teal-300">5,000 members</span> in its online community.</p>
           </div>
           </div>
         </GlassCard>
@@ -264,7 +264,7 @@ const CurrentlyBuilding = memo(function CurrentlyBuilding() {
     <div className="col-span-12 md:col-span-6">
       <GlassCard className="p-3 h-full" intensity="subtle">
         <h3 className="text-xs font-medium flex items-center gap-1.5 text-gray-800 dark:text-white mb-3">
-          <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
+          <span className="w-1.5 h-1.5 rounded-full bg-teal-500" />
           Currently Building
         </h3>
         <div className="space-y-2.5">
@@ -279,7 +279,7 @@ const CurrentlyBuilding = memo(function CurrentlyBuilding() {
           <div className="flex items-start gap-2.5">
             <span className="text-sm flex-shrink-0 mt-0.5">💼</span>
             <div>
-              <p className="text-xs font-semibold text-purple-700 dark:text-purple-300 leading-none mb-0.5">Contractual</p>
+              <p className="text-xs font-semibold text-orange-800 dark:text-orange-300 leading-none mb-0.5">Contractual</p>
               <p className="text-sm text-gray-500 dark:text-gray-400 leading-snug">AI-powered contract management platform.</p>
             </div>
           </div>
@@ -295,16 +295,16 @@ const Experience = memo(function Experience() {
       <GlassCard className="p-3 h-full" intensity="subtle">
         <div className="space-y-2">
           <h3 className="text-xs font-medium flex items-center gap-1.5 text-gray-800 dark:text-white">
-            <Briefcase size={14} className="text-purple-600 dark:text-purple-300" />
+            <Briefcase size={14} className="text-orange-700 dark:text-orange-300" />
             Experience Highlights
           </h3>
           <div className="space-y-1.5 text-xs leading-relaxed text-gray-700 dark:text-gray-100">
             
-            <p>↳ Product engineer at <span className="inline-flex items-center align-middle gap-1"><Logo src="/penseum-logo.avif" alt="Penseum" className="rounded-full" /><Label>Penseum</Label></span>, helping <span className="font-semibold text-green-700 dark:text-green-300">1M+ users learn</span>.</p>
-            
-            <p>↳ Founder and Vice President at <span className="font-semibold text-purple-700 dark:text-purple-300">Hackathons Canada</span>.</p>
-            
-            <p>↳ Founder at <span className="font-semibold text-purple-700 dark:text-purple-300">Contractual</span>.</p>
+            <p>↳ Product engineer at <span className="inline-flex items-center align-middle gap-1"><Logo src="/penseum-logo.avif" alt="Penseum" className="rounded-full" /><Label>Penseum</Label></span>, helping <span className="font-semibold text-teal-700 dark:text-teal-300">1M+ users learn</span>.</p>
+
+            <p>↳ Founder and Vice President at <span className="font-semibold text-orange-800 dark:text-orange-300">Hackathons Canada</span>.</p>
+
+            <p>↳ Founder at <span className="font-semibold text-orange-800 dark:text-orange-300">Contractual</span>.</p>
           </div>
         </div>
       </GlassCard>
@@ -352,21 +352,21 @@ const GitStats = memo(function GitStats() {
                 rel="noreferrer"
                 className="group relative flex items-center justify-center w-10 h-10 rounded-xl glass-tinted btn-tactile"
               >
-                <LinkedinIcon size={14} className="text-[#0077b5] dark:text-blue-400 relative z-10 transition-transform duration-150 group-hover:scale-110" />
+                <LinkedinIcon size={14} className="text-slate-700 dark:text-slate-200 relative z-10 transition-all duration-150 group-hover:scale-110 group-hover:text-teal-700 dark:group-hover:text-teal-300" />
               </a>
 
               <a
                 href="mailto:shettynirek@gmail.com"
                 className="group relative flex items-center justify-center w-10 h-10 rounded-xl glass-tinted btn-tactile"
               >
-                <Mail size={14} className="text-[#ea4335] dark:text-red-400 relative z-10 transition-transform duration-150 group-hover:scale-110" />
+                <Mail size={14} className="text-slate-700 dark:text-slate-200 relative z-10 transition-all duration-150 group-hover:scale-110 group-hover:text-orange-700 dark:group-hover:text-orange-300" />
               </a>
 
               <a
                 href="mailto:nirek@penseum.com"
                 className="group relative flex items-center justify-center w-10 h-10 rounded-xl glass-tinted btn-tactile"
               >
-                <Briefcase size={14} className="text-[#16a34a] dark:text-green-400 relative z-10 transition-transform duration-150 group-hover:scale-110" />
+                <Briefcase size={14} className="text-slate-700 dark:text-slate-200 relative z-10 transition-all duration-150 group-hover:scale-110 group-hover:text-teal-700 dark:group-hover:text-teal-300" />
               </a>
             </div>
           </GlassCard>
@@ -425,7 +425,7 @@ const MusicPlayer = memo(function MusicPlayer() {
         <div className="flex items-center gap-4">
             {/* Album Art with glass effects */}
             <div className="relative flex-shrink-0">
-              <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400/40 via-purple-400/30 to-pink-400/40 dark:from-cyan-300/60 dark:via-purple-300/50 dark:to-pink-300/60 rounded-xl blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="absolute -inset-1 bg-gradient-to-r from-teal-400/40 via-slate-400/30 to-orange-400/40 dark:from-teal-300/50 dark:via-slate-300/30 dark:to-orange-300/50 rounded-xl blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <div className="relative w-16 h-16 rounded-xl overflow-hidden glass-tinted shadow-[0_4px_16px_rgba(0,0,0,0.1)] dark:shadow-[0_6px_24px_rgba(0,0,0,0.8)]">
                 <Image
                   src="/college-dropout-cover.jpg"
@@ -435,9 +435,9 @@ const MusicPlayer = memo(function MusicPlayer() {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 {/* Glass overlay on album art */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-black/10 dark:from-cyan-400/20 dark:via-transparent dark:to-purple-400/10 opacity-40"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-black/10 dark:from-teal-400/20 dark:via-transparent dark:to-orange-400/10 opacity-40"></div>
                 {/* Corner glass accents */}
-                <div className="absolute top-1 right-1 w-2 h-2 bg-gradient-to-br from-white/60 to-transparent dark:from-cyan-300/80 dark:to-transparent rounded-full"></div>
+                <div className="absolute top-1 right-1 w-2 h-2 bg-gradient-to-br from-white/60 to-transparent dark:from-teal-300/80 dark:to-transparent rounded-full"></div>
               </div>
             </div>
             
@@ -451,11 +451,11 @@ const MusicPlayer = memo(function MusicPlayer() {
                 
                 {/* Glass audio visualizer */}
                 <div className="flex items-end gap-1 ml-4 h-6">
-                  <div className="w-1 bg-gradient-to-t from-cyan-500/80 to-cyan-300/60 rounded-full animate-[wave1_1s_ease-in-out_infinite] h-3 shadow-[0_0_4px_rgba(6,182,212,0.5)]"></div>
-                  <div className="w-1 bg-gradient-to-t from-purple-500/80 to-purple-300/60 rounded-full animate-[wave2_1.2s_ease-in-out_infinite] h-4 shadow-[0_0_4px_rgba(168,85,247,0.5)]"></div>
-                  <div className="w-1 bg-gradient-to-t from-pink-500/80 to-pink-300/60 rounded-full animate-[wave3_0.8s_ease-in-out_infinite] h-2 shadow-[0_0_4px_rgba(236,72,153,0.5)]"></div>
-                  <div className="w-1 bg-gradient-to-t from-cyan-500/80 to-cyan-300/60 rounded-full animate-[wave4_1.1s_ease-in-out_infinite] h-5 shadow-[0_0_4px_rgba(168,85,247,0.5)]"></div>
-                  <div className="w-1 bg-gradient-to-t from-purple-500/80 to-purple-300/60 rounded-full animate-[wave5_0.9s_ease-in-out_infinite] h-3 shadow-[0_0_4px_rgba(168,85,247,0.5)]"></div>
+                  <div className="w-1 bg-gradient-to-t from-teal-600/80 to-teal-300/60 rounded-full animate-[wave1_1s_ease-in-out_infinite] h-3 shadow-[0_0_4px_rgba(64,160,138,0.5)]"></div>
+                  <div className="w-1 bg-gradient-to-t from-orange-600/80 to-orange-300/60 rounded-full animate-[wave2_1.2s_ease-in-out_infinite] h-4 shadow-[0_0_4px_rgba(196,126,78,0.5)]"></div>
+                  <div className="w-1 bg-gradient-to-t from-slate-500/80 to-slate-300/60 rounded-full animate-[wave3_0.8s_ease-in-out_infinite] h-2 shadow-[0_0_4px_rgba(132,152,158,0.5)]"></div>
+                  <div className="w-1 bg-gradient-to-t from-teal-600/80 to-teal-300/60 rounded-full animate-[wave4_1.1s_ease-in-out_infinite] h-5 shadow-[0_0_4px_rgba(64,160,138,0.5)]"></div>
+                  <div className="w-1 bg-gradient-to-t from-orange-600/80 to-orange-300/60 rounded-full animate-[wave5_0.9s_ease-in-out_infinite] h-3 shadow-[0_0_4px_rgba(196,126,78,0.5)]"></div>
                 </div>
               </div>
               
@@ -475,7 +475,7 @@ const MusicPlayer = memo(function MusicPlayer() {
             {/* Glass status indicator */}
             <div className="flex-shrink-0">
               <div className="relative">
-                <div className="w-3 h-3 bg-gradient-to-r from-cyan-400 to-purple-400 rounded-full animate-pulse shadow-[0_0_12px_rgba(6,182,212,0.6)]"></div>
+                <div className="w-3 h-3 bg-gradient-to-r from-teal-400 to-orange-400 rounded-full animate-pulse shadow-[0_0_12px_rgba(64,160,138,0.6)]"></div>
                 <div className="absolute inset-0.5 bg-white/30 rounded-full"></div>
               </div>
             </div>
@@ -507,13 +507,13 @@ const Header = memo(function Header() {
             <p className="text-gray-600 dark:text-gray-300 text-xs mt-0.5">Founder & Engineer</p>
           </div>
           <div className="flex gap-2 mt-2 md:mt-0">
-            <a href="mailto:shettynirek@gmail.com" className="p-2 glass-tinted btn-tactile rounded-lg text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
+            <a href="mailto:shettynirek@gmail.com" className="p-2 glass-tinted btn-tactile rounded-lg text-gray-700 dark:text-gray-300 hover:text-orange-700 dark:hover:text-orange-300">
               <Mail size={16} className="relative z-10" />
             </a>
             <a href="https://github.com/nirek13" target="_blank" rel="noreferrer" className="p-2 glass-tinted btn-tactile rounded-lg text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
               <Github size={16} className="relative z-10" />
             </a>
-            <a href="https://www.linkedin.com/in/nirekshetty/" target="_blank" rel="noreferrer" className="p-2 glass-tinted btn-tactile rounded-lg text-gray-700 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-400">
+            <a href="https://www.linkedin.com/in/nirekshetty/" target="_blank" rel="noreferrer" className="p-2 glass-tinted btn-tactile rounded-lg text-gray-700 dark:text-gray-300 hover:text-teal-700 dark:hover:text-teal-300">
               <LinkedinIcon size={16} className="relative z-10" />
             </a>
           </div>
@@ -526,7 +526,7 @@ const Header = memo(function Header() {
 const Footer = memo(function Footer() {
   return (
     <footer className="col-span-12 mt-6 relative">
-      <div className="absolute inset-0 bg-gradient-to-t from-gray-50/50 via-white/20 to-transparent dark:from-black/80 dark:via-black/40 backdrop-blur-xl rounded-2xl border border-gray-200/30 dark:border-cyan-400/20"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-gray-50/50 via-white/20 to-transparent dark:from-black/80 dark:via-black/40 backdrop-blur-xl rounded-2xl border border-gray-200/30 dark:border-teal-400/20"></div>
       
       <div className="relative z-10 px-5 py-6 text-center">
         {/* Signature */}
@@ -542,7 +542,7 @@ const Footer = memo(function Footer() {
                     className="inline-block cursor-default transition-all duration-300 ease-out hover:-translate-y-2 hover:scale-110"
                     style={{
                       color: 'transparent',
-                      WebkitTextStroke: '1px rgba(100, 80, 130, 0.4)',
+                      WebkitTextStroke: '1px rgba(64, 130, 112, 0.5)',
                       transitionDelay: `${i * 28}ms`,
                     }}
                   >
@@ -558,13 +558,13 @@ const Footer = memo(function Footer() {
           <div className="flex flex-col md:flex-row items-center justify-center gap-1 md:gap-4 text-xs text-gray-500 dark:text-gray-400 font-light">
             <p className="flex items-center gap-1">
               <span>Made with</span>
-              <span className="text-red-400 animate-pulse">♥</span>
+              <span className="text-orange-400 animate-pulse">♥</span>
               <span>in Toronto</span>
             </p>
             <span className="hidden md:block opacity-30">·</span>
             <p className="flex items-center gap-1">
               <span>Built with</span>
-              <span className="font-medium text-blue-500 dark:text-blue-400">Next.js</span>
+              <span className="font-medium text-teal-600 dark:text-teal-400">Next.js</span>
             </p>
             <span className="hidden md:block opacity-30">·</span>
             <p>© {new Date().getFullYear()} Nirek Shetty</p>

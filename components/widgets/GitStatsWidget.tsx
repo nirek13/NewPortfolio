@@ -6,9 +6,9 @@ import { GlassCard } from '@/components/ui/glass-components';
 export function GitCommitGraph() {
   const username = "nirek13";
 
-  const purpleTheme = {
-    light: ['#ffffff', '#e9e5ff', '#c7b8ff', '#8b6cff', '#5a2fd8'],
-    dark: ['#161b22', '#332060', '#4f2fa5', '#7c5cff', '#b4a3ff']
+  const verdigrisTheme = {
+    light: ['#eceeed', '#cde5de', '#8fc7b6', '#4da28b', '#2c6e5c'],
+    dark: ['#141a1a', '#1e3a34', '#2c5f52', '#40a08a', '#7fd6c0']
   };
 
   return (
@@ -16,7 +16,7 @@ export function GitCommitGraph() {
       <div className="flex items-center justify-between mb-6">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-purple-500 animate-pulse"></div>
+            <div className="w-3 h-3 rounded-full bg-teal-600 animate-pulse"></div>
             <h3 className="text-sm font-semibold text-gray-800">Contribution Heatmap</h3>
           </div>
           <p className="text-[10px] text-gray-500 font-mono uppercase tracking-wider">
@@ -29,7 +29,7 @@ export function GitCommitGraph() {
           <a 
             href={`https://github.com/${username}`}
             target="_blank" 
-            className="text-[10px] text-purple-600 hover:underline font-bold uppercase tracking-widest"
+            className="text-[10px] text-teal-700 hover:underline font-bold uppercase tracking-widest"
           >
             {username} ↗
           </a>
@@ -41,7 +41,7 @@ export function GitCommitGraph() {
           username={username}
           blockSize={12}
           blockMargin={4}
-          theme={purpleTheme}
+          theme={verdigrisTheme}
           fontSize={12}
           // 1. VISUAL: Only show the last ~180 days
           transformData={(data) => data.slice(-180)} 
@@ -57,7 +57,7 @@ export function GitCommitGraph() {
       <div className="mt-4 flex justify-between items-center text-[11px] text-gray-500 border-t border-gray-100 pt-4">
         <span>Less activity</span>
         <div className="flex gap-1">
-          {purpleTheme.light.map((color) => (
+          {verdigrisTheme.light.map((color) => (
             <div key={color} className="w-3 h-3 rounded-sm border border-gray-50" style={{ backgroundColor: color }} />
           ))}
         </div>

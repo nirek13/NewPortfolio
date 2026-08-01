@@ -230,7 +230,7 @@ export function LiquidFlowButton({
       )}
       {...props}
     >
-      <span className="relative z-10 font-medium tracking-wide text-gray-900 dark:text-white drop-shadow-sm">
+      <span className="relative z-10 font-medium tracking-wide text-zinc-50 drop-shadow-sm">
         {children}
       </span>
     </button>

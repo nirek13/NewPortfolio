@@ -26,9 +26,9 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=My+Soul&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=My+Soul&display=swap" rel="stylesheet" />
       </head>
-      <body className="antialiased site-waxy" style={{ fontFamily: 'Charm, sans-serif' }}>
+      <body className="antialiased site-waxy" style={{ fontFamily: '"Space Grotesk", sans-serif' }}>
         <ThemeProvider>
           <SplashCursor />
           {children}

@@ -16,58 +16,58 @@ interface GlassTintConfig {
 
 export const glassTints: Record<GlassTint, GlassTintConfig> = {
   aurora: {
-    name: 'Aurora',
-    color: '#00f5ff',
-    gradient: 'linear-gradient(135deg, rgba(6, 182, 212, 0.08), rgba(168, 85, 247, 0.04), rgba(236, 72, 155, 0.06))',
-    background: 'linear-gradient(135deg, rgba(236, 254, 255, 0.8), rgba(250, 245, 255, 0.6), rgba(253, 242, 248, 0.8))',
-    glass: 'rgba(6, 182, 212, 0.06)',
-    accent: 'text-cyan-600',
-    border: 'rgba(6, 182, 212, 0.25)'
+    name: 'Verdigris',
+    color: '#40a08a',
+    gradient: 'linear-gradient(135deg, rgba(64, 160, 138, 0.08), rgba(132, 152, 158, 0.04), rgba(94, 200, 174, 0.06))',
+    background: 'linear-gradient(135deg, rgba(238, 246, 243, 0.8), rgba(240, 244, 243, 0.6), rgba(236, 245, 242, 0.8))',
+    glass: 'rgba(64, 160, 138, 0.07)',
+    accent: 'text-teal-700',
+    border: 'rgba(64, 160, 138, 0.28)'
   },
   ocean: {
-    name: 'Ocean',
-    color: '#0066cc',
-    gradient: 'linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(6, 182, 212, 0.04), rgba(20, 184, 166, 0.06))',
-    background: 'linear-gradient(135deg, rgba(239, 246, 255, 0.8), rgba(236, 254, 255, 0.6), rgba(240, 253, 250, 0.8))',
-    glass: 'rgba(59, 130, 246, 0.06)',
-    accent: 'text-blue-600',
-    border: 'rgba(59, 130, 246, 0.25)'
+    name: 'Steel',
+    color: '#5e8091',
+    gradient: 'linear-gradient(135deg, rgba(94, 128, 145, 0.09), rgba(132, 152, 158, 0.04), rgba(64, 160, 138, 0.05))',
+    background: 'linear-gradient(135deg, rgba(238, 243, 245, 0.8), rgba(240, 244, 245, 0.6), rgba(237, 243, 244, 0.8))',
+    glass: 'rgba(94, 128, 145, 0.07)',
+    accent: 'text-slate-600',
+    border: 'rgba(94, 128, 145, 0.28)'
   },
   sunset: {
-    name: 'Sunset',
-    color: '#ff6b35',
-    gradient: 'linear-gradient(135deg, rgba(249, 115, 22, 0.08), rgba(239, 68, 68, 0.04), rgba(234, 179, 8, 0.06))',
-    background: 'linear-gradient(135deg, rgba(255, 247, 237, 0.8), rgba(254, 242, 242, 0.6), rgba(254, 252, 232, 0.8))',
-    glass: 'rgba(249, 115, 22, 0.06)',
-    accent: 'text-orange-600',
-    border: 'rgba(249, 115, 22, 0.25)'
+    name: 'Rust',
+    color: '#b05c3a',
+    gradient: 'linear-gradient(135deg, rgba(176, 92, 58, 0.09), rgba(196, 126, 78, 0.05), rgba(163, 88, 55, 0.06))',
+    background: 'linear-gradient(135deg, rgba(248, 242, 238, 0.8), rgba(247, 241, 236, 0.6), rgba(246, 240, 236, 0.8))',
+    glass: 'rgba(176, 92, 58, 0.07)',
+    accent: 'text-orange-700',
+    border: 'rgba(176, 92, 58, 0.28)'
   },
   forest: {
-    name: 'Forest',
-    color: '#22c55e',
-    gradient: 'linear-gradient(135deg, rgba(34, 197, 94, 0.08), rgba(16, 185, 129, 0.04), rgba(20, 184, 166, 0.06))',
-    background: 'linear-gradient(135deg, rgba(240, 253, 244, 0.8), rgba(236, 253, 245, 0.6), rgba(240, 253, 250, 0.8))',
-    glass: 'rgba(34, 197, 94, 0.06)',
-    accent: 'text-green-600',
-    border: 'rgba(34, 197, 94, 0.25)'
+    name: 'Patina',
+    color: '#5f9e6e',
+    gradient: 'linear-gradient(135deg, rgba(95, 158, 110, 0.09), rgba(64, 160, 138, 0.05), rgba(95, 158, 110, 0.05))',
+    background: 'linear-gradient(135deg, rgba(239, 246, 240, 0.8), rgba(238, 245, 240, 0.6), rgba(237, 244, 239, 0.8))',
+    glass: 'rgba(95, 158, 110, 0.07)',
+    accent: 'text-green-700',
+    border: 'rgba(95, 158, 110, 0.28)'
   },
   lavender: {
-    name: 'Lavender',
-    color: '#8b5cf6',
-    gradient: 'linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(168, 85, 247, 0.04), rgba(99, 102, 241, 0.06))',
-    background: 'linear-gradient(135deg, rgba(250, 245, 255, 0.8), rgba(243, 232, 255, 0.6), rgba(238, 242, 255, 0.8))',
-    glass: 'rgba(139, 92, 246, 0.06)',
-    accent: 'text-purple-600',
-    border: 'rgba(139, 92, 246, 0.25)'
+    name: 'Tarnish',
+    color: '#877e94',
+    gradient: 'linear-gradient(135deg, rgba(135, 126, 148, 0.09), rgba(132, 152, 158, 0.04), rgba(135, 126, 148, 0.05))',
+    background: 'linear-gradient(135deg, rgba(242, 241, 245, 0.8), rgba(242, 242, 245, 0.6), rgba(241, 240, 244, 0.8))',
+    glass: 'rgba(135, 126, 148, 0.07)',
+    accent: 'text-slate-500',
+    border: 'rgba(135, 126, 148, 0.28)'
   },
   coral: {
-    name: 'Coral',
-    color: '#f472b6',
-    gradient: 'linear-gradient(135deg, rgba(244, 114, 182, 0.08), rgba(244, 63, 94, 0.04), rgba(239, 68, 68, 0.06))',
-    background: 'linear-gradient(135deg, rgba(253, 242, 248, 0.8), rgba(255, 241, 242, 0.6), rgba(254, 242, 242, 0.8))',
-    glass: 'rgba(244, 114, 182, 0.06)',
-    accent: 'text-pink-600',
-    border: 'rgba(244, 114, 182, 0.25)'
+    name: 'Copper',
+    color: '#c47e4e',
+    gradient: 'linear-gradient(135deg, rgba(196, 126, 78, 0.09), rgba(224, 152, 100, 0.05), rgba(176, 92, 58, 0.05))',
+    background: 'linear-gradient(135deg, rgba(249, 244, 239, 0.8), rgba(248, 243, 238, 0.6), rgba(247, 242, 237, 0.8))',
+    glass: 'rgba(196, 126, 78, 0.07)',
+    accent: 'text-amber-700',
+    border: 'rgba(196, 126, 78, 0.28)'
   }
 };
 
