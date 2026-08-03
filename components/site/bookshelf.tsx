@@ -9,32 +9,24 @@ function BookMesh({ book, active }: { book: Book; active: boolean }) {
     <button
       type="button"
       aria-label={`${book.title} by ${book.author}`}
-      className={`bookshelf-book ${active ? 'is-active' : ''}`}
+      className={`bookshelf-book${active ? ' is-active' : ''}`}
       style={{ ['--spine' as string]: book.spine }}
     >
-      <span className="bookshelf-mesh">
-        <span className="bookshelf-spine">
-          <span className="bookshelf-spine-rule" />
-          <span className="bookshelf-spine-title">{book.spineLabel}</span>
-          <span className="bookshelf-spine-rule" />
-        </span>
-
-        <span className="bookshelf-cover">
-          <Image
-            src={book.cover}
-            alt=""
-            fill
-            sizes="160px"
-            className="object-cover"
-            draggable={false}
-          />
-        </span>
-
-        <span className="bookshelf-back" aria-hidden />
-        <span className="bookshelf-pages" aria-hidden />
-        <span className="bookshelf-top" aria-hidden />
-        <span className="bookshelf-bottom" aria-hidden />
+      <span className="bookshelf-spine">
+        <span className="bookshelf-spine-title">{book.spineLabel}</span>
       </span>
+      <span className="bookshelf-cover">
+        <Image
+          src={book.cover}
+          alt=""
+          fill
+          sizes="140px"
+          className="object-cover"
+          draggable={false}
+          priority
+        />
+      </span>
+      <span className="bookshelf-pages" aria-hidden />
     </button>
   );
 }
@@ -47,11 +39,12 @@ export function Bookshelf() {
     <div className="bookshelf">
       <div className="bookshelf-stage">
         <div className="bookshelf-row" role="list">
-          {BOOKS.map((book) => (
+          {BOOKS.map((book, i) => (
             <div
               key={book.id}
               role="listitem"
-              className={`bookshelf-slot${activeId === book.id ? ' is-open' : ''}`}
+              className="bookshelf-slot"
+              style={{ zIndex: activeId === book.id ? 20 : i + 1 }}
               onMouseEnter={() => setActiveId(book.id)}
               onMouseLeave={() => setActiveId(null)}
               onFocus={() => setActiveId(book.id)}
