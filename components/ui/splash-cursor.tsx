@@ -6,13 +6,13 @@ function SplashCursor({
   SIM_RESOLUTION = 128,
   DYE_RESOLUTION = 1440,
   CAPTURE_RESOLUTION = 512,
-  DENSITY_DISSIPATION = 2, // was 2.45 → ~15% lower (lingers more)
-  VELOCITY_DISSIPATION = 1, // was 1.4 → ~15% lower (lingers more)
+  DENSITY_DISSIPATION = 3.2, // tighter decay — streaks stay crisp instead of pooling
+  VELOCITY_DISSIPATION = 1.6, // motion dies faster, leaving sharp strokes
   PRESSURE = 0.1,
   PRESSURE_ITERATIONS = 20,
-  CURL = 3,
-  SPLAT_RADIUS = 0.45, // Larger radius for broader coverage
-  SPLAT_FORCE = 3000, // Reduced intensity for gentler splashes
+  CURL = 24, // strong vorticity — fine filament swirls
+  SPLAT_RADIUS = 0.16, // narrow splat for a sharpened edge
+  SPLAT_FORCE = 4600, // fast, decisive strokes
   SHADING = true,
   COLOR_UPDATE_SPEED = 10,
   BACK_COLOR = { r: 0.5, g: 0, b: 0 },
@@ -22,13 +22,7 @@ function SplashCursor({
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) {
-      console.log('SplashCursor: Canvas ref not found');
-      return;
-    }
-    
-    console.log('SplashCursor: Initializing with canvas:', canvas);
-    console.log('SplashCursor: Canvas dimensions:', canvas.clientWidth, 'x', canvas.clientHeight);
+    if (!canvas) return;
 
     let config = {
       SIM_RESOLUTION,
@@ -62,11 +56,8 @@ function SplashCursor({
     }];
 
     const { gl, ext } = getWebGLContext(canvas);
-    console.log('SplashCursor: WebGL context created:', gl);
-    console.log('SplashCursor: Extensions:', ext);
-    
+
     if (!ext.supportLinearFiltering) {
-      console.log('SplashCursor: Linear filtering not supported, adjusting config');
       config.DYE_RESOLUTION = 256;
       config.SHADING = false;
     }
@@ -846,14 +837,11 @@ function SplashCursor({
 
     function startAnimation() {
       if (!isAnimating) {
-        console.log('SplashCursor: Starting animation loop');
         isAnimating = true;
         animationId = requestAnimationFrame(updateFrame);
       }
     }
-    
-    // Start animation automatically for ghost mouse
-    console.log('SplashCursor: Auto-starting background animation');
+
     startAnimation();
 
     function calcDeltaTime() {
@@ -1026,10 +1014,6 @@ function SplashCursor({
       gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
       gl.enable(gl.BLEND);
       drawDisplay(target);
-      // Add a simple test to see if we're rendering
-      if (Math.random() < 0.001) { // Log occasionally to avoid spam
-        console.log('SplashCursor: Rendering frame');
-      }
     }
 
     function drawDisplay(target: any) {
@@ -1141,12 +1125,22 @@ function SplashCursor({
     }
 
     function generateColor() {
-      // Favor darker tones: moderate saturation, lower value
-      const hue = Math.random();
-      const saturation = 0.85; // rich but not neon
-      const value = 0.1 + Math.random() * 0.2; // 0.3–0.5 keeps colors dark
-      let c = HSVtoRGB(hue, saturation, value);
-      return c; 
+      // Oxidized metal dye: verdigris dominant, copper/rust flashes, cold steel
+      const metals = [
+        { h: 0.465, s: 0.62, v: 0.36, w: 0.4 },  // verdigris
+        { h: 0.49, s: 0.52, v: 0.46, w: 0.2 },   // bright patina
+        { h: 0.07, s: 0.68, v: 0.38, w: 0.18 },  // copper
+        { h: 0.04, s: 0.72, v: 0.28, w: 0.12 },  // rust
+        { h: 0.555, s: 0.24, v: 0.32, w: 0.1 },  // cold steel
+      ];
+      let roll = Math.random();
+      let picked = metals[metals.length - 1];
+      for (const m of metals) {
+        if (roll < m.w) { picked = m; break; }
+        roll -= m.w;
+      }
+      const value = picked.v * (0.75 + Math.random() * 0.5);
+      return HSVtoRGB(picked.h, picked.s, value);
     }
 
     function HSVtoRGB(h: number, s: number, v: number) {
@@ -1377,14 +1371,14 @@ function SplashCursor({
           const maxDistance = Math.sqrt(Math.pow(canvas.width * 0.5, 2) + Math.pow(canvas.height * 0.5, 2));
           const centerReduction = 0.3 + (distanceFromCenter / maxDistance) * 0.7; // 30-100% based on distance
           
-          const algaeColors = [
-            { r: 0.05, g: 0.4, b: 0.15 }, // Darker green to prevent white
-            { r: 0.0, g: 0.3, b: 0.4 },   // Darker cyan
-            { r: 0.15, g: 0.45, b: 0.2 }, // Darker lime
-            { r: 0.0, g: 0.35, b: 0.3 }   // Darker teal
+          const oxideColors = [
+            { r: 0.08, g: 0.3, b: 0.25 },  // verdigris bloom
+            { r: 0.28, g: 0.16, b: 0.07 }, // copper bloom
+            { r: 0.22, g: 0.11, b: 0.06 }, // rust bloom
+            { r: 0.14, g: 0.2, b: 0.22 }   // cold steel sheen
           ];
-          
-          const baseColor = algaeColors[ghost.bloomLayer % algaeColors.length];
+
+          const baseColor = oxideColors[ghost.bloomLayer % oxideColors.length];
           const algaeColor = {
             r: baseColor.r * bloomIntensity * pulsation * centerReduction,
             g: baseColor.g * bloomIntensity * pulsation * centerReduction,
@@ -1429,7 +1423,6 @@ function SplashCursor({
     }
 
     window.addEventListener("mousedown", (e) => {
-      console.log('SplashCursor: Mouse down at', e.clientX, e.clientY);
       lastUserActivity = Date.now();
       let pointer = pointers[0];
       let posX = scaleByPixelRatio(e.clientX);

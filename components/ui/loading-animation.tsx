@@ -104,7 +104,7 @@ interface FlowingDotsProps {
 export function FlowingDots({ 
   className, 
   dotCount = 5,
-  colors = ['#5ec8ae', '#8498a0', '#e09864', '#40a08a', '#c9a870']
+  colors = ['#2dd4bf', '#60a5fa', '#fb923c', '#f472b6', '#a78bfa']
 }: FlowingDotsProps) {
   return (
     <div className={cn('flex items-center space-x-2', className)}>
@@ -194,13 +194,13 @@ export function MacOSHelloLoader({
   
   const text = "hello";
   const colors = [
-    '#b05c3a', // Rust
-    '#c47e4e', // Copper
-    '#c9a870', // Brass
-    '#5f9e6e', // Patina
-    '#40a08a', // Verdigris
-    '#5e8091', // Steel
-    '#877e94', // Tarnish
+    '#f43f5e', // Rose
+    '#f97316', // Orange
+    '#facc15', // Gold
+    '#22c55e', // Green
+    '#14b8a6', // Teal
+    '#3b82f6', // Blue
+    '#8b5cf6', // Violet
   ];
 
   const sizeClasses = {

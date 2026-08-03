@@ -1,599 +1,538 @@
 'use client';
 
-import Image from "next/image";
-import Link from "next/link";
-import { Mail, Github, Briefcase, Camera, User, Sparkles } from "lucide-react";
+import { useState } from 'react';
+import Image from 'next/image';
+import {
+  Search,
+  User,
+  Code,
+  Heart,
+  BookOpen,
+  Mail,
+} from 'lucide-react';
+import { ThemeToggle } from '@/components/site/theme-toggle';
+import { CommandPalette } from '@/components/site/command-palette';
+import { Bookshelf } from '@/components/site/bookshelf';
+import { photos } from '@/lib/photos';
+import {
+  BADGE_CLASS,
+  EXPERIENCES,
+  NAV_ITEMS,
+  PHILOSOPHY,
+  PORTFOLIO_ITEMS,
+  type NavSection,
+  type ProjectFilter,
+} from '@/lib/portfolio-data';
 
-function LinkedinIcon({ size = 14, className = "" }: { size?: number; className?: string }) {
+function XIcon({ className = 'w-5 h-5' }: { className?: string }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
-      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-      <rect x="2" y="9" width="4" height="12"/>
-      <circle cx="4" cy="4" r="2"/>
+    <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
     </svg>
   );
 }
-import { useNavigationBounce } from "../lib/useNavigationBounce";
-import { GlassCard, LiquidFlowButton } from "@/components/ui/glass-components";
-import { GitCommitGraph } from "@/components/widgets/GitStatsWidget";
-import { ThemeIndicator } from "@/components/ui/theme-toggle";
-import { useState, useEffect, memo } from "react";
 
-
-const Logo = memo(function Logo({ src, alt, size = 18, className = "" }: { src: string; alt: string; size?: number; className?: string }) {
+function GitHubIcon({ className = 'w-5 h-5' }: { className?: string }) {
   return (
-    <span className="inline-flex items-center align-middle relative -top-[1px]">
-      <Image
-        src={src}
-        alt={alt}
-        width={size}
-        height={size}
-        sizes={`${size}px`}
-        quality={100}
-        priority={false}
-        className={`h-[18px] w-[18px] object-contain align-middle ${className}`}
+    <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        fillRule="evenodd"
+        d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+        clipRule="evenodd"
       />
-    </span>
+    </svg>
   );
-});
+}
 
-const Label = memo(function Label({ children }: { children: React.ReactNode }) {
-  return <span className="relative -top-[1px] leading-none align-middle">{children}</span>;
-});
+function LinkedInIcon({ className = 'w-5 h-5' }: { className?: string }) {
+  return (
+    <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+    </svg>
+  );
+}
 
-const FallbackLogo = memo(function FallbackLogo({ alt }: { alt: string }) {
-  return <Logo src="/YClogo.png" alt={alt} />;
-});
+const MOBILE_NAV: { id: NavSection; icon: React.ElementType | 'photos' }[] = [
+  { id: 'about', icon: User },
+  { id: 'experiences', icon: Code },
+  { id: 'philosophy', icon: Heart },
+  { id: 'books', icon: BookOpen },
+  { id: 'photos', icon: 'photos' },
+];
 
-const CurrentTimeDisplay = memo(function CurrentTimeDisplay() {
-  const [currentTime, setCurrentTime] = useState(new Date());
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-    const timer = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 60000);
-    return () => clearInterval(timer);
-  }, []);
-
-  if (!mounted) {
-    return (
-      <div className="flex items-center gap-1.5 text-xs font-mono text-gray-500 font-medium">
-        <span className="w-1 h-1 rounded-full bg-teal-500 animate-pulse" />
-        --:--
-      </div>
-    );
-  }
+function AboutSection({
+  filter,
+  setFilter,
+  expanded,
+  setExpanded,
+  onSearch,
+}: {
+  filter: ProjectFilter;
+  setFilter: (f: ProjectFilter) => void;
+  expanded: boolean;
+  setExpanded: (v: boolean) => void;
+  onSearch: () => void;
+}) {
+  const items = PORTFOLIO_ITEMS.filter((item) => item.category.includes(filter));
+  const highlights = expanded
+    ? [
+        <>
+          product engineer at{' '}
+          <a href="https://penseum.com" target="_blank" rel="noopener noreferrer" className="link-penseum">
+            @Penseum
+          </a>
+          , helping 1M+ users learn
+        </>,
+        <>
+          founded{' '}
+          <a
+            href="https://hackathonscanada.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link-hackathons"
+          >
+            Hackathons Canada
+          </a>
+          , partnered with{' '}
+          <span className="link-google">Google</span> and{' '}
+          <span className="link-microsoft">Microsoft</span> — 25M views, 5k members
+        </>,
+        <>
+          building <span className="link-contractual">Contractual</span>, shipping{' '}
+          <span className="link-voyager">Voyager-0</span>, and running Canadian builder communities
+        </>,
+        <>
+          silver medalist / national finalist at <span className="link-ioai">IOAI</span> and got nominated for{' '}
+          <span className="link-nasa">NASA Space Apps</span> out of 93k people
+        </>,
+        <>scored 71/75 on the Canadian Computing Competition and came 3rd in a national math contest</>,
+        <>
+          got <span className="link-waterloo">Waterloo</span> distinctions on Pascal, Gauss, and a
+          few other contests
+        </>,
+        <>
+          born and raised in <span className="link-toronto">Toronto</span>, spend a lot of time in
+          Waterloo — started coding around age 7, 30+ hackathons deep
+        </>,
+        <>getting flown out to Ottawa for a week at the House of Commons for a provincial legislation award</>,
+      ]
+    : [
+        <>
+          product engineer at{' '}
+          <a href="https://penseum.com" target="_blank" rel="noopener noreferrer" className="link-penseum">
+            @Penseum
+          </a>
+          , helping 1M+ users learn
+        </>,
+        <>
+          founded{' '}
+          <a
+            href="https://hackathonscanada.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link-hackathons"
+          >
+            Hackathons Canada
+          </a>
+          , partnered with Google and Microsoft — 25M views, 5k members
+        </>,
+        <>
+          building <span className="link-contractual">Contractual</span>, shipping{' '}
+          <span className="link-voyager">Voyager-0</span>, and running Canadian builder communities
+        </>,
+        <>
+          silver medalist / national finalist at <span className="link-ioai">IOAI</span> and got nominated for{' '}
+          <span className="link-nasa">NASA Space Apps</span> out of 93k people
+        </>,
+      ];
 
   return (
-    <div className="flex items-center gap-1.5 text-xs font-mono text-gray-500 font-medium">
-      <span className="w-1 h-1 rounded-full bg-teal-500 animate-pulse" />
-      {currentTime.toLocaleTimeString('en-US', {
-        timeZone: 'America/Toronto',
-        hour12: false,
-        hour: '2-digit',
-        minute: '2-digit'
-      })}
-    </div>
-  );
-});
-
-const FuturisticClock = memo(function FuturisticClock() {
-  const [currentTime, setCurrentTime] = useState(new Date());
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-    const timer = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000); // Update every second for smooth animation
-    return () => clearInterval(timer);
-  }, []);
-
-  const seconds = currentTime.getSeconds();
-  const minutes = currentTime.getMinutes();
-  const hours = currentTime.getHours() % 12;
-
-  // Calculate rotation angles
-  const secondAngle = (seconds * 6) - 90; // 360/60 = 6 degrees per second
-  const minuteAngle = (minutes * 6) + (seconds * 0.1) - 90; // Include seconds for smooth movement
-  const hourAngle = (hours * 30) + (minutes * 0.5) - 90; // 360/12 = 30 degrees per hour
-
-  if (!mounted) {
-    return (
-      <div className="flex flex-col items-center justify-center gap-4">
-        {/* Static clock placeholder */}
-        <div className="relative w-20 h-20 rounded-full glass-tinted">
-          <div className="absolute top-1/2 left-1/2 w-1.5 h-1.5 bg-gradient-to-br from-amber-400 to-orange-600 rounded-full transform -translate-x-1/2 -translate-y-1/2 z-30"></div>
+    <div>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold group cursor-default grid [grid-template-areas:'name'] w-fit">
+          <span className="[grid-area:name] transition-opacity duration-300 ease-in-out group-hover:opacity-0">
+            Nirek Shetty
+          </span>
+          <span
+            aria-hidden="true"
+            className="[grid-area:name] transition-opacity duration-300 ease-in-out opacity-0 group-hover:opacity-100"
+          >
+            निरेक शेट्टी
+          </span>
+        </h1>
+        <div className="flex items-center gap-4">
+          <a
+            href="https://x.com/nirekshetty/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <XIcon />
+          </a>
+          <a
+            href="https://github.com/nirek13"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <GitHubIcon />
+          </a>
+          <a
+            href="https://www.linkedin.com/in/nirekshetty/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <LinkedInIcon />
+          </a>
+          <a
+            href="mailto:shettynirek@gmail.com"
+            className="text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <Mail className="w-5 h-5" />
+          </a>
         </div>
-        {/* Digital time placeholder */}
-        <div className="glass-tinted px-3 py-1.5 rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.3)]">
-          <div className="text-xs font-mono text-teal-700 dark:text-teal-300 tracking-wide">
-            --:--:--
+      </div>
+
+      <p className="mb-6 text-muted-foreground">
+        <span>
+          i&apos;m an engineer at{' '}
+          <a
+            href="https://penseum.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link-penseum"
+          >
+            @Penseum
+          </a>{' '}
+          and founder of{' '}
+          <a
+            href="https://hackathonscanada.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link-hackathons"
+          >
+            @HackathonsCanada
+          </a>
+          .
+        </span>
+      </p>
+
+      <div className="mb-4">
+        <h2 className="mb-2 font-bold text-sm">some cool things i&apos;ve done in the past:</h2>
+        <ul className="list-none space-y-1 text-sm">
+          {highlights.map((item, i) => (
+            <li key={i} className="tight-list-item">
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <button
+        className="text-sm underline hover:no-underline mb-4"
+        onClick={() => setExpanded(!expanded)}
+      >
+        {expanded ? 'Show Less' : 'Read More'}
+      </button>
+
+      <div className="mt-8">
+        <div className="hidden md:flex justify-between items-center mb-6">
+          <div className="flex flex-wrap gap-4">
+            {(
+              [
+                ['everything', 'Everything'],
+                ['projects', 'Projects'],
+                ['communities', 'Communities'],
+              ] as const
+            ).map(([id, label]) => (
+              <button
+                key={id}
+                onClick={() => setFilter(id)}
+                className={`px-4 py-1 text-sm transition-colors duration-200 rounded ${
+                  filter === id
+                    ? 'bg-foreground text-background'
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                {label}
+              </button>
+            ))}
           </div>
+          <button
+            className="text-muted-foreground hover:text-foreground transition-colors p-2"
+            aria-label="Search"
+            onClick={onSearch}
+          >
+            <Search className="w-5 h-5" />
+          </button>
         </div>
-      </div>
-    );
-  }
 
-  return (
-    <div className="flex flex-col items-center justify-center gap-4">
-      {/* Clock Section */}
-      <div className="relative flex items-center justify-center">
-        {/* Outer glow ring */}
-        <div className="absolute inset-2 rounded-full bg-gradient-to-br from-teal-400/20 via-slate-400/10 to-orange-400/20 dark:from-teal-300/30 dark:via-slate-300/15 dark:to-orange-300/25 animate-pulse blur-sm"></div>
-
-        {/* Main clock container */}
-        <div className="relative w-20 h-20 rounded-full bg-gradient-to-br from-white/40 via-white/20 to-white/10 dark:from-black/60 dark:via-black/40 dark:to-black/20 backdrop-blur-xl border border-white/30 dark:border-teal-400/40 shadow-[inset_0_2px_4px_rgba(255,255,255,0.3),0_8px_32px_rgba(0,0,0,0.1)] dark:shadow-[inset_0_2px_4px_rgba(94,200,174,0.3),0_12px_48px_rgba(0,0,0,0.8)] clock-glow">
-        
-        {/* Hour markers */}
-        {[...Array(12)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-0.5 h-3 bg-gradient-to-b from-gray-600 to-gray-400 dark:from-teal-300 dark:to-teal-500 origin-bottom"
-            style={{
-              top: '6px',
-              left: '50%',
-              transformOrigin: '50% 34px',
-              transform: `translateX(-50%) rotate(${i * 30}deg)`,
-              opacity: i % 3 === 0 ? 1 : 0.6,
-              height: i % 3 === 0 ? '8px' : '6px',
-              boxShadow: i % 3 === 0 ? '0 0 4px rgba(64,160,138,0.6)' : 'none'
-            }}
-          />
-        ))}
-
-        {/* Center dot */}
-        <div className="absolute top-1/2 left-1/2 w-1.5 h-1.5 bg-gradient-to-br from-amber-400 to-orange-600 rounded-full transform -translate-x-1/2 -translate-y-1/2 z-30 shadow-[0_0_8px_rgba(196,126,78,0.8)]"></div>
-
-        {/* Hour hand */}
-        <div
-          className="absolute w-0.5 bg-gradient-to-t from-gray-800 to-gray-600 dark:from-white dark:to-gray-300 rounded-full origin-bottom z-20 transition-transform duration-1000 ease-out shadow-[0_0_4px_rgba(0,0,0,0.5)]"
-          style={{
-            height: '20px',
-            top: '20px',
-            left: '50%',
-            transformOrigin: '50% 20px',
-            transform: `translateX(-50%) rotate(${hourAngle}deg)`
-          }}
-        />
-
-        {/* Minute hand */}
-        <div
-          className="absolute w-0.5 bg-gradient-to-t from-teal-700 to-teal-400 dark:from-teal-400 dark:to-teal-200 rounded-full origin-bottom z-20 transition-transform duration-500 ease-out shadow-[0_0_6px_rgba(64,160,138,0.6)]"
-          style={{
-            height: '28px',
-            top: '12px',
-            left: '50%',
-            transformOrigin: '50% 28px',
-            transform: `translateX(-50%) rotate(${minuteAngle}deg)`
-          }}
-        />
-
-        {/* Second hand */}
-        <div
-          className="absolute w-0.5 bg-gradient-to-t from-orange-600 to-amber-400 rounded-full origin-bottom z-30 transition-transform duration-75 ease-out shadow-[0_0_8px_rgba(196,126,78,0.8)]"
-          style={{
-            height: '32px',
-            top: '8px',
-            left: '50%',
-            transformOrigin: '50% 32px',
-            transform: `translateX(-50%) rotate(${secondAngle}deg)`
-          }}
-        />
-
-        {/* Floating particles */}
-        <div className="absolute -top-1 -left-1 w-1 h-1 bg-teal-400 rounded-full clock-particle opacity-70"></div>
-        <div className="absolute -top-1 -right-1 w-1 h-1 bg-slate-400 rounded-full clock-particle opacity-70" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute -bottom-1 -left-1 w-1 h-1 bg-orange-400 rounded-full clock-particle opacity-70" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute -bottom-1 -right-1 w-1 h-1 bg-amber-400 rounded-full clock-particle opacity-70" style={{ animationDelay: '3s' }}></div>
+        <div className="md:hidden flex gap-2 mb-6 overflow-x-auto pb-1">
+          {(
+            [
+              ['everything', 'Everything'],
+              ['projects', 'Projects'],
+              ['communities', 'Communities'],
+            ] as const
+          ).map(([id, label]) => (
+            <button
+              key={id}
+              onClick={() => setFilter(id)}
+              className={`px-3 py-1 text-sm whitespace-nowrap transition-colors duration-200 rounded ${
+                filter === id
+                  ? 'bg-foreground text-background'
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
         </div>
-      </div>
 
-      {/* Digital time display */}
-      <div className="glass-tinted px-3 py-1.5 rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.3)]">
-        <div className="text-xs font-mono text-teal-700 dark:text-teal-300 tracking-wide">
-          {currentTime.toLocaleTimeString('en-US', {
-            timeZone: 'America/Toronto',
-            hour12: false,
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit'
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8" key={filter}>
+          {items.map((item, index) => {
+            const fit = item.fit ?? 'cover';
+            const Card = (
+              <div
+                className="flex flex-col group project-card fade-up"
+                style={{ animationDelay: `${index * 70}ms` }}
+              >
+                <div
+                  className="relative mb-4 aspect-[16/10] cursor-pointer project-frame"
+                  style={{ backgroundColor: item.frame || 'hsl(var(--muted))' }}
+                >
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    className={`${
+                      fit === 'contain' ? 'object-contain p-6 md:p-8' : 'object-cover'
+                    } transition-transform duration-500 ease-out group-hover:scale-[1.04]`}
+                    sizes="(max-width: 768px) 100vw, 40vw"
+                    priority={index < 2}
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="text-lg font-medium leading-tight group-hover:underline underline-offset-4 decoration-foreground/30">
+                      {item.title}
+                    </h3>
+                    <span
+                      className={
+                        BADGE_CLASS[item.badgeStyle || 'muted'] || BADGE_CLASS.muted
+                      }
+                    >
+                      {item.badge}
+                    </span>
+                  </div>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
+              </div>
+            );
+
+            return item.href ? (
+              <a
+                key={item.id}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
+              >
+                {Card}
+              </a>
+            ) : (
+              <div key={item.id}>{Card}</div>
+            );
           })}
         </div>
       </div>
     </div>
   );
-});
+}
 
-const Navigation = memo(function Navigation() {
-  const { shouldBounce } = useNavigationBounce('home');
+function ExperiencesSection() {
   return (
-    <div className="col-span-12 md:col-span-4">
-      <GlassCard className="p-2.5 h-full" intensity="subtle">
-        <h3 className="text-xs font-bold mb-2.5 flex items-center gap-1.5 text-gray-400 dark:text-gray-200 uppercase tracking-widest">
-          <User size={12} className="opacity-70" />
-          Navigation
-        </h3>
-        
-        <div className="space-y-1.5">
-          {[
-            { href: "/about", label: "About Me", icon: User, variant: "pastel-blue", bounce: 'about' },
-            { href: "/essays", label: "Essays", icon: Briefcase, variant: "pastel-purple", bounce: '' },
-            { href: "/photography", label: "Photography", icon: Camera, variant: "pastel-pink", bounce: 'photography' }
-          ].map((item) => (
-            <Link href={item.href} key={item.label} className="block group">
-              <LiquidFlowButton
-                variant={item.variant as "pastel-blue" | "pastel-purple" | "pastel-pink" | "pastel-green"}
-                className={`w-full justify-start py-1.5 px-3 text-sm font-semibold border-t border-white/50 border-l border-white/30 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:translate-x-0.5 hover:shadow-[6px_10px_18px_rgba(0,0,0,0.12),-2px_-2px_10px_rgba(255,255,255,0.8)] hover:border-white/80 active:translate-y-0 active:shadow-inner${item.bounce && shouldBounce(item.bounce) ? ' nav-bounce' : ''}`}
-              >
-                <item.icon size={13} className="mr-2 group-hover:scale-105 group-hover:rotate-2 transition-transform duration-300 ease-out" />
-                {item.label}
-              </LiquidFlowButton>
-              </Link>
-            ))}
-          </div>
-        </GlassCard>
-    </div>
-  );
-});
-
-const TLDR = memo(function TLDR() {
-  return (
-    <div className="col-span-12 md:col-span-8">
-      <GlassCard className="p-3 h-full" intensity="subtle">
-        <div className="space-y-2">
-          <div className="flex items-center gap-1.5">
-            <Sparkles className="text-teal-700 dark:text-teal-300" size={16} />
-            <h2 className="text-sm font-medium text-gray-800 dark:text-white">TL;DR</h2>
-          </div>
-          <div className="space-y-1.5 text-xs leading-relaxed text-gray-700 dark:text-gray-100">
-            <p>↳ <span className="font-semibold text-teal-700 dark:text-teal-300">16</span> years old, working at a startup with <span className="font-semibold text-teal-700 dark:text-teal-300">1 million users</span> called <span className="inline-flex items-center align-middle gap-1"><Logo src="/penseum-logo.avif" alt="Penseum" className="rounded-full" /><Label>Penseum</Label></span>.</p>
-
-            <p>↳ Founded a non-profit <span className="font-semibold text-orange-800 dark:text-orange-300">Hackathons Canada</span> which has partnered with <span className="font-semibold text-teal-700 dark:text-teal-300">Google</span> and <span className="font-semibold text-teal-700 dark:text-teal-300">Microsoft</span> with <span className="font-semibold text-teal-700 dark:text-teal-300">25 million views</span> across social media and <span className="font-semibold text-teal-700 dark:text-teal-300">5,000 members</span> in its online community.</p>
-          </div>
-          </div>
-        </GlassCard>
-    </div>
-  );
-});
-
-const CurrentlyBuilding = memo(function CurrentlyBuilding() {
-  return (
-    <div className="col-span-12 md:col-span-6">
-      <GlassCard className="p-3 h-full" intensity="subtle">
-        <h3 className="text-xs font-medium flex items-center gap-1.5 text-gray-800 dark:text-white mb-3">
-          <span className="w-1.5 h-1.5 rounded-full bg-teal-500" />
-          Currently Building
-        </h3>
-        <div className="space-y-2.5">
-          <div className="flex items-start gap-2.5">
-            <Logo src="/penseum-logo.avif" alt="Penseum" className="rounded-full mt-0.5 flex-shrink-0" />
-            <div>
-              <p className="text-xs font-semibold text-gray-800 dark:text-white leading-none mb-0.5">Penseum</p>
-              <p className="text-sm text-gray-500 dark:text-gray-400 leading-snug">Educational platform helping 1M+ users learn.</p>
+    <div>
+      <h1 className="text-3xl font-bold mb-6">experiences</h1>
+      <div className="space-y-8">
+        {EXPERIENCES.map((exp) => (
+          <div key={exp.org} className="flex flex-col gap-1">
+            <div className="flex justify-between items-start gap-4">
+              <h3 className="text-lg font-medium leading-tight">{exp.org}</h3>
+              <span className="text-sm text-muted-foreground shrink-0">{exp.period}</span>
             </div>
+            <p className="text-sm font-medium text-foreground/80">{exp.role}</p>
+            <p className="text-xs text-muted-foreground leading-relaxed mt-1">{exp.detail}</p>
           </div>
-          <div className="border-t border-gray-100/60 dark:border-white/5" />
-          <div className="flex items-start gap-2.5">
-            <span className="text-sm flex-shrink-0 mt-0.5">💼</span>
-            <div>
-              <p className="text-xs font-semibold text-orange-800 dark:text-orange-300 leading-none mb-0.5">Contractual</p>
-              <p className="text-sm text-gray-500 dark:text-gray-400 leading-snug">AI-powered contract management platform.</p>
-            </div>
-          </div>
-        </div>
-      </GlassCard>
-    </div>
-  );
-});
-
-const Experience = memo(function Experience() {
-  return (
-    <div className="col-span-12 md:col-span-6">
-      <GlassCard className="p-3 h-full" intensity="subtle">
-        <div className="space-y-2">
-          <h3 className="text-xs font-medium flex items-center gap-1.5 text-gray-800 dark:text-white">
-            <Briefcase size={14} className="text-orange-700 dark:text-orange-300" />
-            Experience Highlights
-          </h3>
-          <div className="space-y-1.5 text-xs leading-relaxed text-gray-700 dark:text-gray-100">
-            
-            <p>↳ Product engineer at <span className="inline-flex items-center align-middle gap-1"><Logo src="/penseum-logo.avif" alt="Penseum" className="rounded-full" /><Label>Penseum</Label></span>, helping <span className="font-semibold text-teal-700 dark:text-teal-300">1M+ users learn</span>.</p>
-
-            <p>↳ Founder and Vice President at <span className="font-semibold text-orange-800 dark:text-orange-300">Hackathons Canada</span>.</p>
-
-            <p>↳ Founder at <span className="font-semibold text-orange-800 dark:text-orange-300">Contractual</span>.</p>
-          </div>
-        </div>
-      </GlassCard>
-    </div>
-  );
-});
-
-const GitStats = memo(function GitStats() {
-  return (
-    <div className="col-span-12 md:col-span-6 flex flex-col">
-      {/* GitHub Stats Widget */}
-      <div className="mb-3">
-        <GitCommitGraph />
-      </div>
-      
-      {/* Side-by-Side Connect & Time Display */}
-      <div className="grid grid-cols-2 gap-3 flex-1">
-        {/* Connect Section */}
-        <div className="relative">
-          <GlassCard className="p-4 h-full" intensity="subtle">
-            <div className="text-center mb-3">
-              <h3 className="text-xs font-medium text-gray-900 dark:text-white" style={{
-                fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-                fontWeight: 500,
-                letterSpacing: '-0.01em'
-              }}>
-                Connect
-              </h3>
-            </div>
-            
-            {/* 2x2 Grid of Connect Buttons */}
-            <div className="grid grid-cols-2 gap-2 max-w-[96px] mx-auto">
-              <a
-                href="https://github.com/nirek13"
-                target="_blank"
-                rel="noreferrer"
-                className="group relative flex items-center justify-center w-10 h-10 rounded-xl glass-tinted btn-tactile"
-              >
-                <Github size={14} className="text-gray-800 dark:text-gray-200 relative z-10 transition-transform duration-150 group-hover:scale-110" />
-              </a>
-
-              <a
-                href="https://www.linkedin.com/in/nirekshetty/"
-                target="_blank"
-                rel="noreferrer"
-                className="group relative flex items-center justify-center w-10 h-10 rounded-xl glass-tinted btn-tactile"
-              >
-                <LinkedinIcon size={14} className="text-slate-700 dark:text-slate-200 relative z-10 transition-all duration-150 group-hover:scale-110 group-hover:text-teal-700 dark:group-hover:text-teal-300" />
-              </a>
-
-              <a
-                href="mailto:shettynirek@gmail.com"
-                className="group relative flex items-center justify-center w-10 h-10 rounded-xl glass-tinted btn-tactile"
-              >
-                <Mail size={14} className="text-slate-700 dark:text-slate-200 relative z-10 transition-all duration-150 group-hover:scale-110 group-hover:text-orange-700 dark:group-hover:text-orange-300" />
-              </a>
-
-              <a
-                href="mailto:nirek@penseum.com"
-                className="group relative flex items-center justify-center w-10 h-10 rounded-xl glass-tinted btn-tactile"
-              >
-                <Briefcase size={14} className="text-slate-700 dark:text-slate-200 relative z-10 transition-all duration-150 group-hover:scale-110 group-hover:text-teal-700 dark:group-hover:text-teal-300" />
-              </a>
-            </div>
-          </GlassCard>
-        </div>
-
-        {/* Futuristic Clock Display */}
-        <div className="relative">
-          <GlassCard className="p-3 h-full" intensity="subtle">
-            <div className="flex flex-col items-center justify-center min-h-[120px]">
-              {/* Futuristic Analog Clock */}
-              <FuturisticClock />
-            </div>
-          </GlassCard>
-        </div>
+        ))}
       </div>
     </div>
   );
-});
+}
 
-const TurtleSection = memo(function TurtleSection() {
+function PhilosophySection() {
   return (
-    <div className="col-span-12 md:col-span-6 h-[500px] flex flex-col gap-3">
-      {/* 1. MINIMALIST QUOTE BOX (TOP) */}
-      <div className="flex-[0.4] glass-tinted surface-rough raised-surface rounded-[2rem] p-8 flex flex-col justify-center relative overflow-hidden group">
-        <div className="relative z-10">
-          <h2 className="text-xl md:text-2xl font-semibold tracking-tight text-gray-900 dark:text-white leading-tight">
-            "This is a rat race. <br />
-            <span className="text-gray-300 dark:text-gray-600 group-hover:text-orange-500 transition-colors duration-500">But I'm no rat."</span>
-          </h2>
-          <p className="mt-2 text-sm font-medium text-gray-400 dark:text-gray-500 italic">
-            I'm a f***ing turtle, <span className="text-gray-900 dark:text-white not-italic font-bold uppercase">ninja turtle.</span>
-          </p>
-        </div>
-      </div>
+    <div>
+      <h1 className="text-3xl font-bold mb-6">my philosophy</h1>
+      <ul className="list-none space-y-3 text-sm">
+        {PHILOSOPHY.map((line, i) => (
+          <li key={i} className="tight-list-item text-muted-foreground leading-relaxed">
+            <span className="text-foreground">{line}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
-      {/* 2. RESUME */}
-      <div className="flex-[0.6] glass-tinted surface-rough raised-surface rounded-[2rem] p-8 flex flex-col justify-between relative group overflow-hidden">
-        <p className="relative z-10 text-lg font-light text-gray-700 dark:text-gray-300">resume</p>
+function BooksSection() {
+  return (
+    <div>
+      <h1 className="text-3xl font-bold mb-6">books</h1>
+      <Bookshelf />
+    </div>
+  );
+}
 
-        <Link href="/coming-soon" className="relative z-10">
-          <button className="w-full py-2.5 px-5 rounded-xl text-sm font-medium text-white
-                             bg-gray-900 dark:bg-white dark:text-gray-900
-                             hover:opacity-80 transition-opacity duration-200 btn-tactile">
-            View Resume ↗
-          </button>
-        </Link>
+function PhotosSection() {
+  return (
+    <div>
+      <h1 className="text-3xl font-bold mb-2">photos</h1>
+      <p className="text-sm text-muted-foreground mb-8">places i&apos;ve been.</p>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {photos.map((photo) => (
+          <a
+            key={photo.id}
+            href={`/photography/${photo.id}`}
+            className="group relative overflow-hidden aspect-[16/10] bg-muted"
+          >
+            <Image
+              src={`/${photo.filename}`}
+              alt={photo.caption}
+              fill
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
+              sizes="(max-width: 768px) 100vw, 40vw"
+            />
+          </a>
+        ))}
       </div>
     </div>
   );
-});
-
-const MusicPlayer = memo(function MusicPlayer() {
-  return (
-    <div className="col-span-12 mt-4">
-      <GlassCard className="p-4 group overflow-hidden" intensity="subtle">
-        <div className="flex items-center gap-4">
-            {/* Album Art with glass effects */}
-            <div className="relative flex-shrink-0">
-              <div className="absolute -inset-1 bg-gradient-to-r from-teal-400/40 via-slate-400/30 to-orange-400/40 dark:from-teal-300/50 dark:via-slate-300/30 dark:to-orange-300/50 rounded-xl blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="relative w-16 h-16 rounded-xl overflow-hidden glass-tinted shadow-[0_4px_16px_rgba(0,0,0,0.1)] dark:shadow-[0_6px_24px_rgba(0,0,0,0.8)]">
-                <Image
-                  src="/college-dropout-cover.jpg"
-                  alt="The College Dropout Album Art"
-                  width={64}
-                  height={64}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                {/* Glass overlay on album art */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-black/10 dark:from-teal-400/20 dark:via-transparent dark:to-orange-400/10 opacity-40"></div>
-                {/* Corner glass accents */}
-                <div className="absolute top-1 right-1 w-2 h-2 bg-gradient-to-br from-white/60 to-transparent dark:from-teal-300/80 dark:to-transparent rounded-full"></div>
-              </div>
-            </div>
-            
-            {/* Track Info & Controls */}
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center justify-between">
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-sm font-medium text-gray-900 dark:text-white truncate" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>Family Business</h3>
-                  <p className="text-xs text-gray-600 dark:text-gray-200 truncate">Kanye West • The College Dropout</p>
-                </div>
-                
-                {/* Glass audio visualizer */}
-                <div className="flex items-end gap-1 ml-4 h-6">
-                  <div className="w-1 bg-gradient-to-t from-teal-600/80 to-teal-300/60 rounded-full animate-[wave1_1s_ease-in-out_infinite] h-3 shadow-[0_0_4px_rgba(64,160,138,0.5)]"></div>
-                  <div className="w-1 bg-gradient-to-t from-orange-600/80 to-orange-300/60 rounded-full animate-[wave2_1.2s_ease-in-out_infinite] h-4 shadow-[0_0_4px_rgba(196,126,78,0.5)]"></div>
-                  <div className="w-1 bg-gradient-to-t from-slate-500/80 to-slate-300/60 rounded-full animate-[wave3_0.8s_ease-in-out_infinite] h-2 shadow-[0_0_4px_rgba(132,152,158,0.5)]"></div>
-                  <div className="w-1 bg-gradient-to-t from-teal-600/80 to-teal-300/60 rounded-full animate-[wave4_1.1s_ease-in-out_infinite] h-5 shadow-[0_0_4px_rgba(64,160,138,0.5)]"></div>
-                  <div className="w-1 bg-gradient-to-t from-orange-600/80 to-orange-300/60 rounded-full animate-[wave5_0.9s_ease-in-out_infinite] h-3 shadow-[0_0_4px_rgba(196,126,78,0.5)]"></div>
-                </div>
-              </div>
-              
-              {/* Glass Audio Player */}
-              <div className="mt-3">
-                <audio 
-                  controls 
-                  className="w-full h-8 glass-audio-player"
-                  preload="metadata"
-                >
-                  <source src="/family-business.m4a" type="audio/mp4" />
-                  Your browser does not support the audio element.
-                </audio>
-              </div>
-            </div>
-            
-            {/* Glass status indicator */}
-            <div className="flex-shrink-0">
-              <div className="relative">
-                <div className="w-3 h-3 bg-gradient-to-r from-teal-400 to-orange-400 rounded-full animate-pulse shadow-[0_0_12px_rgba(64,160,138,0.6)]"></div>
-                <div className="absolute inset-0.5 bg-white/30 rounded-full"></div>
-              </div>
-            </div>
-        </div>
-      </GlassCard>
-    </div>
-  );
-});
-
-const Header = memo(function Header() {
-  return (
-    <div className="col-span-12">
-      <GlassCard className="p-3 h-full" intensity="subtle">
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-600 transition-colors cursor-pointer"></div>
-            <div className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-600 transition-colors cursor-pointer"></div>
-            <div className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-600 transition-colors cursor-pointer"></div>
-          </div>
-          <div className="flex items-center gap-3">
-            <ThemeIndicator />
-            <div className="text-xs text-gray-500 dark:text-gray-400 font-mono">nireks-portfolio</div>
-            <CurrentTimeDisplay />
-          </div>
-        </div>
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-          <div>
-            <h1 className="text-xl lg:text-2xl font-light tracking-wide text-gray-900 dark:text-white">◆ Nirek Shetty</h1>
-            <p className="text-gray-600 dark:text-gray-300 text-xs mt-0.5">Founder & Engineer</p>
-          </div>
-          <div className="flex gap-2 mt-2 md:mt-0">
-            <a href="mailto:shettynirek@gmail.com" className="p-2 glass-tinted btn-tactile rounded-lg text-gray-700 dark:text-gray-300 hover:text-orange-700 dark:hover:text-orange-300">
-              <Mail size={16} className="relative z-10" />
-            </a>
-            <a href="https://github.com/nirek13" target="_blank" rel="noreferrer" className="p-2 glass-tinted btn-tactile rounded-lg text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
-              <Github size={16} className="relative z-10" />
-            </a>
-            <a href="https://www.linkedin.com/in/nirekshetty/" target="_blank" rel="noreferrer" className="p-2 glass-tinted btn-tactile rounded-lg text-gray-700 dark:text-gray-300 hover:text-teal-700 dark:hover:text-teal-300">
-              <LinkedinIcon size={16} className="relative z-10" />
-            </a>
-          </div>
-        </div>
-      </GlassCard>
-    </div>
-  );
-});
-
-const Footer = memo(function Footer() {
-  return (
-    <footer className="col-span-12 mt-6 relative">
-      <div className="absolute inset-0 bg-gradient-to-t from-gray-50/50 via-white/20 to-transparent dark:from-black/80 dark:via-black/40 backdrop-blur-xl rounded-2xl border border-gray-200/30 dark:border-teal-400/20"></div>
-      
-      <div className="relative z-10 px-5 py-6 text-center">
-        {/* Signature */}
-        <div className="mb-5">
-          <p className="text-3xl md:text-4xl tracking-[0.18em] font-light select-none" style={{ fontFamily: '"My Soul", cursive' }}>
-            <span className="flex justify-center items-center flex-wrap gap-0">
-              {['N','i','r','e','k','','S','h','e','t','t','y'].map((char, i) =>
-                char === '' ? (
-                  <span key={`sp-${i}`} className="w-4 md:w-5 inline-block" />
-                ) : (
-                  <span
-                    key={i}
-                    className="inline-block cursor-default transition-all duration-300 ease-out hover:-translate-y-2 hover:scale-110"
-                    style={{
-                      color: 'transparent',
-                      WebkitTextStroke: '1px rgba(64, 130, 112, 0.5)',
-                      transitionDelay: `${i * 28}ms`,
-                    }}
-                  >
-                    {char}
-                  </span>
-                )
-              )}
-            </span>
-          </p>
-        </div>
-
-        <div className="border-t border-gray-200/30 dark:border-white/10 pt-3">
-          <div className="flex flex-col md:flex-row items-center justify-center gap-1 md:gap-4 text-xs text-gray-500 dark:text-gray-400 font-light">
-            <p className="flex items-center gap-1">
-              <span>Made with</span>
-              <span className="text-orange-400 animate-pulse">♥</span>
-              <span>in Toronto</span>
-            </p>
-            <span className="hidden md:block opacity-30">·</span>
-            <p className="flex items-center gap-1">
-              <span>Built with</span>
-              <span className="font-medium text-teal-600 dark:text-teal-400">Next.js</span>
-            </p>
-            <span className="hidden md:block opacity-30">·</span>
-            <p>© {new Date().getFullYear()} Nirek Shetty</p>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-});
+}
 
 export default function Home() {
-  return (
-    <main className="relative min-h-screen bg-textured-3d">
-      <div className="relative z-[10] min-h-screen p-1.5 lg:p-2 pb-20">
-        {/* Compact Apple-like Glass Grid Layout */}
-        <div className="max-w-5xl lg:max-w-none lg:w-[90%] mx-auto grid grid-cols-12 gap-2 min-h-screen">
-          
-          <Header />
-          <Navigation />
-          <TLDR />
-          <CurrentlyBuilding />
-          <Experience />
-          <GitStats />
-          <TurtleSection />
-          <MusicPlayer />
-          <Footer />
+  const [section, setSection] = useState<NavSection>('about');
+  const [filter, setFilter] = useState<ProjectFilter>('everything');
+  const [expanded, setExpanded] = useState(false);
+  const [cmdOpen, setCmdOpen] = useState(false);
 
+  return (
+    <div className="min-h-screen bg-background text-foreground flex flex-col items-center py-12 px-4 sm:px-6 lg:px-8 relative dotted-bg">
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background" />
+      <div className="w-full flex flex-col items-center relative z-10">
+        {/* Mobile top bar */}
+        <div className="md:hidden fixed top-4 left-1/2 transform -translate-x-1/2 z-50">
+          <div className="flex items-center gap-1 bg-muted/50 rounded-full p-1 backdrop-blur-sm">
+            <button
+              onClick={() => setCmdOpen(true)}
+              className="inline-flex items-center justify-center h-8 w-8 p-0 rounded-full hover:bg-accent hover:text-accent-foreground transition-colors"
+            >
+              <Search className="h-4 w-4" />
+            </button>
+            <div className="w-px h-4 bg-border" />
+            {MOBILE_NAV.map(({ id, icon: Icon }) => (
+              <button
+                key={id}
+                onClick={() => setSection(id)}
+                className={`inline-flex items-center justify-center h-8 w-8 p-0 rounded-full transition-colors ${
+                  section === id
+                    ? 'bg-primary text-primary-foreground'
+                    : 'hover:bg-accent hover:text-accent-foreground'
+                }`}
+              >
+                {Icon === 'photos' ? (
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    />
+                  </svg>
+                ) : (
+                  <Icon className="h-4 w-4" />
+                )}
+              </button>
+            ))}
+            <div className="w-px h-4 bg-border" />
+            <ThemeToggle />
+          </div>
+        </div>
+
+        {/* Desktop top-right controls */}
+        <div className="hidden md:flex absolute top-4 right-4 items-center gap-3">
+          <button
+            onClick={() => setCmdOpen(true)}
+            className="flex items-center gap-1.5 px-2 py-1 text-xs text-muted-foreground hover:text-foreground border border-border rounded-md hover:bg-muted/50 transition-colors"
+          >
+            <span className="text-[10px]">⌘</span>
+            <span>K</span>
+          </button>
+          <ThemeToggle />
+        </div>
+
+        <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-[120px_1fr_120px] gap-8 md:gap-12">
+          <nav className="hidden md:block md:text-right space-y-8 md:space-y-12 text-sm text-muted-foreground sticky top-12 self-start">
+            {NAV_ITEMS.map((item) => (
+              <div key={item.id}>
+                <button
+                  onClick={() => setSection(item.id)}
+                  className={`block w-full text-right transition-colors duration-200 ${
+                    section === item.id
+                      ? 'text-foreground font-medium'
+                      : 'text-muted-foreground/70 hover:text-muted-foreground'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              </div>
+            ))}
+          </nav>
+
+          <div className="text-base leading-relaxed pt-12 md:pt-0">
+            {section === 'about' && (
+              <AboutSection
+                filter={filter}
+                setFilter={setFilter}
+                expanded={expanded}
+                setExpanded={setExpanded}
+                onSearch={() => setCmdOpen(true)}
+              />
+            )}
+            {section === 'experiences' && <ExperiencesSection />}
+            {section === 'philosophy' && <PhilosophySection />}
+            {section === 'books' && <BooksSection />}
+            {section === 'photos' && <PhotosSection />}
+
+            <div className="mt-12 pt-8 flex justify-between items-center">
+              <p className="text-sm text-muted-foreground">
+                made by nirek · inspired by form
+              </p>
+            </div>
+          </div>
+
+          <div className="hidden md:block" />
         </div>
       </div>
-    </main>
+
+      <CommandPalette
+        open={cmdOpen}
+        onOpenChange={setCmdOpen}
+        onNavigate={setSection}
+      />
+    </div>
   );
 }

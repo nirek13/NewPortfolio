@@ -3,7 +3,6 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Calendar, Clock } from 'lucide-react';
-import { ThemeProvider } from '@/lib/theme-context';
 
 interface BlogPost {
   id: string;

@@ -7,13 +7,13 @@ export function GitCommitGraph() {
   const username = "nirek13";
 
   const verdigrisTheme = {
-    light: ['#eceeed', '#cde5de', '#8fc7b6', '#4da28b', '#2c6e5c'],
-    dark: ['#141a1a', '#1e3a34', '#2c5f52', '#40a08a', '#7fd6c0']
+    light: ['#e8f0f4', '#99f6e4', '#2dd4bf', '#0d9488', '#115e59'],
+    dark: ['#131629', '#134e4a', '#0f766e', '#14b8a6', '#5eead4']
   };
 
   return (
-    <GlassCard className="p-6 overflow-hidden" intensity="subtle">
-      <div className="flex items-center justify-between mb-6">
+    <GlassCard className="p-3 md:p-4 overflow-hidden" intensity="subtle">
+      <div className="flex items-center justify-between mb-4">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded-full bg-teal-600 animate-pulse"></div>
