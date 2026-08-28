@@ -44,8 +44,6 @@ export default function About() {
             <h1 className="underline underline-offset-[3px] font-extralight">◆ Nirek Shetty</h1>
             <div className="flex items-center gap-2 font-extralight">
               <a href="/" className={`hover-underline-nudge ${shouldBounce('home') ? 'nav-bounce' : ''}`}>Home</a>
-              <span className="text-neutral-400">|</span>
-              <a href="/photography" className={`hover-underline-nudge ${shouldBounce('photography') ? 'nav-bounce-delayed' : ''}`}>Photos</a>
             </div>
           </div>
           <div>↳ Born and raised in <span className="inline-flex items-center align-middle gap-1"><Logo src="/ontario flag.png" alt="Ontario" /><Label>Toronto</Label></span>, but spend a lot of time in <span className="inline-flex items-center align-middle gap-1"><Logo src="/ontario flag.png" alt="Ontario" /><Label>Waterloo</Label></span>.</div>

@@ -1,9 +1,4 @@
-export type NavSection =
-  | 'about'
-  | 'experiences'
-  | 'philosophy'
-  | 'books'
-  | 'photos';
+export type NavSection = 'about' | 'work' | 'experiences' | 'github' | 'books';
 
 export type ProjectFilter = 'everything' | 'projects' | 'communities';
 
@@ -24,10 +19,10 @@ export interface PortfolioItem {
 
 export const NAV_ITEMS: { id: NavSection; label: string }[] = [
   { id: 'about', label: 'about' },
-  { id: 'experiences', label: 'experiences' },
-  { id: 'philosophy', label: 'my philosophy' },
+  { id: 'work', label: 'work' },
+  { id: 'experiences', label: 'experience' },
+  { id: 'github', label: 'code' },
   { id: 'books', label: 'books' },
-  { id: 'photos', label: 'photos' },
 ];
 
 export const PORTFOLIO_ITEMS: PortfolioItem[] = [
@@ -98,45 +93,55 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
     description:
       'silver medalist and national finalist at the international olympiad in artificial intelligence — burgas, bulgaria 2024.',
     image: '/projects/ioai.png',
+    href: 'https://ioai-official.org',
     category: ['everything', 'projects'],
     fit: 'cover',
   },
 ];
 
-export const EXPERIENCES = [
+export const FEATURED_REPOS = [
   {
-    org: 'Penseum',
-    role: 'Product Engineer',
-    period: 'present',
-    detail:
-      'building learning tools used by 1M+ people. shipping product, talking to users, and moving fast.',
+    name: 'AGEile',
+    lang: 'Swift',
+    blurb: 'all-in-one app for seniors. Ingenious+ Ontario winner.',
+    href: 'https://github.com/nirek13/AGEile',
   },
+  {
+    name: '.Summa',
+    lang: 'JS',
+    blurb: 'connecting founders to VCs. Gen AI Genesis winner.',
+    href: 'https://github.com/nirek13/.Summa',
+  },
+  {
+    name: 'HaarCascadeClasifier',
+    lang: 'Python',
+    blurb: 'detects smiles, eyes, hands, mouths.',
+    href: 'https://github.com/nirek13/HaarCascadeClasifier',
+  },
+  {
+    name: 'Resume',
+    lang: 'TeX',
+    blurb: 'open-source LaTeX resume.',
+    href: 'https://github.com/nirek13/Resume',
+  },
+] as const;
+
+export const EXPERIENCES = [
+  { org: 'Penseum', role: 'Product Engineer', period: 'now', href: 'https://penseum.com' },
   {
     org: 'Hackathons Canada',
-    role: 'Founder & VP',
-    period: 'ongoing',
-    detail:
-      'grew a national student builder community with google/microsoft partners, 25M views, and 5k members.',
-  },
-  {
-    org: 'Contractual',
     role: 'Founder',
     period: 'ongoing',
-    detail: 'ai contract management — making dense legal docs actually usable.',
+    href: 'https://hackathonscanada.com',
   },
+  { org: 'Contractual', role: 'Founder', period: 'ongoing' },
+  { org: 'Voyager-0', role: 'shipped', period: '2024' },
   {
-    org: 'Voyager-0',
-    role: 'Builder',
-    period: 'shipped',
-    detail: 'satellite campus production with a cosmic visual identity and real product behind it.',
+    org: 'IOAI',
+    role: 'Silver · national finalist',
+    period: '2024',
+    href: 'https://ioai-official.org',
   },
-];
-
-export const PHILOSOPHY = [
-  "this is a rat race. but i'm no rat — i'm a fucking turtle. ninja turtle.",
-  'build in public when it helps. stay quiet when it compounds.',
-  'ship something every week. even small. especially small.',
-  "don't wait until you're \"ready.\" readiness is a trap.",
 ];
 
 export { BOOKS } from './books';

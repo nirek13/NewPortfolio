@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { Search } from 'lucide-react';
 import { NAV_ITEMS, type NavSection } from '@/lib/portfolio-data';
 import { useTheme, type ThemeMode } from '@/lib/theme-context';
 
@@ -71,22 +72,28 @@ export function CommandPalette({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-start justify-center pt-[20vh] px-4">
+    <div className="cmd-overlay fixed inset-0 z-[100] flex items-start justify-center px-4 pt-[18vh]">
       <div
-        className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/45 backdrop-blur-md"
         onClick={() => onOpenChange(false)}
       />
-      <div className="relative w-full max-w-lg overflow-hidden rounded-lg border border-border bg-popover text-popover-foreground shadow-2xl">
-        <input
-          autoFocus
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Type a command or search..."
-          className="w-full border-b border-border bg-transparent px-4 py-3 text-sm outline-none placeholder:text-muted-foreground"
-        />
+      <div className="metal-panel relative w-full max-w-lg overflow-hidden text-popover-foreground">
+        <div className="flex items-center gap-2 border-b border-border px-4">
+          <Search className="h-4 w-4 text-muted-foreground" />
+          <input
+            autoFocus
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search"
+            className="w-full bg-transparent py-3.5 text-sm outline-none placeholder:text-muted-foreground"
+          />
+          <kbd className="hidden border border-border px-1.5 py-0.5 text-[10px] text-muted-foreground sm:inline">
+            ESC
+          </kbd>
+        </div>
         <div className="max-h-72 overflow-y-auto p-2">
           {items.length === 0 && (
-            <p className="px-2 py-6 text-center text-sm text-muted-foreground">
+            <p className="px-2 py-8 text-center text-sm text-muted-foreground">
               No results.
             </p>
           )}
@@ -94,10 +101,10 @@ export function CommandPalette({
             <button
               key={item.id}
               onClick={item.run}
-              className="flex w-full items-center justify-between rounded-md px-3 py-2 text-sm text-left hover:bg-accent hover:text-accent-foreground transition-colors"
+              className="flex w-full items-center justify-between px-3 py-2.5 text-left text-sm transition-colors hover:bg-foreground/8 hover:text-accent-foreground"
             >
-              <span>{item.label}</span>
-              <span className="text-[10px] uppercase tracking-wide text-muted-foreground">
+              <span className="capitalize">{item.label}</span>
+              <span className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
                 {item.group}
               </span>
             </button>

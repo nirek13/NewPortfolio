@@ -2,7 +2,6 @@ import Link from "next/link";
 
 const links = [
   { href: "/about", label: "About" },
-  { href: "/photography", label: "Photos" },
 ];
 
 export function SiteNav({ active }: { active?: string }) {

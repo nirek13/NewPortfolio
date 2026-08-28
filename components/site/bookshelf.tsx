@@ -4,12 +4,12 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { BOOKS } from '@/lib/books';
 
-export function Bookshelf() {
+export function Bookshelf({ compact = false }: { compact?: boolean }) {
   const [activeId, setActiveId] = useState<string | null>(null);
   const active = BOOKS.find((b) => b.id === activeId);
 
   return (
-    <div className="bookshelf">
+    <div className={`bookshelf${compact ? ' is-compact' : ''}`}>
       <div className="bookshelf-stage">
         <div className="bookshelf-backboard" aria-hidden />
         <div className="bookshelf-row" role="list">
@@ -32,6 +32,10 @@ export function Bookshelf() {
                 aria-label={`${book.title} by ${book.author}`}
                 className={`bookshelf-book${activeId === book.id ? ' is-active' : ''}`}
                 style={{ ['--spine' as string]: book.spine }}
+                onClick={() => {
+                  if (window.matchMedia('(hover: hover)').matches) return;
+                  setActiveId((id) => (id === book.id ? null : book.id));
+                }}
               >
                 <span className="bookshelf-spine">
                   <span className="bookshelf-spine-rule" />
