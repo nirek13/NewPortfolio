@@ -95,7 +95,7 @@ export function PolaroidCard({
                 tabIndex={flipped ? 0 : -1}
                 onClick={(e) => e.stopPropagation()}
               >
-                visit
+                {new URL(item.href).hostname.replace(/^www\./, '')}
               </a>
             ) : (
               <span className="polaroid-visit" aria-hidden>

@@ -186,6 +186,8 @@
   .link-waterloo,
   .link-toronto,
   .link-voyager,
+  .link-dmz,
+  .link-ingenious,
   .link-badge {
     display: inline;
     padding: 0.04em 0.32em;
@@ -335,6 +337,32 @@
   }
   .link-voyager:hover {
     background-color: #7c3aed;
+    color: #fff;
+  }
+
+  .link-dmz {
+    color: #1e3a8a;
+    background-color: rgb(219 234 254 / 0.82);
+  }
+  .dark .link-dmz {
+    color: #bfdbfe;
+    background-color: rgb(37 99 235 / 0.28);
+  }
+  .link-dmz:hover {
+    background-color: #1d4ed8;
+    color: #fff;
+  }
+
+  .link-ingenious {
+    color: #854d0e;
+    background-color: rgb(255 243 196 / 0.86);
+  }
+  .dark .link-ingenious {
+    color: #fde68a;
+    background-color: rgb(245 158 11 / 0.24);
+  }
+  .link-ingenious:hover {
+    background-color: #d97706;
     color: #fff;
   }
 }

@@ -29,10 +29,10 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
   {
     id: 'penseum',
     title: 'Penseum',
-    badge: '1M+ users',
+    badge: '2M+ users',
     badgeStyle: 'penseum',
     description:
-      'product engineer at an edtech startup serving over a million users. shipping features, obsessing over product, learning how real software gets built.',
+      'your 1-1 AI tutor. upload notes, it explains out loud, draws on your screen, and quizzes you until it sticks. 2 million users worldwide.',
     image: '/penseum-logo.avif',
     href: 'https://penseum.com',
     category: ['everything', 'projects'],
@@ -45,20 +45,21 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
     badge: '5k members',
     badgeStyle: 'hackathons',
     description:
-      'founded and scaled a national hackathon community. partnered with google and microsoft, hit 25 million social views, and grew to 5,000 members.',
+      'the most comprehensive hackathon list anywhere. track applications, get deadline reminders, and discover events from MLH, Devpost, Luma, and Eventbrite. built by a 5,000+ community.',
     image: '/projects/hackathons-canada.png',
-    href: 'https://hackathonscanada.com',
+    href: 'https://hna.dev',
     category: ['everything', 'communities'],
     fit: 'cover',
   },
   {
     id: 'contractual',
     title: 'Contractual',
-    badge: 'project',
+    badge: 'tenders',
     badgeStyle: 'contractual',
     description:
-      'ai-powered contract management platform. helping people actually understand and manage the agreements they sign.',
+      'canadian public tender search. browse CanadaBuys and SEAO in one place, inspect closing dates and buyers, then verify and continue at the official portal.',
     image: '/projects/contractual.png',
+    href: 'https://contractual.ca',
     category: ['everything', 'projects'],
     fit: 'contain',
     frame: '#ffffff',
@@ -77,21 +78,21 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
   {
     id: 'hack-canada',
     title: 'Hack Canada',
-    badge: 'community',
+    badge: 'hackathon',
     badgeStyle: 'muted',
     description:
-      'canadian winter energy for builders. igloos, beavers, campfires — and a whole lot of shipping under the northern lights.',
+      "canada's premier hackathon. real canadian challenges, then a 30-day build with 1-on-1 sponsor access and funding to turn prototypes into lasting projects.",
     image: '/projects/hack-canada.png',
+    href: 'https://hackcanada.org',
     category: ['everything', 'communities'],
     fit: 'cover',
   },
   {
     id: 'ioai',
     title: 'IOAI',
-    badge: 'silver medalist · national finalist',
+    badge: 'silver medalist',
     badgeStyle: 'ioai',
-    description:
-      'silver medalist and national finalist at the international olympiad in artificial intelligence — burgas, bulgaria 2024.',
+    description: 'IOAI Canada silver medalist.',
     image: '/projects/ioai.png',
     href: 'https://ioai-official.org',
     category: ['everything', 'projects'],
@@ -99,49 +100,15 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
   },
 ];
 
-export const FEATURED_REPOS = [
-  {
-    name: 'AGEile',
-    lang: 'Swift',
-    blurb: 'all-in-one app for seniors. Ingenious+ Ontario winner.',
-    href: 'https://github.com/nirek13/AGEile',
-  },
-  {
-    name: '.Summa',
-    lang: 'JS',
-    blurb: 'connecting founders to VCs. Gen AI Genesis winner.',
-    href: 'https://github.com/nirek13/.Summa',
-  },
-  {
-    name: 'HaarCascadeClasifier',
-    lang: 'Python',
-    blurb: 'detects smiles, eyes, hands, mouths.',
-    href: 'https://github.com/nirek13/HaarCascadeClasifier',
-  },
-  {
-    name: 'Resume',
-    lang: 'TeX',
-    blurb: 'open-source LaTeX resume.',
-    href: 'https://github.com/nirek13/Resume',
-  },
-] as const;
-
 export const EXPERIENCES = [
-  { org: 'Penseum', role: 'Product Engineer', period: 'now', href: 'https://penseum.com' },
+  { org: 'Penseum', role: 'Product Engineer', period: 'prev', href: 'https://penseum.com' },
   {
     org: 'Hackathons Canada',
     role: 'Founder',
     period: 'ongoing',
-    href: 'https://hackathonscanada.com',
+    href: 'https://hna.dev',
   },
-  { org: 'Contractual', role: 'Founder', period: 'ongoing' },
-  { org: 'Voyager-0', role: 'shipped', period: '2024' },
-  {
-    org: 'IOAI',
-    role: 'Silver · national finalist',
-    period: '2024',
-    href: 'https://ioai-official.org',
-  },
+  { org: 'Contractual', role: 'Founder', period: 'ongoing', href: 'https://contractual.ca' },
 ];
 
 export { BOOKS } from './books';

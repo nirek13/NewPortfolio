@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { GitHubCalendar } from 'react-github-calendar';
 import { useTheme } from '@/lib/theme-context';
-import { FEATURED_REPOS } from '@/lib/portfolio-data';
 
 const USER = 'nirek13';
 
@@ -59,26 +58,6 @@ export function GitHubPanel() {
           showColorLegend={false}
           showTotalCount={false}
         />
-      </div>
-
-      <div className="mt-4 border-y border-foreground/20">
-        {FEATURED_REPOS.map((repo) => (
-          <a
-            key={repo.name}
-            href={repo.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="exp-row is-link"
-          >
-            <p className="min-w-0 text-[0.88rem] leading-snug">
-              <span className="font-medium">{repo.name}</span>
-              <span className="text-muted-foreground"> — {repo.blurb}</span>
-            </p>
-            <span className="shrink-0 text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
-              {repo.lang}
-            </span>
-          </a>
-        ))}
       </div>
     </div>
   );

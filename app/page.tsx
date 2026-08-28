@@ -17,16 +17,16 @@ import {
 
 const NOTES = [
   <>
-    product engineer at{' '}
+    prev. product engineer at{' '}
     <a href="https://penseum.com" target="_blank" rel="noopener noreferrer" className="link-penseum">
       @Penseum
     </a>
-    . a million people on it.
+    , providing world-class education to over 2 million people worldwide.
   </>,
   <>
     started{' '}
     <a
-      href="https://hackathonscanada.com"
+      href="https://hna.dev"
       target="_blank"
       rel="noopener noreferrer"
       className="link-hackathons"
@@ -37,11 +37,10 @@ const NOTES = [
     25M views, 5k members.
   </>,
   <>
-    silver at{' '}
     <a href="https://ioai-official.org" target="_blank" rel="noopener noreferrer" className="link-ioai">
-      IOAI
+      IOAI Canada
     </a>{' '}
-    in Bulgaria. nominated for{' '}
+    silver medalist.{' '}
     <a
       href="https://www.spaceappschallenge.org/"
       target="_blank"
@@ -50,12 +49,20 @@ const NOTES = [
     >
       NASA Space Apps
     </a>{' '}
-    out of 93k.
+    global nominee. winner of Canada&apos;s largest AI hackathon.
   </>,
-  <>71/75 on the CCC. Waterloo math distinctions. House of Commons next.</>,
   <>
-    <span className="link-toronto">Toronto</span> / Waterloo. coding since I was seven, 30+
-    hackathons in.
+    national finalist in{' '}
+    <a href="https://dmz.torontomu.ca/" target="_blank" rel="noopener noreferrer" className="link-dmz">
+      DMZ&apos;s
+    </a>{' '}
+    100k pitch competition. 3× <span className="link-ingenious">Ingenious+</span> Ontario winner.
+  </>,
+  <>
+    71/75 on the CCC. 9× <span className="link-waterloo">Waterloo</span> math.
+  </>,
+  <>
+    <span className="link-toronto">Toronto</span> / Waterloo.
   </>,
 ];
 
@@ -265,9 +272,11 @@ export default function Home() {
                       <span className="font-medium">{exp.org}</span>
                       <span className="text-muted-foreground"> — {exp.role}</span>
                     </p>
-                    <span className="shrink-0 text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
-                      {exp.period}
-                    </span>
+                    {exp.period ? (
+                      <span className="shrink-0 text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
+                        {exp.period}
+                      </span>
+                    ) : null}
                   </>
                 );
 
