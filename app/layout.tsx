@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Caveat, Fraunces, IBM_Plex_Sans } from 'next/font/google'
+import { Caveat, Fraunces, IBM_Plex_Mono, IBM_Plex_Sans } from 'next/font/google'
 import './globals.css'
 import { Analytics } from '@vercel/analytics/react'
 import { ThemeProvider } from '@/lib/theme-context'
@@ -10,6 +10,13 @@ const sans = IBM_Plex_Sans({
   subsets: ['latin'],
   weight: ['400', '500', '600'],
   variable: '--font-sans',
+  display: 'swap',
+})
+
+const mono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-mono',
   display: 'swap',
 })
 
@@ -56,7 +63,7 @@ export default function RootLayout({
       <head>
         <script id="boot-init" dangerouslySetInnerHTML={{ __html: bootInit }} />
       </head>
-      <body className={`${sans.variable} ${display.variable} ${hand.variable} font-sans antialiased`}>
+      <body className={`${sans.variable} ${mono.variable} ${display.variable} ${hand.variable} font-sans antialiased`}>
         <SignatureLoader />
         <ThemeProvider>
           {children}

@@ -7,51 +7,51 @@
 /* ------------------------------------------------------------------ */
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 4%;
-    --muted-foreground: 0 0% 42%;
-    --accent-ink: 0 0% 4%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 4%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 4%;
-    --primary: 0 0% 4%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 4%;
-    --muted: 0 0% 96%;
-    --accent: 0 0% 96%;
-    --accent-foreground: 0 0% 4%;
-    --destructive: 0 0% 4%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 86%;
-    --input: 0 0% 86%;
-    --ring: 0 0% 4%;
+    --background: 42 18% 97%;
+    --foreground: 30 8% 9%;
+    --muted-foreground: 30 5% 44%;
+    --accent-ink: 30 8% 9%;
+    --card: 42 18% 97%;
+    --card-foreground: 30 8% 9%;
+    --popover: 42 18% 97%;
+    --popover-foreground: 30 8% 9%;
+    --primary: 30 8% 9%;
+    --primary-foreground: 42 18% 97%;
+    --secondary: 40 12% 92%;
+    --secondary-foreground: 30 8% 9%;
+    --muted: 40 12% 92%;
+    --accent: 40 12% 92%;
+    --accent-foreground: 30 8% 9%;
+    --destructive: 30 8% 9%;
+    --destructive-foreground: 42 18% 97%;
+    --border: 35 8% 84%;
+    --input: 35 8% 84%;
+    --ring: 30 8% 9%;
     --radius: 0px;
     color-scheme: light;
   }
 
   .dark {
-    --background: 0 0% 4%;
-    --foreground: 0 0% 96%;
-    --muted-foreground: 0 0% 60%;
-    --accent-ink: 0 0% 96%;
-    --card: 0 0% 4%;
-    --card-foreground: 0 0% 96%;
-    --popover: 0 0% 4%;
-    --popover-foreground: 0 0% 96%;
-    --primary: 0 0% 96%;
-    --primary-foreground: 0 0% 4%;
-    --secondary: 0 0% 10%;
-    --secondary-foreground: 0 0% 96%;
-    --muted: 0 0% 10%;
-    --accent: 0 0% 10%;
-    --accent-foreground: 0 0% 96%;
-    --destructive: 0 0% 96%;
-    --destructive-foreground: 0 0% 4%;
-    --border: 0 0% 22%;
-    --input: 0 0% 22%;
-    --ring: 0 0% 96%;
+    --background: 30 5% 6%;
+    --foreground: 40 12% 91%;
+    --muted-foreground: 40 5% 58%;
+    --accent-ink: 40 12% 91%;
+    --card: 30 5% 6%;
+    --card-foreground: 40 12% 91%;
+    --popover: 30 5% 6%;
+    --popover-foreground: 40 12% 91%;
+    --primary: 40 12% 91%;
+    --primary-foreground: 30 5% 6%;
+    --secondary: 30 5% 11%;
+    --secondary-foreground: 40 12% 91%;
+    --muted: 30 5% 11%;
+    --accent: 30 5% 11%;
+    --accent-foreground: 40 12% 91%;
+    --destructive: 40 12% 91%;
+    --destructive-foreground: 30 5% 6%;
+    --border: 30 5% 22%;
+    --input: 30 5% 22%;
+    --ring: 40 12% 91%;
     color-scheme: dark;
   }
 
@@ -82,6 +82,11 @@
     font-family: var(--font-hand), cursive;
   }
 
+  .font-mono {
+    font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: 0.04em;
+  }
+
   ::selection {
     background: hsl(var(--foreground));
     color: hsl(var(--background));
@@ -110,7 +115,7 @@
     top: 0.52em;
     width: 4px;
     height: 4px;
-    background: hsl(var(--foreground));
+    background: hsl(var(--foreground) / 0.6);
   }
 
   .link-penseum,
@@ -271,35 +276,67 @@ body > .sig-loader ~ * [data-sig-target] {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Chrome: one narrow column, hairline separators, nothing boxed        */
+/*  Chrome: paper with a faint dot grid, bracket-cornered panels,        */
+/*  dotted rules and monospace index labels                              */
 /* ------------------------------------------------------------------ */
 .site-bg {
-  background: hsl(var(--background));
+  background-color: hsl(var(--background));
+  background-image: radial-gradient(hsl(var(--foreground) / 0.11) 0.7px, transparent 0.9px);
+  background-size: 18px 18px;
+  background-position: 9px 9px;
 }
 
-.site-wrap {
-  width: 100%;
-  max-width: 42rem;
-  margin: 0 auto;
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
+.dark .site-bg {
+  background-image: radial-gradient(hsl(var(--foreground) / 0.09) 0.7px, transparent 0.9px);
 }
 
-.site-nav {
-  background: hsl(var(--background) / 0.92);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-bottom: 1px solid hsl(var(--foreground) / 0.08);
+.dash-bar {
+  background: hsl(var(--background) / 0.94);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-bottom: 1px solid hsl(var(--foreground) / 0.3);
+  box-shadow:
+    0 2px 0 0 hsl(var(--background)),
+    0 3px 0 0 hsl(var(--foreground) / 0.12);
 }
 
-.section {
-  margin-top: 3.5rem;
-  padding-top: 1.75rem;
-  border-top: 1px solid hsl(var(--foreground) / 0.12);
+.dash-panel {
+  --bracket: hsl(var(--foreground) / 0.75);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 0.9rem 1.05rem 1.05rem;
+  border: 1px solid hsl(var(--foreground) / 0.1);
+  background-color: hsl(var(--background));
+  background-repeat: no-repeat;
+  background-image:
+    linear-gradient(var(--bracket), var(--bracket)),
+    linear-gradient(var(--bracket), var(--bracket)),
+    linear-gradient(var(--bracket), var(--bracket)),
+    linear-gradient(var(--bracket), var(--bracket)),
+    linear-gradient(var(--bracket), var(--bracket)),
+    linear-gradient(var(--bracket), var(--bracket)),
+    linear-gradient(var(--bracket), var(--bracket)),
+    linear-gradient(var(--bracket), var(--bracket));
+  background-size:
+    12px 1px, 1px 12px,
+    12px 1px, 1px 12px,
+    12px 1px, 1px 12px,
+    12px 1px, 1px 12px;
+  background-position:
+    0 0, 0 0,
+    100% 0, 100% 0,
+    0 100%, 0 100%,
+    100% 100%, 100% 100%;
 }
 
-.section-label {
-  margin: 0 0 1.1rem;
+.dash-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0 0 0.85rem;
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 10px;
   font-weight: 500;
   letter-spacing: 0.18em;
@@ -307,20 +344,26 @@ body > .sig-loader ~ * [data-sig-target] {
   color: hsl(var(--muted-foreground));
 }
 
-.text-link {
-  font-size: 12px;
-  letter-spacing: 0.02em;
-  color: hsl(var(--muted-foreground));
-  background-image: linear-gradient(hsl(var(--foreground)), hsl(var(--foreground)));
-  background-repeat: no-repeat;
-  background-position: 0 100%;
-  background-size: 0 1px;
-  transition: color 0.18s ease, background-size 0.22s ease;
+.dash-label .label-index {
+  color: hsl(var(--foreground));
 }
 
-.text-link:hover {
-  color: hsl(var(--foreground));
-  background-size: 100% 1px;
+.dash-label .label-rule {
+  flex: 1;
+  height: 0;
+  border-top: 1px dotted hsl(var(--foreground) / 0.4);
+}
+
+.dash-label .label-kanji {
+  font-family: inherit;
+  font-size: 11px;
+  letter-spacing: 0;
+  color: hsl(var(--foreground) / 0.55);
+}
+
+.icon-chip {
+  border: 1px solid hsl(var(--foreground) / 0.35);
+  background: transparent;
 }
 
 .cmd-panel {
@@ -341,6 +384,7 @@ body > .sig-loader ~ * [data-sig-target] {
 .theme-toggle {
   height: 12px;
   width: 12px;
+  border-radius: 50%;
   border: 1px solid hsl(var(--foreground));
   background: hsl(var(--foreground));
   transition: background-color 0.18s ease, transform 0.15s ease;
@@ -366,7 +410,7 @@ body > .sig-loader ~ * [data-sig-target] {
 }
 
 .site-section {
-  scroll-margin-top: 4.5rem;
+  scroll-margin-top: 3.1rem;
 }
 
 .exp-row {
@@ -375,8 +419,8 @@ body > .sig-loader ~ * [data-sig-target] {
   align-items: baseline;
   justify-content: space-between;
   gap: 1rem;
-  border-bottom: 1px solid hsl(var(--foreground) / 0.1);
-  padding: 0.7rem 0.1rem;
+  border-bottom: 1px dotted hsl(var(--foreground) / 0.35);
+  padding: 0.6rem 0.1rem;
   text-align: left;
   transition: background-color 0.2s ease, padding-left 0.2s ease;
 }
@@ -389,6 +433,11 @@ body > .sig-loader ~ * [data-sig-target] {
 .exp-row.is-link:focus-visible {
   background: hsl(var(--foreground) / 0.05);
   padding-left: 0.45rem;
+}
+
+.dash-panel .exp-row {
+  gap: 0.85rem;
+  padding: 0.55rem 0.08rem;
 }
 
 /* GitHub calendar */

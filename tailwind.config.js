@@ -12,6 +12,7 @@ module.exports = {
         sans: ['var(--font-sans)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         display: ['var(--font-display)', 'ui-serif', 'Georgia', 'serif'],
         hand: ['var(--font-hand)', 'cursive'],
+        mono: ['var(--font-mono)', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
       },
       colors: {
         background: 'hsl(var(--background) / <alpha-value>)',

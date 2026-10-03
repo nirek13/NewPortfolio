@@ -52,7 +52,7 @@ export function GitHubPanel() {
         >
           github.com/{USER}
         </a>
-        <p className="text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
+        <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
           {stats.repos} repos · {stats.followers} followers · since 2020
         </p>
       </div>
