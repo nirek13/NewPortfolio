@@ -6,9 +6,10 @@ import { useTheme } from '@/lib/theme-context';
 
 const USER = 'nirek13';
 
+/** Five-step grayscale ramps: empty cell first, busiest cell last. */
 const CAL_THEME = {
-  light: ['#e6e4de', '#9be9a8', '#40c463', '#30a14e', '#216e39'],
-  dark: ['#2a2622', '#0e4429', '#006d32', '#26a641', '#39d353'],
+  light: ['#ececec', '#c4c4c4', '#8a8a8a', '#4a4a4a', '#0a0a0a'],
+  dark: ['#1c1c1c', '#3b3b3b', '#6a6a6a', '#a6a6a6', '#f5f5f5'],
 };
 
 export function GitHubPanel() {

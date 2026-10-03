@@ -2,16 +2,15 @@
 
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import { ThemeToggle } from '@/components/site/theme-toggle';
+import { Signature } from '@/components/site/signature';
 import { CommandPalette } from '@/components/site/command-palette';
 import { Bookshelf } from '@/components/site/bookshelf';
 import { SocialLinks } from '@/components/site/socials';
 import { Stage, Reveal } from '@/components/site/stage';
 import { GitHubPanel } from '@/components/site/github-panel';
-import { PolaroidCard } from '@/components/site/polaroid-card';
 import {
   EXPERIENCES,
   NAV_ITEMS,
-  PORTFOLIO_ITEMS,
   type NavSection,
 } from '@/lib/portfolio-data';
 
@@ -65,8 +64,6 @@ const NOTES = [
     <span className="link-toronto">Toronto</span> / Waterloo.
   </>,
 ];
-
-const TILTS = ['-0.7deg', '0.55deg', '-0.35deg', '0.7deg', '-0.5deg', '0.4deg'];
 
 function scrollToSection(id: NavSection) {
   const el = document.getElementById(id);
@@ -203,9 +200,10 @@ export default function Home() {
             <button
               type="button"
               onClick={() => goTo('about')}
-              className="shrink-0 font-display text-[15px] font-semibold leading-none tracking-tight"
+              className="flex shrink-0 items-center py-1 pr-1"
+              aria-label="Nirek Shetty — back to top"
             >
-              Nirek
+              <Signature data-sig-target className="h-[22px] w-auto" aria-hidden="true" />
             </button>
             <span className="mx-1.5 hidden h-3.5 w-px bg-foreground/20 sm:block" aria-hidden />
             <div className="flex min-w-0 items-center overflow-x-auto">
@@ -299,18 +297,6 @@ export default function Home() {
             </div>
           </Panel>
 
-          <Panel id="work" label="work" span="lg:col-span-12">
-            <div className="grid grid-cols-2 gap-x-3 gap-y-4 sm:gap-x-5 sm:gap-y-5 lg:grid-cols-3">
-              {PORTFOLIO_ITEMS.map((item, index) => (
-                <PolaroidCard
-                  key={item.id}
-                  item={item}
-                  tilt={TILTS[index % TILTS.length]}
-                  priority={index < 3}
-                />
-              ))}
-            </div>
-          </Panel>
 
           <Panel id="github" label="code" span="lg:col-span-7">
             <GitHubPanel />

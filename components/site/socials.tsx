@@ -45,7 +45,7 @@ export function SocialLinks({ className = '' }: { className?: string }) {
           target={href.startsWith('mailto:') ? undefined : '_blank'}
           rel={href.startsWith('mailto:') ? undefined : 'noopener noreferrer'}
           aria-label={label}
-          className="metal-chip inline-flex h-8 w-8 items-center justify-center text-muted-foreground transition-colors duration-200 hover:bg-foreground hover:text-background"
+          className="icon-chip inline-flex h-8 w-8 items-center justify-center text-muted-foreground transition-colors duration-200 hover:bg-foreground hover:text-background"
         >
           <Icon className="h-4 w-4" />
         </a>

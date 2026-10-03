@@ -1,4 +1,4 @@
-export type NavSection = 'about' | 'work' | 'experiences' | 'github' | 'books';
+export type NavSection = 'about' | 'experiences' | 'github' | 'books';
 
 export type ProjectFilter = 'everything' | 'projects' | 'communities';
 
@@ -19,7 +19,6 @@ export interface PortfolioItem {
 
 export const NAV_ITEMS: { id: NavSection; label: string }[] = [
   { id: 'about', label: 'about' },
-  { id: 'work', label: 'work' },
   { id: 'experiences', label: 'experience' },
   { id: 'github', label: 'code' },
   { id: 'books', label: 'books' },
@@ -37,7 +36,7 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
     href: 'https://penseum.com',
     category: ['everything', 'projects'],
     fit: 'contain',
-    frame: '#0b1220',
+    frame: '#0a0a0a',
   },
   {
     id: 'hackathons-canada',

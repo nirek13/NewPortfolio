@@ -5,7 +5,7 @@ export interface Book {
   cover: string;
   /** short label printed on the spine */
   spineLabel: string;
-  /** spine accent color */
+  /** spine shade (grayscale) */
   spine: string;
 }
 
@@ -16,7 +16,7 @@ export const BOOKS: Book[] = [
     author: 'Peter Thiel',
     cover: '/books/zero-to-one.png',
     spineLabel: 'ZERO TO ONE',
-    spine: '#3d6f9c',
+    spine: '#2e2e2e',
   },
   {
     id: 'steve-jobs',
@@ -24,7 +24,7 @@ export const BOOKS: Book[] = [
     author: 'Walter Isaacson',
     cover: '/books/steve-jobs.png',
     spineLabel: 'STEVE JOBS',
-    spine: '#111111',
+    spine: '#0f0f0f',
   },
   {
     id: 'benjamin-franklin',
@@ -32,7 +32,7 @@ export const BOOKS: Book[] = [
     author: 'Walter Isaacson',
     cover: '/books/benjamin-franklin.png',
     spineLabel: 'FRANKLIN',
-    spine: '#1a3352',
+    spine: '#3b3b3b',
   },
   {
     id: 'moneyball',
@@ -40,7 +40,7 @@ export const BOOKS: Book[] = [
     author: 'Michael Lewis',
     cover: '/books/moneyball.png',
     spineLabel: 'MONEYBALL',
-    spine: '#b91c1c',
+    spine: '#5a5a5a',
   },
   {
     id: 'devils',
@@ -48,7 +48,7 @@ export const BOOKS: Book[] = [
     author: 'Fyodor Dostoevsky',
     cover: '/books/devils.png',
     spineLabel: 'DEVILS',
-    spine: '#8f122f',
+    spine: '#1f1f1f',
   },
   {
     id: 'dream-ridiculous-man',
@@ -56,7 +56,7 @@ export const BOOKS: Book[] = [
     author: 'Fyodor Dostoyevsky',
     cover: '/books/dream-ridiculous-man.png',
     spineLabel: 'DREAM',
-    spine: '#0d0d0d',
+    spine: '#474747',
   },
   {
     id: 'confessions',
@@ -64,6 +64,6 @@ export const BOOKS: Book[] = [
     author: 'Saint Augustine',
     cover: '/books/confessions.png',
     spineLabel: 'CONFESSIONS',
-    spine: '#0a1624',
+    spine: '#262626',
   },
 ];

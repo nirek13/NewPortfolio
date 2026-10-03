@@ -3,12 +3,7 @@
 import { useEffect, useRef, type ReactNode } from 'react';
 
 export function Stage({ children }: { children: ReactNode }) {
-  return (
-    <div className="relative min-h-screen text-foreground metal-bg">
-      <div className="site-grain" />
-      {children}
-    </div>
-  );
+  return <div className="site-bg relative min-h-screen text-foreground">{children}</div>;
 }
 
 export function Reveal({

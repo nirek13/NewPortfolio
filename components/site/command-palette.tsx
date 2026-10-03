@@ -14,8 +14,6 @@ interface CommandPaletteProps {
 const THEME_OPTIONS: { id: ThemeMode; label: string }[] = [
   { id: 'light', label: 'Light theme' },
   { id: 'dark', label: 'Dark theme' },
-  { id: 'reading', label: 'Reading theme' },
-  { id: 'matcha', label: 'Matcha theme' },
 ];
 
 export function CommandPalette({
@@ -74,11 +72,11 @@ export function CommandPalette({
   return (
     <div className="cmd-overlay fixed inset-0 z-[100] flex items-start justify-center px-4 pt-[18vh]">
       <div
-        className="absolute inset-0 bg-black/45 backdrop-blur-md"
+        className="absolute inset-0 bg-background/80 backdrop-blur-sm"
         onClick={() => onOpenChange(false)}
       />
-      <div className="metal-panel relative w-full max-w-lg overflow-hidden text-popover-foreground">
-        <div className="flex items-center gap-2 border-b border-border px-4">
+      <div className="cmd-panel relative w-full max-w-lg overflow-hidden text-foreground">
+        <div className="flex items-center gap-2 border-b border-foreground/20 px-4">
           <Search className="h-4 w-4 text-muted-foreground" />
           <input
             autoFocus
@@ -87,7 +85,7 @@ export function CommandPalette({
             placeholder="Search"
             className="w-full bg-transparent py-3.5 text-sm outline-none placeholder:text-muted-foreground"
           />
-          <kbd className="hidden border border-border px-1.5 py-0.5 text-[10px] text-muted-foreground sm:inline">
+          <kbd className="hidden border border-foreground/30 px-1.5 py-0.5 text-[10px] text-muted-foreground sm:inline">
             ESC
           </kbd>
         </div>
@@ -101,7 +99,7 @@ export function CommandPalette({
             <button
               key={item.id}
               onClick={item.run}
-              className="flex w-full items-center justify-between px-3 py-2.5 text-left text-sm transition-colors hover:bg-foreground/8 hover:text-accent-foreground"
+              className="flex w-full items-center justify-between px-3 py-2.5 text-left text-sm transition-colors hover:bg-foreground hover:text-background"
             >
               <span className="capitalize">{item.label}</span>
               <span className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
