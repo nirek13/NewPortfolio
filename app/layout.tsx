@@ -44,7 +44,7 @@ export const metadata: Metadata = {
  *     on-screen time
  */
 const seenCheck = INTRO_ONCE_PER_SESSION ? `!sessionStorage.getItem('${INTRO_SESSION_KEY}')&&` : ''
-const bootInit = `(function(){var h=document.documentElement;try{var t=localStorage.getItem('portfolio-theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches))h.classList.add('dark')}catch(e){}try{if(${seenCheck}!window.matchMedia('(prefers-reduced-motion: reduce)').matches){h.setAttribute('data-sig-loading','');h.dataset.sigStart=String(performance.now());requestAnimationFrame(function(){h.dataset.sigStart=String(performance.now());performance.mark('sig-intro:first-frame')})}}catch(e){}})()`
+const bootInit = `(function(){var h=document.documentElement;try{var t=localStorage.getItem('portfolio-theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches))h.classList.add('dark')}catch(e){}try{if(${seenCheck}!window.matchMedia('(prefers-reduced-motion: reduce)').matches){h.setAttribute('data-sig-loading','');var s0=performance.now();h.dataset.sigStart=String(s0);window.__sigIntro={start:s0};requestAnimationFrame(function(){var s1=performance.now();h.dataset.sigStart=String(s1);window.__sigIntro.start=s1;performance.mark('sig-intro:first-frame')})}}catch(e){}})()`
 
 export default function RootLayout({
   children,

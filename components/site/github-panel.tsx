@@ -1,8 +1,19 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { GitHubCalendar } from 'react-github-calendar';
+import dynamic from 'next/dynamic';
 import { useTheme } from '@/lib/theme-context';
+
+/**
+ * Client-only: the calendar lays out "the last year" from today's date, so a
+ * page prerendered on the server (UTC, at build time) can disagree with the
+ * visitor's browser and trip a hydration mismatch. Rendering it after mount
+ * sidesteps that entirely; the placeholder keeps the panel from jumping.
+ */
+const GitHubCalendar = dynamic(
+  () => import('react-github-calendar').then((m) => m.GitHubCalendar),
+  { ssr: false, loading: () => <div className="github-cal-placeholder" aria-hidden /> }
+);
 
 const USER = 'nirek13';
 

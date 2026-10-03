@@ -390,7 +390,12 @@ body > .sig-loader ~ * [data-sig-target] {
 
 /* GitHub calendar */
 .github-cal {
+  min-height: 104px;
   color: hsl(var(--muted-foreground));
+}
+
+.github-cal-placeholder {
+  height: 96px;
 }
 
 .github-cal svg {

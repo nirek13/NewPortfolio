@@ -29,13 +29,6 @@ export function SignatureLoader() {
 
   useEffect(() => {
     const html = document.documentElement;
-    if (!html.hasAttribute('data-sig-loading')) {
-      setDone(true);
-      return;
-    }
-
-    const root = rootRef.current;
-    const started = Number(html.dataset.sigStart) || performance.now();
     const mark = (name: string) => {
       try {
         performance.mark(`sig-intro:${name}`);
@@ -43,6 +36,26 @@ export function SignatureLoader() {
         /* older browsers */
       }
     };
+
+    // The boot script decides whether the intro runs at all.
+    const boot = (window as Window & { __sigIntro?: { start: number } }).__sigIntro;
+    if (!boot) {
+      setDone(true);
+      return;
+    }
+
+    // If React had to client-render the root (hydration mismatch) it resets
+    // the <html> attributes, which hides the overlay and restarts its CSS
+    // animations. Put the flag back and restart the clock from now.
+    if (!html.hasAttribute('data-sig-loading')) {
+      mark('restarted');
+      boot.start = performance.now();
+      html.dataset.sigStart = String(boot.start);
+      html.setAttribute('data-sig-loading', '');
+    }
+
+    const root = rootRef.current;
+    const started = Number(html.dataset.sigStart) || boot.start || performance.now();
     mark('hydrated');
     const timers: number[] = [];
     const after = (ms: number, fn: () => void) => {
@@ -57,6 +70,7 @@ export function SignatureLoader() {
       mark('finish');
       html.removeAttribute('data-sig-loading');
       delete html.dataset.sigStart;
+      delete (window as Window & { __sigIntro?: unknown }).__sigIntro;
       if (INTRO_ONCE_PER_SESSION) {
         try {
           sessionStorage.setItem(INTRO_SESSION_KEY, '1');
@@ -118,7 +132,7 @@ export function SignatureLoader() {
     //    nothing (and keeps its CSS animations at frame zero) until it is
     //    shown, so the intro waits for the visitor instead of running blind.
     const arm = () => {
-      const base = Number(html.dataset.sigStart) || started;
+      const base = Number(html.dataset.sigStart) || boot.start || started;
       mark('armed');
       after(base + INTRO_MIN_VISIBLE_MS - performance.now(), () => {
         clockDone = true;
