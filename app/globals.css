@@ -271,31 +271,35 @@ body > .sig-loader ~ * [data-sig-target] {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Chrome                                                               */
+/*  Chrome: one narrow column, hairline separators, nothing boxed        */
 /* ------------------------------------------------------------------ */
 .site-bg {
   background: hsl(var(--background));
 }
 
-.dash-bar {
-  background: hsl(var(--background));
-  border-bottom: 1px solid hsl(var(--foreground) / 0.14);
+.site-wrap {
+  width: 100%;
+  max-width: 42rem;
+  margin: 0 auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
 }
 
-.dash-panel {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  background: hsl(var(--background));
-  border: 1px solid hsl(var(--foreground) / 0.16);
-  padding: 0.55rem 0.7rem 0.7rem;
+.site-nav {
+  background: hsl(var(--background) / 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid hsl(var(--foreground) / 0.08);
 }
 
-.dash-label {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  margin: 0 0 0.5rem;
+.section {
+  margin-top: 3.5rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid hsl(var(--foreground) / 0.12);
+}
+
+.section-label {
+  margin: 0 0 1.1rem;
   font-size: 10px;
   font-weight: 500;
   letter-spacing: 0.18em;
@@ -303,16 +307,20 @@ body > .sig-loader ~ * [data-sig-target] {
   color: hsl(var(--muted-foreground));
 }
 
-.dash-label::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: hsl(var(--foreground) / 0.14);
+.text-link {
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: hsl(var(--muted-foreground));
+  background-image: linear-gradient(hsl(var(--foreground)), hsl(var(--foreground)));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0 1px;
+  transition: color 0.18s ease, background-size 0.22s ease;
 }
 
-.icon-chip {
-  border: 1px solid hsl(var(--foreground) / 0.3);
-  background: transparent;
+.text-link:hover {
+  color: hsl(var(--foreground));
+  background-size: 100% 1px;
 }
 
 .cmd-panel {
@@ -358,7 +366,7 @@ body > .sig-loader ~ * [data-sig-target] {
 }
 
 .site-section {
-  scroll-margin-top: 3.1rem;
+  scroll-margin-top: 4.5rem;
 }
 
 .exp-row {
@@ -367,8 +375,8 @@ body > .sig-loader ~ * [data-sig-target] {
   align-items: baseline;
   justify-content: space-between;
   gap: 1rem;
-  border-bottom: 1px solid hsl(var(--foreground) / 0.14);
-  padding: 0.55rem 0.1rem;
+  border-bottom: 1px solid hsl(var(--foreground) / 0.1);
+  padding: 0.7rem 0.1rem;
   text-align: left;
   transition: background-color 0.2s ease, padding-left 0.2s ease;
 }
@@ -381,11 +389,6 @@ body > .sig-loader ~ * [data-sig-target] {
 .exp-row.is-link:focus-visible {
   background: hsl(var(--foreground) / 0.05);
   padding-left: 0.45rem;
-}
-
-.dash-panel .exp-row {
-  gap: 0.85rem;
-  padding: 0.48rem 0.08rem;
 }
 
 /* GitHub calendar */
@@ -424,13 +427,7 @@ body > .sig-loader ~ * [data-sig-target] {
 }
 
 .bookshelf-backboard {
-  position: absolute;
-  left: 4%;
-  right: 4%;
-  top: 1.25rem;
-  bottom: 28px;
-  background: linear-gradient(180deg, hsl(var(--foreground) / 0.06), transparent 85%);
-  pointer-events: none;
+  display: none;
 }
 
 .bookshelf-row {
