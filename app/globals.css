@@ -217,7 +217,7 @@ html[data-sig-loading] [data-sig-target] {
   mask-position: 0 0;
   -webkit-mask-size: 0% 100%;
   mask-size: 0% 100%;
-  animation: sig-ink 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.02s forwards;
+  animation: sig-ink 0.9s cubic-bezier(0.4, 0, 0.2, 1) 1.25s forwards;
 }
 
 /* a hairline pen traces the outline first */
@@ -230,8 +230,8 @@ html[data-sig-loading] [data-sig-target] {
   stroke-dasharray: 5900;
   stroke-dashoffset: 5900;
   animation:
-    sig-trace 1.4s cubic-bezier(0.55, 0, 0.3, 1) 0.1s forwards,
-    sig-trace-out 0.4s ease-out 1.5s forwards;
+    sig-trace 1.6s cubic-bezier(0.55, 0, 0.3, 1) 0.15s forwards,
+    sig-trace-out 0.4s ease-out 1.85s forwards;
 }
 
 @keyframes sig-trace {
