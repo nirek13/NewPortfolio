@@ -185,7 +185,8 @@ html:not([data-sig-loading]) .sig-loader {
   display: none;
 }
 
-html[data-sig-loading] [data-sig-target] {
+/* keep the nav mark hidden only while the intro overlay is actually mounted */
+body > .sig-loader ~ * [data-sig-target] {
   opacity: 0;
 }
 

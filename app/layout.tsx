@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Script from 'next/script'
 import { Caveat, Fraunces, IBM_Plex_Sans } from 'next/font/google'
 import './globals.css'
 import { Analytics } from '@vercel/analytics/react'
@@ -35,7 +34,9 @@ export const metadata: Metadata = {
 }
 
 /**
- * Runs before first paint:
+ * Inline <head> script, so it runs synchronously before the first paint
+ * (next/script's inline `beforeInteractive` is queued behind the client
+ * bootstrap in the app router, which is too late for this):
  *  1. applies the stored theme (only `dark` adds a class; anything else is light)
  *  2. flags the signature intro (every load, or once per tab session when
  *     INTRO_ONCE_PER_SESSION is on) unless the visitor prefers reduced motion,
@@ -52,10 +53,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script id="boot-init" dangerouslySetInnerHTML={{ __html: bootInit }} />
+      </head>
       <body className={`${sans.variable} ${display.variable} ${hand.variable} font-sans antialiased`}>
-        <Script id="boot-init" strategy="beforeInteractive">
-          {bootInit}
-        </Script>
         <SignatureLoader />
         <ThemeProvider>
           {children}
