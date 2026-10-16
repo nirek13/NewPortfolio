@@ -130,6 +130,7 @@
   .link-voyager,
   .link-dmz,
   .link-ingenious,
+  .link-plyxl,
   .link-badge {
     display: inline;
     padding: 0 0.08em;
@@ -165,6 +166,7 @@
   a.link-voyager:hover,
   a.link-dmz:hover,
   a.link-ingenious:hover,
+  a.link-plyxl:hover,
   a.link-badge:hover {
     background-size: 100% 100%;
     color: hsl(var(--background));
@@ -804,6 +806,294 @@ body > .sig-loader ~ * [data-sig-target] {
 }
 
 /* ------------------------------------------------------------------ */
+/*  Plyxl: YC chip, the sheep, and the counting-sheep fence             */
+/* ------------------------------------------------------------------ */
+.yc-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  height: 1.5rem;
+  padding: 0 0.5rem 0 0.25rem;
+  border: 1px solid hsl(var(--foreground) / 0.35);
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: hsl(var(--foreground));
+  white-space: nowrap;
+  transition: border-color 0.18s ease, background-color 0.18s ease, color 0.18s ease;
+}
+
+.yc-chip .yc-chip-batch {
+  padding-left: 0.4rem;
+  border-left: 1px dotted hsl(var(--foreground) / 0.4);
+  color: hsl(var(--muted-foreground));
+}
+
+.yc-chip:hover,
+.yc-chip:focus-visible {
+  border-color: #f26625;
+  background: #f26625;
+  color: #fff;
+}
+
+.yc-chip:hover .yc-chip-batch,
+.yc-chip:focus-visible .yc-chip-batch {
+  color: #fff;
+  border-left-color: rgb(255 255 255 / 0.6);
+}
+
+.yc-chip.is-small {
+  height: 1.15rem;
+  gap: 0.3rem;
+  padding: 0 0.35rem 0 0.15rem;
+  font-size: 9px;
+}
+
+.yc-chip.is-small img {
+  height: 0.75rem;
+  width: 0.75rem;
+}
+
+.plyxl-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25em;
+  vertical-align: -0.12em;
+}
+
+.plyxl-inline img {
+  height: 1.05em;
+  width: 1.05em;
+  transition: transform 0.25s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.plyxl-inline:hover img {
+  transform: rotate(-12deg) scale(1.15);
+}
+
+.plyxl-wordmark img {
+  transition: transform 0.3s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.plyxl-wordmark:hover img {
+  transform: rotate(-10deg) scale(1.08);
+}
+
+.plyxl-sheep {
+  display: block;
+  color: hsl(var(--foreground));
+  cursor: pointer;
+  transform-origin: 50% 92%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.plyxl-sheep svg {
+  overflow: visible;
+}
+
+/* the sheep's face and legs are ink; give them a paper rim on dark paper */
+.dark .plyxl-sheep svg,
+.dark .sheep-mini,
+.dark .plyxl-inline img,
+.dark .plyxl-wordmark img,
+.dark .exp-row img[src="/plyxl-mark.svg"] {
+  filter: drop-shadow(0 0 0.6px #f7f4ec) drop-shadow(0 0 0.6px #f7f4ec);
+}
+
+.plyxl-sheep.is-baa {
+  animation: sheep-boing 0.5s cubic-bezier(0.3, 1.5, 0.5, 1);
+}
+
+.plyxl-sheep .sheep-head {
+  transform-box: fill-box;
+  transform-origin: 60% 80%;
+  animation: sheep-nod 7s ease-in-out infinite;
+}
+
+.sheep-eyes {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: sheep-blink 4.6s ease-in-out infinite;
+}
+
+.sheep-pupils {
+  transition: transform 0.12s ease-out;
+}
+
+.sheep-eye-wink {
+  opacity: 0;
+}
+
+.plyxl-sheep:hover .sheep-eye-r,
+.plyxl-sheep:focus-visible .sheep-eye-r {
+  opacity: 0;
+}
+
+.plyxl-sheep:hover .sheep-eye-wink,
+.plyxl-sheep:focus-visible .sheep-eye-wink {
+  opacity: 1;
+}
+
+.sheep-bubble {
+  position: absolute;
+  z-index: 2;
+  top: -0.4rem;
+  left: -0.6rem;
+  padding: 0.1rem 0.6rem 0.2rem;
+  border: 1px solid hsl(var(--foreground));
+  background: hsl(var(--background));
+  font-size: 1.25rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  pointer-events: none;
+  animation: sheep-bubble 1.3s ease forwards;
+}
+
+.sheep-bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 1.6rem;
+  width: 10px;
+  height: 10px;
+  border-right: 1px solid hsl(var(--foreground));
+  border-bottom: 1px solid hsl(var(--foreground));
+  background: hsl(var(--background));
+  transform: rotate(45deg);
+}
+
+.sheep-strip {
+  position: relative;
+  height: 3.4rem;
+  overflow: hidden;
+  border-bottom: 1px dotted hsl(var(--foreground) / 0.45);
+  color: hsl(var(--foreground) / 0.55);
+}
+
+.sheep-fence {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 34px;
+  height: 26px;
+  transform: translateX(-50%);
+}
+
+.sheep-runner {
+  position: absolute;
+  bottom: 1px;
+  left: -48px;
+  width: 44px;
+  animation: sheep-run linear forwards;
+}
+
+.sheep-hop {
+  animation: sheep-hop linear forwards;
+}
+
+.sheep-mini {
+  display: block;
+  width: 44px;
+  height: auto;
+  color: hsl(var(--foreground));
+  transform: scaleX(-1);
+}
+
+.sheep-mini .sheep-legs {
+  animation: sheep-trot 0.22s steps(2) infinite;
+}
+
+@keyframes sheep-run {
+  to {
+    left: calc(100% + 8px);
+  }
+}
+
+@keyframes sheep-hop {
+  0%,
+  38% {
+    transform: translateY(0) rotate(0);
+  }
+  44% {
+    transform: translateY(-16px) rotate(-8deg);
+  }
+  50% {
+    transform: translateY(-24px) rotate(0);
+  }
+  56% {
+    transform: translateY(-16px) rotate(8deg);
+  }
+  62%,
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+}
+
+@keyframes sheep-trot {
+  to {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes sheep-blink {
+  0%,
+  93%,
+  100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.08);
+  }
+}
+
+@keyframes sheep-nod {
+  0%,
+  70%,
+  100% {
+    transform: rotate(0);
+  }
+  76% {
+    transform: rotate(-6deg);
+  }
+  84% {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes sheep-boing {
+  0% {
+    transform: scale(1, 1);
+  }
+  30% {
+    transform: scale(1.08, 0.9) translateY(2px);
+  }
+  60% {
+    transform: scale(0.96, 1.06) translateY(-8px);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
+@keyframes sheep-bubble {
+  0% {
+    opacity: 0;
+    transform: translateY(6px) scale(0.9);
+  }
+  15%,
+  75% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+/* ------------------------------------------------------------------ */
 /*  Reduced motion                                                       */
 /* ------------------------------------------------------------------ */
 @media (prefers-reduced-motion: reduce) {
@@ -817,8 +1107,18 @@ body > .sig-loader ~ * [data-sig-target] {
   .bookshelf-book:hover,
   .bookshelf-book:focus-visible,
   .bookshelf-book.is-active,
-  .sig-loader-mark {
+  .sig-loader-mark,
+  .plyxl-inline img,
+  .plyxl-wordmark img,
+  .sheep-pupils {
     transition: none;
+  }
+
+  .plyxl-sheep.is-baa,
+  .plyxl-sheep .sheep-head,
+  .sheep-eyes,
+  .sheep-bubble {
+    animation: none;
   }
 
   .reveal {

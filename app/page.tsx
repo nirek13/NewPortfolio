@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useCallback, useEffect, useState, type ReactNode } from 'react';
 import { ThemeToggle } from '@/components/site/theme-toggle';
 import { Signature } from '@/components/site/signature';
@@ -8,9 +9,19 @@ import { Bookshelf } from '@/components/site/bookshelf';
 import { SocialLinks } from '@/components/site/socials';
 import { Stage, Reveal } from '@/components/site/stage';
 import { GitHubPanel } from '@/components/site/github-panel';
+import { PlyxlFeature, PlyxlMark, YCBadge } from '@/components/site/plyxl';
 import { EXPERIENCES, NAV_ITEMS, type NavSection } from '@/lib/portfolio-data';
 
 const NOTES = [
+  <>
+    founder of{' '}
+    <a href="https://plyxl.com" target="_blank" rel="noopener noreferrer" className="link-plyxl plyxl-inline">
+      <PlyxlMark />
+      Plyxl
+    </a>{' '}
+    <YCBadge batch="W27" className="is-small align-[0.08em]" /> — running a business is hard enough,
+    plyxl makes it a little easier.
+  </>,
   <>
     prev. product engineer at{' '}
     <a href="https://penseum.com" target="_blank" rel="noopener noreferrer" className="link-penseum">
@@ -221,11 +232,16 @@ export default function Home() {
               {EXPERIENCES.map((exp) => {
                 const body = (
                   <>
-                    <p className="min-w-0 text-[0.88rem] leading-snug">
+                    <p className="flex min-w-0 items-center gap-1.5 text-[0.88rem] leading-snug">
+                      {exp.logo ? (
+                        <Image src={exp.logo} alt="" width={16} height={16} className="h-4 w-4 shrink-0" />
+                      ) : null}
                       <span className="font-medium">{exp.org}</span>
                       <span className="text-muted-foreground"> — {exp.role}</span>
                     </p>
-                    {exp.period ? (
+                    {exp.yc ? (
+                      <YCBadge batch={exp.yc} asLink={false} className="is-small shrink-0" />
+                    ) : exp.period ? (
                       <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
                         {exp.period}
                       </span>
@@ -252,11 +268,15 @@ export default function Home() {
             </div>
           </Panel>
 
-          <Panel id="github" index={3} label="code" span="lg:col-span-7">
+          <Panel id="plyxl" index={3} label="plyxl · yc w27" span="lg:col-span-12">
+            <PlyxlFeature />
+          </Panel>
+
+          <Panel id="github" index={4} label="code" span="lg:col-span-7">
             <GitHubPanel />
           </Panel>
 
-          <Panel id="books" index={4} label="books" span="lg:col-span-5">
+          <Panel id="books" index={5} label="books" span="lg:col-span-5">
             <Bookshelf compact />
           </Panel>
         </div>

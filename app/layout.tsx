@@ -36,7 +36,7 @@ const hand = Caveat({
 
 export const metadata: Metadata = {
   title: 'Nirek Shetty',
-  description: 'Former product engineer at Penseum. Founder of Hackathons Canada.',
+  description: 'Founder of Plyxl (YC W27). Former product engineer at Penseum. Founder of Hackathons Canada.',
   icons: { icon: '/logo_L.png' },
 }
 

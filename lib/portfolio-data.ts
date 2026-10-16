@@ -1,4 +1,4 @@
-export type NavSection = 'about' | 'experiences' | 'github' | 'books';
+export type NavSection = 'about' | 'experiences' | 'plyxl' | 'github' | 'books';
 
 export type ProjectFilter = 'everything' | 'projects' | 'communities';
 
@@ -20,6 +20,7 @@ export interface PortfolioItem {
 export const NAV_ITEMS: { id: NavSection; label: string }[] = [
   { id: 'about', label: 'about' },
   { id: 'experiences', label: 'experience' },
+  { id: 'plyxl', label: 'plyxl' },
   { id: 'github', label: 'code' },
   { id: 'books', label: 'books' },
 ];
@@ -99,7 +100,19 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
   },
 ];
 
-export const EXPERIENCES = [
+export interface Experience {
+  org: string;
+  role: string;
+  period?: string;
+  href?: string;
+  /** small square logo shown before the org name */
+  logo?: string;
+  /** YC batch, rendered as a Y Combinator chip in place of the period */
+  yc?: string;
+}
+
+export const EXPERIENCES: Experience[] = [
+  { org: 'Plyxl', role: 'Founder', yc: 'W27', href: 'https://plyxl.com', logo: '/plyxl-mark.svg' },
   { org: 'Penseum', role: 'Product Engineer', period: 'prev', href: 'https://penseum.com' },
   {
     org: 'Hackathons Canada',
