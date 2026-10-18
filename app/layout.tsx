@@ -5,6 +5,7 @@ import { Analytics } from '@vercel/analytics/react'
 import { ThemeProvider } from '@/lib/theme-context'
 import { SignatureLoader } from '@/components/site/signature-loader'
 import { INTRO_ONCE_PER_SESSION, INTRO_SESSION_KEY } from '@/lib/signature-intro'
+import { PERSON_JSON_LD, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from '@/lib/site'
 
 const sans = IBM_Plex_Sans({
   subsets: ['latin'],
@@ -35,8 +36,25 @@ const hand = Caveat({
 })
 
 export const metadata: Metadata = {
-  title: 'Nirek Shetty',
-  description: 'Founder of Plyxl (YC W27). Former product engineer at Penseum. Founder of Hackathons Canada.',
+  metadataBase: new URL(SITE_URL),
+  title: { default: `${SITE_NAME} — Founder of Plyxl (YC W27)`, template: `%s — ${SITE_NAME}` },
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
+  creator: SITE_NAME,
+  alternates: { canonical: '/' },
+  openGraph: {
+    type: 'profile',
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    firstName: 'Nirek',
+    lastName: 'Shetty',
+    locale: 'en_CA',
+  },
+  twitter: { card: 'summary_large_image', creator: '@nirekshetty', title: SITE_NAME, description: SITE_DESCRIPTION },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large' } },
   icons: { icon: '/logo_L.png' },
 }
 
@@ -62,6 +80,10 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <script id="boot-init" dangerouslySetInnerHTML={{ __html: bootInit }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(PERSON_JSON_LD) }}
+        />
       </head>
       <body className={`${sans.variable} ${mono.variable} ${display.variable} ${hand.variable} font-sans antialiased`}>
         <SignatureLoader />
