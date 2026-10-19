@@ -56,7 +56,6 @@ export const metadata: Metadata = {
   twitter: { card: 'summary_large_image', creator: '@nirekshetty', title: SITE_NAME, description: SITE_DESCRIPTION },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large' } },
   verification: { google: '3Upqy0QipOObFiwc8ABHwLyjm6RHYSjemOWErOmt6J8' },
-  icons: { icon: '/logo_L.png' },
 }
 
 /**
