@@ -1096,6 +1096,139 @@ body > .sig-loader ~ * [data-sig-target] {
 /* ------------------------------------------------------------------ */
 /*  Reduced motion                                                       */
 /* ------------------------------------------------------------------ */
+/* ------------------------------------------------------------------ */
+/*  Subpages: blog, posts, plyxl                                         */
+/* ------------------------------------------------------------------ */
+.sub-nav-link {
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: hsl(var(--muted-foreground));
+  transition: color 0.15s ease;
+}
+
+.sub-nav-link:hover,
+.sub-nav-link[aria-current='page'] {
+  color: hsl(var(--foreground));
+}
+
+.sub-nav-link[aria-current='page'] {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.post-row {
+  display: block;
+  border-bottom: 1px dotted hsl(var(--foreground) / 0.35);
+  padding: 0.75rem 0.1rem;
+  transition: background-color 0.2s ease, padding-left 0.2s ease;
+}
+
+.post-row:last-child {
+  border-bottom: 0;
+}
+
+.post-row:hover,
+.post-row:focus-visible {
+  background: hsl(var(--foreground) / 0.05);
+  padding-left: 0.45rem;
+}
+
+.post-meta {
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: hsl(var(--muted-foreground));
+}
+
+.post-body {
+  font-size: 0.97rem;
+  line-height: 1.75;
+  color: hsl(var(--foreground) / 0.88);
+}
+
+.post-body > * + * {
+  margin-top: 1.05em;
+}
+
+.post-body h2 {
+  margin-top: 2em;
+  font-family: var(--font-display), ui-serif, Georgia, serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: hsl(var(--foreground));
+}
+
+.post-body h3 {
+  margin-top: 1.6em;
+  font-size: 1rem;
+  font-weight: 600;
+  color: hsl(var(--foreground));
+}
+
+.post-body h2 + *,
+.post-body h3 + * {
+  margin-top: 0.6em;
+}
+
+.post-body strong {
+  font-weight: 600;
+  color: hsl(var(--foreground));
+}
+
+.post-body a {
+  color: hsl(var(--foreground));
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.post-body a:hover {
+  background: hsl(var(--foreground));
+  color: hsl(var(--background));
+  text-decoration: none;
+}
+
+.post-body code {
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.85em;
+  padding: 0.08em 0.3em;
+  background: hsl(var(--foreground) / 0.07);
+}
+
+.post-body ul,
+.post-body ol {
+  padding-left: 1.3rem;
+}
+
+.post-body ul {
+  list-style: square;
+}
+
+.post-body ol {
+  list-style: decimal;
+}
+
+.post-body li + li {
+  margin-top: 0.35em;
+}
+
+.post-body blockquote {
+  border-left: 1px dotted hsl(var(--foreground) / 0.5);
+  padding-left: 1rem;
+  font-family: var(--font-display), ui-serif, Georgia, serif;
+  font-size: 1.08rem;
+  color: hsl(var(--foreground));
+}
+
+.post-body hr {
+  border: 0;
+  border-top: 1px dotted hsl(var(--foreground) / 0.35);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -1110,7 +1243,8 @@ body > .sig-loader ~ * [data-sig-target] {
   .sig-loader-mark,
   .plyxl-inline img,
   .plyxl-wordmark img,
-  .sheep-pupils {
+  .sheep-pupils,
+  .post-row {
     transition: none;
   }
 
