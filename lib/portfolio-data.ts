@@ -1,4 +1,4 @@
-export type NavSection = 'about' | 'experiences' | 'plyxl' | 'github' | 'books' | 'writing';
+export type NavSection = 'about' | 'experiences' | 'plyxl' | 'github' | 'books';
 
 export type ProjectFilter = 'everything' | 'projects' | 'communities';
 
@@ -23,7 +23,6 @@ export const NAV_ITEMS: { id: NavSection; label: string }[] = [
   { id: 'plyxl', label: 'plyxl' },
   { id: 'github', label: 'code' },
   { id: 'books', label: 'books' },
-  { id: 'writing', label: 'writing' },
 ];
 
 export const PORTFOLIO_ITEMS: PortfolioItem[] = [
