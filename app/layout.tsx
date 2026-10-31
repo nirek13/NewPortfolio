@@ -37,7 +37,7 @@ const hand = Caveat({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: { default: `${SITE_NAME} — Founder of Plyxl (YC W27)`, template: `%s — ${SITE_NAME}` },
+  title: { default: `${SITE_NAME} — Co-founder of Plyxl (YC W27)`, template: `%s — ${SITE_NAME}` },
   description: SITE_DESCRIPTION,
   applicationName: SITE_NAME,
   authors: [{ name: SITE_NAME, url: SITE_URL }],

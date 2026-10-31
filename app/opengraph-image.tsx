@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og'
 
-export const alt = 'Nirek Shetty — founder of Plyxl (YC W27)'
+export const alt = 'Nirek Shetty — co-founder of Plyxl (YC W27)'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -20,7 +20,7 @@ export default function OpengraphImage() {
         }}
       >
         <div style={{ fontSize: 96, fontWeight: 700, letterSpacing: '-0.03em' }}>Nirek Shetty</div>
-        <div style={{ fontSize: 40, marginTop: 24, color: '#555' }}>Founder of Plyxl (YC W27).</div>
+        <div style={{ fontSize: 40, marginTop: 24, color: '#555' }}>Co-founder of Plyxl (YC W27).</div>
         <div style={{ fontSize: 28, marginTop: 48, color: '#888' }}>nirekshetty.com</div>
       </div>
     ),

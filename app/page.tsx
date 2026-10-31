@@ -14,13 +14,13 @@ import { EXPERIENCES, NAV_ITEMS, type NavSection } from '@/lib/portfolio-data';
 
 const NOTES = [
   <>
-    founder of{' '}
+    co-founder of{' '}
     <a href="https://plyxl.com" target="_blank" rel="noopener noreferrer" className="link-plyxl plyxl-inline">
       <PlyxlMark />
       Plyxl
     </a>{' '}
-    <YCBadge batch="W27" className="is-small align-[0.08em]" /> — running a business is hard enough,
-    plyxl makes it a little easier.
+    <YCBadge batch="W27" className="is-small align-[0.08em]" /> — the workspace that does the
+    work.
   </>,
   <>
     prev. product engineer at{' '}
@@ -65,10 +65,10 @@ const NOTES = [
     100k pitch competition. 3× <span className="link-ingenious">Ingenious+</span> Ontario winner.
   </>,
   <>
-    71/75 on the CCC. 9× <span className="link-waterloo">Waterloo</span> math.
+    71/75 on the CCC.
   </>,
   <>
-    <span className="link-toronto">Toronto</span> / Waterloo.
+    <span className="link-toronto">Toronto</span>.
   </>,
 ];
 

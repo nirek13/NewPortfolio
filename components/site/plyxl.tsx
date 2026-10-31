@@ -3,100 +3,51 @@
 import Image from 'next/image';
 import { useCallback, useEffect, useRef, useState, type Ref } from 'react';
 
-const INK = '#1b1815';
-const WOOL = '#f7f4ec';
-const BLUSH = '#f4a3a3';
-
-/** Overlapping wool puffs: [cx, cy, r]. Drawn twice (ink then wool) so only the outer edge gets a line. */
-const BODY_PUFFS: [number, number, number][] = [
-  [84, 78, 26],
-  [106, 58, 26],
-  [134, 54, 27],
-  [162, 64, 25],
-  [180, 86, 22],
-  [196, 80, 9],
-  [168, 112, 24],
-  [138, 120, 26],
-  [108, 120, 25],
-  [86, 104, 24],
-  [130, 88, 40],
-];
-
-const TUFT_PUFFS: [number, number, number][] = [
-  [52, 66, 9],
-  [64, 61, 10],
-  [76, 66, 9],
-];
-
-const LEGS = [96, 116, 146, 166];
+/** Official Plyxl sheep parts (from plyxl.com), drawn with <use> so they follow the theme. */
+const SPRITE = '/plyxl-sheep.svg';
 
 const BAAS = ['baa!', 'baaa~', 'b2baa', 'ship it', 'hi :)', 'mehh'];
 
-function Puffs({ puffs, stroke }: { puffs: [number, number, number][]; stroke: number }) {
+/**
+ * The Plyxl sheep, as drawn on plyxl.com. Fleece and features take the ink colour,
+ * the face takes the paper colour. `withWord` adds the plyxl wordmark beside it.
+ * `pupilsRef` lets a parent nudge the eyes toward the cursor.
+ */
+function SheepArt({
+  pupilsRef,
+  withWord = false,
+  className = '',
+}: {
+  pupilsRef?: Ref<SVGGElement>;
+  withWord?: boolean;
+  className?: string;
+}) {
   return (
-    <>
-      <g fill={INK} stroke={INK} strokeWidth={stroke}>
-        {puffs.map(([cx, cy, r]) => (
-          <circle key={`o${cx}-${cy}`} cx={cx} cy={cy} r={r} />
-        ))}
+    <svg
+      viewBox={withWord ? '416 218 1148 362' : '416 218 350 362'}
+      className={`plyxl-art ${className}`}
+      aria-hidden="true"
+    >
+      <g className="sheep-legs">
+        <use href={`${SPRITE}#legL`} />
+        <use href={`${SPRITE}#legR`} />
       </g>
-      <g fill={WOOL}>
-        {puffs.map(([cx, cy, r]) => (
-          <circle key={`f${cx}-${cy}`} cx={cx} cy={cy} r={r} />
-        ))}
-      </g>
-    </>
-  );
-}
-
-/** The Plyxl sheep. `pupilsRef` lets a parent nudge the pupils toward the cursor. */
-function SheepArt({ pupilsRef, className = '' }: { pupilsRef?: Ref<SVGGElement>; className?: string }) {
-  return (
-    <svg viewBox="0 0 220 170" className={className} aria-hidden="true">
-      <ellipse cx="128" cy="158" rx="74" ry="6" fill="currentColor" opacity="0.12" />
-
-      <g className="sheep-legs" fill={INK}>
-        {LEGS.map((x) => (
-          <rect key={x} x={x} y={116} width={10} height={38} rx={5} />
-        ))}
-      </g>
-
-      <Puffs puffs={BODY_PUFFS} stroke={5} />
-
+      <use href={`${SPRITE}#fleece`} />
       <g className="sheep-head">
-        <g fill={INK}>
-          <ellipse cx="40" cy="84" rx="14" ry="6.5" transform="rotate(-22 40 84)" />
-          <ellipse cx="90" cy="82" rx="14" ry="6.5" transform="rotate(22 90 82)" />
-          <ellipse cx="64" cy="92" rx="23" ry="27" />
-        </g>
-        <Puffs puffs={TUFT_PUFFS} stroke={5} />
-        <g fill={WOOL}>
-          <circle cx="56" cy="70" r="6" />
-          <circle cx="64" cy="67" r="7" />
-          <circle cx="72" cy="70" r="6" />
-        </g>
-
-        <g className="sheep-eyes">
-          <circle cx="55" cy="91" r="7" fill="#fff" />
-          <circle className="sheep-eye-r" cx="73" cy="91" r="7" fill="#fff" />
-          <path
-            className="sheep-eye-wink"
-            d="M66 92q7-6.5 14 0"
-            fill="none"
-            stroke="#fff"
-            strokeWidth="2.8"
-            strokeLinecap="round"
-          />
-          <g ref={pupilsRef} className="sheep-pupils" fill={INK}>
-            <circle cx="55.5" cy="92" r="3.6" />
-            <circle className="sheep-eye-r" cx="73.5" cy="92" r="3.6" />
+        <g transform="translate(0 -14)">
+          <use className="sheep-face" href={`${SPRITE}#face`} />
+          <g ref={pupilsRef} className="sheep-pupils">
+            <path
+              className="sheep-eyes"
+              d="M 531 393.5 A 14.1 14.1 0 1 0 559.2 393.5 A 14.1 14.1 0 1 0 531 393.5 Z"
+            />
+            <use href={`${SPRITE}#wink`} />
+            <use href={`${SPRITE}#mouth`} />
+            <use className="sheep-face" href={`${SPRITE}#tongue`} />
           </g>
         </g>
-
-        <ellipse cx="49" cy="104" rx="4" ry="2.3" fill={BLUSH} opacity="0.8" />
-        <ellipse cx="79" cy="104" rx="4" ry="2.3" fill={BLUSH} opacity="0.8" />
-        <path d="M60 108q4 3.6 8 0" fill="none" stroke={WOOL} strokeWidth="2" strokeLinecap="round" />
       </g>
+      {withWord ? <use href={`${SPRITE}#word`} /> : null}
     </svg>
   );
 }
@@ -105,9 +56,11 @@ function prefersReducedMotion() {
   return typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
-/** The small Plyxl sheep head, for inline use next to the name. */
+/** The official Plyxl app icon, for inline use next to the name. */
 export function PlyxlMark({ className = 'h-4 w-4' }: { className?: string }) {
-  return <Image src="/plyxl-mark.svg" alt="" width={64} height={64} className={className} aria-hidden="true" />;
+  return (
+    <Image src="/plyxl-icon.png" alt="" width={64} height={64} className={`rounded-[22%] ${className}`} aria-hidden="true" />
+  );
 }
 
 /** Y Combinator chip. Pass `asLink={false}` when it sits inside another link. */
@@ -204,13 +157,13 @@ export function PlyxlFeature() {
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
         const box = sheep.getBoundingClientRect();
-        // the eyes sit roughly 29% across and 54% down the art
-        const ex = box.left + box.width * 0.29;
-        const ey = box.top + box.height * 0.54;
+        // the eyes sit roughly 45% across and 47% down the art
+        const ex = box.left + box.width * 0.45;
+        const ey = box.top + box.height * 0.47;
         const dx = e.clientX - ex;
         const dy = e.clientY - ey;
         const dist = Math.hypot(dx, dy) || 1;
-        const reach = Math.min(2.6, dist / 40);
+        const reach = Math.min(8, dist / 15);
         pupils.style.transform = `translate(${(dx / dist) * reach}px, ${(dy / dist) * reach}px)`;
       });
     };
@@ -264,24 +217,23 @@ export function PlyxlFeature() {
             href="https://plyxl.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="plyxl-wordmark inline-flex items-center gap-2"
+            className="plyxl-wordmark inline-flex items-center"
+            aria-label="Plyxl"
           >
-            <PlyxlMark className="h-8 w-8" />
-            <span className="font-display text-[2rem] font-semibold leading-none">plyxl</span>
+            <SheepArt withWord className="h-10 w-auto" />
           </a>
           <div className="mt-3 flex flex-wrap items-center gap-2">
             <YCBadge batch="W27" />
             <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
-              founder
+              co-founder
             </span>
           </div>
           <p className="mt-4 text-[0.95rem] leading-relaxed text-foreground/90">
-            running a business is hard enough.{' '}
-            <span className="font-medium text-foreground">plyxl makes it a little easier.</span>
+            <span className="font-medium text-foreground">the workspace that does the work.</span>
           </p>
           <p className="mt-2 text-[0.86rem] leading-relaxed text-muted-foreground">
-            one place to run your company — your tables, the tools you already use, docs and team
-            rooms, with every change on the record.
+            ask for anything and plyxl&apos;s agent gets it done across your entire business — email,
+            calendar, books, CRM and 200+ more tools, all in one workspace.
           </p>
           <a
             href="https://plyxl.com"

@@ -58,7 +58,7 @@ We're continuing to grow the platform and exploring new ways to support the Cana
     readTime: '5 min read',
     tags: ['startup', 'community', 'hackathons'],
     featured: true,
-    image: '/waterloo-logo.png'
+    image: '/projects/hackathons-canada.png'
   },
   {
     slug: 'nasa-space-apps-journey',

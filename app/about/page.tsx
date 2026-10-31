@@ -46,12 +46,11 @@ export default function About() {
               <a href="/" className={`hover-underline-nudge ${shouldBounce('home') ? 'nav-bounce' : ''}`}>Home</a>
             </div>
           </div>
-          <div>↳ Born and raised in <span className="inline-flex items-center align-middle gap-1"><Logo src="/ontario flag.png" alt="Ontario" /><Label>Toronto</Label></span>, but spend a lot of time in <span className="inline-flex items-center align-middle gap-1"><Logo src="/ontario flag.png" alt="Ontario" /><Label>Waterloo</Label></span>.</div>
+          <div>↳ Born and raised in <span className="inline-flex items-center align-middle gap-1"><Logo src="/ontario flag.png" alt="Ontario" /><Label>Toronto</Label></span>.</div>
           <div className="ml-4">↳ Fun fact: I was born on Friday the 13th.</div>
           <div>↳ Started coding around age 7 and have been to well over 30 hackathons.</div>
           <div>↳ Won a silver at IOAI Canada and got nominated for NASA Space Apps out of like 93k people.</div>
-          <div className="ml-4">↳ Did pretty well on the Canadian Computing Competition (71/75) and came 3rd in the national math contest.</div>
-          <div className="ml-4">↳ Got Waterloo distinctions on Pascal, Gauss, and a few other contests.</div>
+          <div className="ml-4">↳ Did pretty well on the Canadian Computing Competition (71/75).</div>
           <div>↳ Got an award in provincial legislation and am getting flown out to Ottawa free of charge for a week to the House of Commons.</div>
         </div>
 

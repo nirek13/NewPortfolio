@@ -125,7 +125,6 @@
   .link-microsoft,
   .link-nasa,
   .link-ioai,
-  .link-waterloo,
   .link-toronto,
   .link-voyager,
   .link-dmz,
@@ -161,7 +160,6 @@
   a.link-microsoft:hover,
   a.link-nasa:hover,
   a.link-ioai:hover,
-  a.link-waterloo:hover,
   a.link-toronto:hover,
   a.link-voyager:hover,
   a.link-dmz:hover,
@@ -873,14 +871,6 @@ body > .sig-loader ~ * [data-sig-target] {
   transform: rotate(-12deg) scale(1.15);
 }
 
-.plyxl-wordmark img {
-  transition: transform 0.3s cubic-bezier(0.3, 1.6, 0.5, 1);
-}
-
-.plyxl-wordmark:hover img {
-  transform: rotate(-10deg) scale(1.08);
-}
-
 .plyxl-sheep {
   display: block;
   color: hsl(var(--foreground));
@@ -893,13 +883,26 @@ body > .sig-loader ~ * [data-sig-target] {
   overflow: visible;
 }
 
-/* the sheep's face and legs are ink; give them a paper rim on dark paper */
-.dark .plyxl-sheep svg,
-.dark .sheep-mini,
-.dark .plyxl-inline img,
-.dark .plyxl-wordmark img,
-.dark .exp-row img[src="/plyxl-mark.svg"] {
-  filter: drop-shadow(0 0 0.6px #f7f4ec) drop-shadow(0 0 0.6px #f7f4ec);
+/* the official sheep: ink fleece and features, a paper face, so it flips with the theme */
+.plyxl-art {
+  fill: currentColor;
+}
+
+.plyxl-art .sheep-face {
+  fill: hsl(var(--background));
+}
+
+.plyxl-wordmark {
+  color: hsl(var(--foreground));
+}
+
+.plyxl-wordmark svg {
+  overflow: visible;
+  transition: transform 0.3s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.plyxl-wordmark:hover svg {
+  transform: rotate(-4deg) scale(1.04);
 }
 
 .plyxl-sheep.is-baa {
@@ -920,20 +923,6 @@ body > .sig-loader ~ * [data-sig-target] {
 
 .sheep-pupils {
   transition: transform 0.12s ease-out;
-}
-
-.sheep-eye-wink {
-  opacity: 0;
-}
-
-.plyxl-sheep:hover .sheep-eye-r,
-.plyxl-sheep:focus-visible .sheep-eye-r {
-  opacity: 0;
-}
-
-.plyxl-sheep:hover .sheep-eye-wink,
-.plyxl-sheep:focus-visible .sheep-eye-wink {
-  opacity: 1;
 }
 
 .sheep-bubble {
@@ -1109,7 +1098,7 @@ body > .sig-loader ~ * [data-sig-target] {
   .bookshelf-book.is-active,
   .sig-loader-mark,
   .plyxl-inline img,
-  .plyxl-wordmark img,
+  .plyxl-wordmark svg,
   .sheep-pupils {
     transition: none;
   }
