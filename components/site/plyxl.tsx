@@ -2,6 +2,8 @@
 
 import Image from 'next/image';
 import { useCallback, useEffect, useRef, useState, type Ref } from 'react';
+import { YC_FOUNDER_URL } from '@/lib/site';
+import { YCMark } from '@/components/site/yc-card';
 
 /** Official Plyxl sheep parts (from plyxl.com), drawn with <use> so they follow the theme. */
 const SPRITE = '/plyxl-sheep.svg';
@@ -75,7 +77,7 @@ export function YCBadge({
 }) {
   const inner = (
     <>
-      <Image src="/YClogo.png" alt="" width={32} height={32} className="h-4 w-4" aria-hidden="true" />
+      <YCMark className="h-4 w-4" />
       <span>Combinator</span>
       <span className="yc-chip-batch">{batch}</span>
     </>
@@ -91,9 +93,9 @@ export function YCBadge({
 
   return (
     <a
-      href="https://www.ycombinator.com/companies"
+      href={YC_FOUNDER_URL}
       target="_blank"
-      rel="noopener noreferrer"
+      rel="me noopener noreferrer"
       className={`yc-chip ${className}`}
       aria-label={`Y Combinator ${batch}`}
     >
@@ -220,12 +222,12 @@ export function PlyxlFeature() {
             className="plyxl-wordmark inline-flex items-center"
             aria-label="Plyxl"
           >
-            <SheepArt withWord className="h-10 w-auto" />
+            <SheepArt withWord className="h-9 w-auto" />
           </a>
           <div className="mt-3 flex flex-wrap items-center gap-2">
             <YCBadge batch="W27" />
             <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
-              co-founder
+              co-founder &amp; cto
             </span>
           </div>
           <p className="mt-4 text-[0.95rem] leading-relaxed text-foreground/90">
@@ -258,7 +260,7 @@ export function PlyxlFeature() {
             className={`plyxl-sheep ${baa ? 'is-baa' : ''}`}
             aria-label="Pet the Plyxl sheep"
           >
-            <SheepArt pupilsRef={pupilsRef} className="h-auto w-44 sm:w-56" />
+            <SheepArt pupilsRef={pupilsRef} className="h-auto w-32 sm:w-40" />
           </button>
         </div>
       </div>

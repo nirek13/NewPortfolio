@@ -5,7 +5,7 @@ import { Analytics } from '@vercel/analytics/react'
 import { ThemeProvider } from '@/lib/theme-context'
 import { SignatureLoader } from '@/components/site/signature-loader'
 import { INTRO_ONCE_PER_SESSION, INTRO_SESSION_KEY } from '@/lib/signature-intro'
-import { PERSON_JSON_LD, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from '@/lib/site'
+import { PERSON_JSON_LD, SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL, YC_FOUNDER_URL } from '@/lib/site'
 
 const sans = IBM_Plex_Sans({
   subsets: ['latin'],
@@ -37,7 +37,7 @@ const hand = Caveat({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: { default: `${SITE_NAME} — Co-founder of Plyxl (YC W27)`, template: `%s — ${SITE_NAME}` },
+  title: { default: `${SITE_NAME} — ${SITE_TITLE}`, template: `%s — ${SITE_NAME}` },
   description: SITE_DESCRIPTION,
   applicationName: SITE_NAME,
   authors: [{ name: SITE_NAME, url: SITE_URL }],
@@ -47,14 +47,15 @@ export const metadata: Metadata = {
     type: 'profile',
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: SITE_NAME,
+    title: `${SITE_NAME} — ${SITE_TITLE}`,
     description: SITE_DESCRIPTION,
     firstName: 'Nirek',
     lastName: 'Shetty',
     locale: 'en_CA',
   },
-  twitter: { card: 'summary_large_image', creator: '@nirekshetty', title: SITE_NAME, description: SITE_DESCRIPTION },
+  twitter: { card: 'summary_large_image', creator: '@nirekshetty', title: `${SITE_NAME} — ${SITE_TITLE}`, description: SITE_DESCRIPTION },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large' } },
+  keywords: ['Nirek Shetty', 'Plyxl', 'Y Combinator', 'YC W27', 'founder', 'CTO', 'Toronto'],
   verification: { google: '3Upqy0QipOObFiwc8ABHwLyjm6RHYSjemOWErOmt6J8' },
 }
 
@@ -80,6 +81,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <script id="boot-init" dangerouslySetInnerHTML={{ __html: bootInit }} />
+        <link rel="me" href={YC_FOUNDER_URL} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(PERSON_JSON_LD) }}

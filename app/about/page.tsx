@@ -50,7 +50,6 @@ export default function About() {
           <div className="ml-4">↳ Fun fact: I was born on Friday the 13th.</div>
           <div>↳ Started coding around age 7 and have been to well over 30 hackathons.</div>
           <div>↳ Won a silver at IOAI Canada and got nominated for NASA Space Apps out of like 93k people.</div>
-          <div className="ml-4">↳ Did pretty well on the Canadian Computing Competition (71/75).</div>
           <div>↳ Got an award in provincial legislation and am getting flown out to Ottawa free of charge for a week to the House of Commons.</div>
         </div>
 

@@ -112,10 +112,10 @@
     content: "";
     position: absolute;
     left: 0;
-    top: 0.52em;
-    width: 4px;
-    height: 4px;
-    background: hsl(var(--foreground) / 0.6);
+    top: 0.78em;
+    width: 6px;
+    height: 1px;
+    background: hsl(var(--foreground) / 0.4);
   }
 
   .link-penseum,
@@ -281,88 +281,97 @@ body > .sig-loader ~ * [data-sig-target] {
 /* ------------------------------------------------------------------ */
 .site-bg {
   background-color: hsl(var(--background));
-  background-image: radial-gradient(hsl(var(--foreground) / 0.11) 0.7px, transparent 0.9px);
-  background-size: 18px 18px;
-  background-position: 9px 9px;
 }
 
-.dark .site-bg {
-  background-image: radial-gradient(hsl(var(--foreground) / 0.09) 0.7px, transparent 0.9px);
+/* a faint grain, so the flat paper doesn't read as a blank page */
+.site-bg::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-.dash-bar {
-  background: hsl(var(--background) / 0.94);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  border-bottom: 1px solid hsl(var(--foreground) / 0.3);
-  box-shadow:
-    0 2px 0 0 hsl(var(--background)),
-    0 3px 0 0 hsl(var(--foreground) / 0.12);
+.dark .site-bg::before {
+  opacity: 0.05;
 }
 
-.dash-panel {
-  --bracket: hsl(var(--foreground) / 0.75);
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  padding: 0.9rem 1.05rem 1.05rem;
-  border: 1px solid hsl(var(--foreground) / 0.1);
-  background-color: hsl(var(--background));
-  background-repeat: no-repeat;
-  background-image:
-    linear-gradient(var(--bracket), var(--bracket)),
-    linear-gradient(var(--bracket), var(--bracket)),
-    linear-gradient(var(--bracket), var(--bracket)),
-    linear-gradient(var(--bracket), var(--bracket)),
-    linear-gradient(var(--bracket), var(--bracket)),
-    linear-gradient(var(--bracket), var(--bracket)),
-    linear-gradient(var(--bracket), var(--bracket)),
-    linear-gradient(var(--bracket), var(--bracket));
-  background-size:
-    12px 1px, 1px 12px,
-    12px 1px, 1px 12px,
-    12px 1px, 1px 12px,
-    12px 1px, 1px 12px;
-  background-position:
-    0 0, 0 0,
-    100% 0, 100% 0,
-    0 100%, 0 100%,
-    100% 100%, 100% 100%;
+.min-bar {
+  background: hsl(var(--background) / 0.8);
+  backdrop-filter: blur(10px) saturate(1.2);
+  -webkit-backdrop-filter: blur(10px) saturate(1.2);
+  padding-top: env(safe-area-inset-top);
 }
 
-.dash-label {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin: 0 0 0.85rem;
+/* label in the margin on wide screens, stacked above on phones */
+.min-section {
+  display: grid;
+  gap: 0.9rem;
+  padding: 2.75rem 0;
+  border-top: 1px solid hsl(var(--foreground) / 0.08);
+}
+
+.section-label {
   font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
   color: hsl(var(--muted-foreground));
 }
 
-.dash-label .label-index {
-  color: hsl(var(--foreground));
+@media (min-width: 640px) {
+  .min-section {
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    gap: 1.5rem;
+    padding: 3.5rem 0;
+  }
+
+  .section-label {
+    padding-top: 0.2rem;
+  }
 }
 
-.dash-label .label-rule {
-  flex: 1;
-  height: 0;
-  border-top: 1px dotted hsl(var(--foreground) / 0.4);
+/* YC founder card */
+.yc-card {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.75rem 0.9rem 0.75rem 0.75rem;
+  border: 1px solid hsl(var(--foreground) / 0.12);
+  border-radius: 10px;
+  background: hsl(var(--foreground) / 0.015);
+  transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
 }
 
-.dash-label .label-kanji {
-  font-family: inherit;
-  font-size: 11px;
-  letter-spacing: 0;
-  color: hsl(var(--foreground) / 0.55);
+.yc-card-mark {
+  border-radius: 7px;
+  transition: transform 0.35s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.yc-card-arrow {
+  color: hsl(var(--muted-foreground));
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.yc-card:hover,
+.yc-card:focus-visible {
+  border-color: #f26625;
+  background: rgb(242 102 37 / 0.05);
+}
+
+.yc-card:hover .yc-card-mark {
+  transform: rotate(-8deg) scale(1.06);
+}
+
+.yc-card:hover .yc-card-arrow {
+  color: #f26625;
+  transform: translate(2px, -2px);
 }
 
 .icon-chip {
-  border: 1px solid hsl(var(--foreground) / 0.35);
+  border-radius: 999px;
   background: transparent;
 }
 
@@ -416,11 +425,11 @@ body > .sig-loader ~ * [data-sig-target] {
 .exp-row {
   display: flex;
   width: 100%;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  border-bottom: 1px dotted hsl(var(--foreground) / 0.35);
-  padding: 0.6rem 0.1rem;
+  border-bottom: 1px solid hsl(var(--foreground) / 0.06);
+  padding: 0.75rem 0;
   text-align: left;
   transition: background-color 0.2s ease, padding-left 0.2s ease;
 }
@@ -429,15 +438,13 @@ body > .sig-loader ~ * [data-sig-target] {
   border-bottom: 0;
 }
 
-.exp-row.is-link:hover,
-.exp-row.is-link:focus-visible {
-  background: hsl(var(--foreground) / 0.05);
-  padding-left: 0.45rem;
+.exp-row:first-child {
+  padding-top: 0;
 }
 
-.dash-panel .exp-row {
-  gap: 0.85rem;
-  padding: 0.55rem 0.08rem;
+.exp-row.is-link:hover,
+.exp-row.is-link:focus-visible {
+  padding-left: 0.35rem;
 }
 
 /* GitHub calendar */

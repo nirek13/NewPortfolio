@@ -112,7 +112,7 @@ export interface Experience {
 }
 
 export const EXPERIENCES: Experience[] = [
-  { org: 'Plyxl', role: 'Co-founder', yc: 'W27', href: 'https://plyxl.com', logo: '/plyxl-icon.png' },
+  { org: 'Plyxl', role: 'Co-founder & CTO', yc: 'W27', href: 'https://plyxl.com', logo: '/plyxl-icon.png' },
   { org: 'Penseum', role: 'Product Engineer', period: 'prev', href: 'https://penseum.com' },
   {
     org: 'Hackathons Canada',
