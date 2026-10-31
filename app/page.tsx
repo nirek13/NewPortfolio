@@ -7,7 +7,7 @@ import { Signature } from '@/components/site/signature';
 import { CommandPalette } from '@/components/site/command-palette';
 import { Bookshelf } from '@/components/site/bookshelf';
 import { SocialLinks } from '@/components/site/socials';
-import { Stage, Reveal } from '@/components/site/stage';
+import { Stage } from '@/components/site/stage';
 import { GitHubPanel } from '@/components/site/github-panel';
 import { PlyxlFeature, PlyxlMark, YCBadge } from '@/components/site/plyxl';
 import { YCFounderCard, YCMark } from '@/components/site/yc-card';
@@ -122,7 +122,7 @@ function CopyEmail() {
 
 /**
  * One tile of the dashboard: a quiet header (index, title, optional meta on the
- * right) over its content. Tiles in a row stretch to the same height.
+ * right) over its content. On phones only the active tab's tile is shown.
  */
 function Panel({
   id,
@@ -130,7 +130,6 @@ function Panel({
   title,
   meta,
   className = '',
-  reveal = true,
   children,
 }: {
   id?: NavSection;
@@ -138,44 +137,53 @@ function Panel({
   title: string;
   meta?: ReactNode;
   className?: string;
-  reveal?: boolean;
   children: ReactNode;
 }) {
-  const inner = (
-    <section id={id} className="dash-panel site-section">
-      <header className="panel-head">
-        <span className="panel-index">{String(index).padStart(2, '0')}</span>
-        <h2 className="panel-title">{title}</h2>
-        {meta ? <span className="panel-meta">{meta}</span> : null}
-      </header>
-      <div className="panel-body">{children}</div>
-    </section>
-  );
-
-  return reveal ? (
-    <Reveal className={`flex ${className}`}>{inner}</Reveal>
-  ) : (
-    <div className={`flex ${className}`}>{inner}</div>
+  return (
+    <div className={`flex min-h-0 ${className}`}>
+      <section id={id} className="dash-panel site-section">
+        <header className="panel-head">
+          <span className="panel-index">{String(index).padStart(2, '0')}</span>
+          <h2 className="panel-title">{title}</h2>
+          {meta ? <span className="panel-meta">{meta}</span> : null}
+        </header>
+        <div className="panel-body">{children}</div>
+      </section>
+    </div>
   );
 }
 
+/** Bottom tab bar labels for phones. */
+const TAB_LABELS: Record<NavSection, string> = {
+  about: 'About',
+  experiences: 'Work',
+  plyxl: 'Plyxl',
+  github: 'Code',
+  books: 'Books',
+};
+
 export default function Home() {
   const [cmdOpen, setCmdOpen] = useState(false);
+  const [tab, setTab] = useState<NavSection>('about');
 
-  const goTo = useCallback((id: NavSection) => scrollToSection(id), []);
+  const goTo = useCallback((id: NavSection) => {
+    setTab(id);
+    requestAnimationFrame(() => scrollToSection(id));
+  }, []);
 
   useEffect(() => {
     const hash = window.location.hash.replace('#', '') as NavSection;
-    if (NAV_ITEMS.some((item) => item.id === hash)) {
-      requestAnimationFrame(() => scrollToSection(hash));
-    }
-  }, []);
+    if (NAV_ITEMS.some((item) => item.id === hash)) goTo(hash);
+  }, [goTo]);
+
+  /** hides a tile on phones unless its tab is open; desktop always shows every tile */
+  const onTab = (id: NavSection) => (tab === id ? '' : 'max-lg:hidden');
 
   return (
     <Stage>
       <header className="sticky top-0 z-50">
         <nav className="dash-bar" aria-label="Site">
-          <div className="mx-auto flex h-14 max-w-[72rem] items-center justify-between px-4 sm:px-6">
+          <div className="mx-auto flex h-12 max-w-[80rem] items-center justify-between px-4 sm:px-6">
             <button
               type="button"
               onClick={() => goTo('about')}
@@ -184,28 +192,24 @@ export default function Home() {
             >
               <Signature data-sig-target className="h-[22px] w-auto" aria-hidden="true" />
             </button>
-            <div className="flex items-center gap-1 text-[11px] text-muted-foreground">
-              {NAV_ITEMS.slice(1).map((item) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => goTo(item.id)}
-                  className="hidden px-2 py-1 font-mono transition-colors hover:text-foreground md:inline"
-                >
-                  {item.label}
-                </button>
-              ))}
-              <span className="ml-2 mr-3 hidden h-3 w-px bg-foreground/15 md:inline-block" aria-hidden />
+            <div className="flex items-center gap-4 text-[11px] text-muted-foreground">
+              <button
+                type="button"
+                onClick={() => setCmdOpen(true)}
+                className="hidden font-mono transition-colors hover:text-foreground lg:inline"
+              >
+                ⌘K
+              </button>
               <ThemeToggle />
             </div>
           </div>
         </nav>
       </header>
 
-      <main className="relative z-10 mx-auto max-w-[72rem] px-4 pb-16 pt-4 sm:px-6 sm:pb-20 sm:pt-6">
+      <main className="dash-main relative z-10 mx-auto max-w-[80rem] px-3 pt-3 sm:px-5">
         <div className="dash-grid">
-          <Panel id="about" index={1} title="About" meta={<TorontoTime />} className="lg:col-span-8" reveal={false}>
-            <h1 className="font-display text-[2.3rem] font-medium leading-[0.95] sm:text-[2.9rem]">
+          <Panel id="about" index={1} title="About" meta={<TorontoTime />} className={`lg:col-span-5 ${onTab('about')}`}>
+            <h1 className="font-display text-[2.3rem] font-medium leading-[0.95] sm:text-[2.6rem]">
               Nirek Shetty
             </h1>
             <p className="mt-3 text-[0.98rem] leading-relaxed text-foreground/90">
@@ -218,7 +222,7 @@ export default function Home() {
               <span className="text-muted-foreground"> — the workspace that does the work.</span>
             </p>
 
-            <ul className="mt-5 list-none space-y-1.5 text-[0.88rem] leading-relaxed text-foreground/75">
+            <ul className="mt-4 list-none space-y-1.5 text-[0.86rem] leading-relaxed text-foreground/75 lg:text-[0.82rem]">
               {NOTES.map((item, i) => (
                 <li key={i} className="tight-list-item">
                   {item}
@@ -232,8 +236,8 @@ export default function Home() {
             </div>
           </Panel>
 
-          <div className="flex flex-col gap-3 lg:col-span-4">
-            <Panel id="experiences" index={2} title="Experience" meta={`${EXPERIENCES.length} roles`} reveal={false}>
+          <div className={`flex min-h-0 flex-col gap-3 lg:col-span-3 ${onTab('experiences')}`}>
+            <Panel id="experiences" index={2} title="Experience" meta={`${EXPERIENCES.length} roles`}>
               {EXPERIENCES.map((exp) => {
                 const body = (
                   <>
@@ -267,24 +271,38 @@ export default function Home() {
               })}
             </Panel>
 
-            <Panel index={3} title="Backed by" meta="YC W27" className="flex-1" reveal={false}>
+            <Panel index={3} title="Backed by" meta="YC W27" className="flex-1">
               <YCFounderCard />
             </Panel>
           </div>
 
-          <Panel id="plyxl" index={4} title="Plyxl" meta="plyxl.com" className="lg:col-span-12">
+          <Panel id="plyxl" index={4} title="Plyxl" meta="plyxl.com" className={`lg:col-span-4 lg:col-start-6 lg:row-start-1 ${onTab('plyxl')}`}>
             <PlyxlFeature />
           </Panel>
 
-          <Panel id="github" index={5} title="Code" meta="last 12 months" className="lg:col-span-7">
+          <Panel id="github" index={5} title="Code" meta="last 12 months" className={`lg:col-span-7 ${onTab('github')}`}>
             <GitHubPanel />
           </Panel>
 
-          <Panel id="books" index={6} title="Reading" meta="hover a spine" className="lg:col-span-5">
+          <Panel id="books" index={6} title="Reading" meta="hover a spine" className={`lg:col-span-5 ${onTab('books')}`}>
             <Bookshelf compact />
           </Panel>
         </div>
       </main>
+
+      <nav className="mob-tabs lg:hidden" aria-label="Sections">
+        {NAV_ITEMS.map((item) => (
+          <button
+            key={item.id}
+            type="button"
+            onClick={() => goTo(item.id)}
+            aria-current={tab === item.id ? 'page' : undefined}
+            className="mob-tab"
+          >
+            {TAB_LABELS[item.id]}
+          </button>
+        ))}
+      </nav>
 
       <CommandPalette open={cmdOpen} onOpenChange={setCmdOpen} onNavigate={goTo} />
     </Stage>

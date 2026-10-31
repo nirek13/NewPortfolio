@@ -212,9 +212,9 @@ export function PlyxlFeature() {
   };
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex flex-col-reverse gap-5 sm:flex-row sm:items-center sm:justify-between">
-        <div className="min-w-0 max-w-[30rem]">
+    <div className="flex h-full flex-col gap-3">
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
           <a
             href="https://plyxl.com"
             target="_blank"
@@ -222,32 +222,17 @@ export function PlyxlFeature() {
             className="plyxl-wordmark inline-flex items-center"
             aria-label="Plyxl"
           >
-            <SheepArt withWord className="h-9 w-auto" />
+            <SheepArt withWord className="h-8 w-auto" />
           </a>
-          <div className="mt-3 flex flex-wrap items-center gap-2">
-            <YCBadge batch="W27" />
+          <div className="mt-2.5 flex flex-wrap items-center gap-2">
+            <YCBadge batch="W27" className="is-small" />
             <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
               co-founder &amp; cto
             </span>
           </div>
-          <p className="mt-4 text-[0.95rem] leading-relaxed text-foreground/90">
-            <span className="font-medium text-foreground">the workspace that does the work.</span>
-          </p>
-          <p className="mt-2 text-[0.86rem] leading-relaxed text-muted-foreground">
-            ask for anything and plyxl&apos;s agent gets it done across your entire business — email,
-            calendar, books, CRM and 200+ more tools, all in one workspace.
-          </p>
-          <a
-            href="https://plyxl.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="link-badge mt-4 inline-block"
-          >
-            plyxl.com ↗
-          </a>
         </div>
 
-        <div className="relative mx-auto shrink-0 sm:mx-0">
+        <div className="relative shrink-0">
           {baa ? (
             <span key={baa.key} className="sheep-bubble font-hand" role="status">
               {baa.text}
@@ -260,11 +245,20 @@ export function PlyxlFeature() {
             className={`plyxl-sheep ${baa ? 'is-baa' : ''}`}
             aria-label="Pet the Plyxl sheep"
           >
-            <SheepArt pupilsRef={pupilsRef} className="h-auto w-32 sm:w-48" />
+            <SheepArt pupilsRef={pupilsRef} className="h-auto w-24 xl:w-28" />
           </button>
         </div>
       </div>
 
+      <div>
+        <p className="text-[0.92rem] font-medium leading-snug">the workspace that does the work.</p>
+        <p className="mt-1.5 text-[0.82rem] leading-relaxed text-muted-foreground">
+          ask for anything and plyxl&apos;s agent gets it done across your entire business — email,
+          calendar, books, CRM and 200+ more tools, all in one workspace.
+        </p>
+      </div>
+
+      <div className="mt-auto">
       <div ref={stripRef} className="sheep-strip" aria-hidden="true">
         <svg className="sheep-fence" viewBox="0 0 40 30">
           <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -286,12 +280,13 @@ export function PlyxlFeature() {
           </div>
         ))}
       </div>
-      <p className="-mt-2 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
+      <p className="mt-1.5 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
         <span>pet the sheep</span>
         <span className="tabular-nums" aria-live="polite">
           {String(count).padStart(3, '0')} sheep counted
         </span>
       </p>
+      </div>
     </div>
   );
 }
