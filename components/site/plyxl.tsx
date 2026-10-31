@@ -260,7 +260,7 @@ export function PlyxlFeature() {
             className={`plyxl-sheep ${baa ? 'is-baa' : ''}`}
             aria-label="Pet the Plyxl sheep"
           >
-            <SheepArt pupilsRef={pupilsRef} className="h-auto w-32 sm:w-40" />
+            <SheepArt pupilsRef={pupilsRef} className="h-auto w-32 sm:w-48" />
           </button>
         </div>
       </div>

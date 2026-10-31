@@ -10,7 +10,7 @@ import { SocialLinks } from '@/components/site/socials';
 import { Stage, Reveal } from '@/components/site/stage';
 import { GitHubPanel } from '@/components/site/github-panel';
 import { PlyxlFeature, PlyxlMark, YCBadge } from '@/components/site/plyxl';
-import { YCFounderCard } from '@/components/site/yc-card';
+import { YCFounderCard, YCMark } from '@/components/site/yc-card';
 import { EXPERIENCES, NAV_ITEMS, type NavSection } from '@/lib/portfolio-data';
 
 const NOTES = [
@@ -120,26 +120,43 @@ function CopyEmail() {
   );
 }
 
-/** A section of the single column: a small label in the margin, content beside it. */
-function Section({
+/**
+ * One tile of the dashboard: a quiet header (index, title, optional meta on the
+ * right) over its content. Tiles in a row stretch to the same height.
+ */
+function Panel({
   id,
-  label,
+  index,
+  title,
+  meta,
+  className = '',
   reveal = true,
   children,
 }: {
-  id: NavSection;
-  label: string;
+  id?: NavSection;
+  index: number;
+  title: string;
+  meta?: ReactNode;
+  className?: string;
   reveal?: boolean;
   children: ReactNode;
 }) {
   const inner = (
-    <section id={id} className="site-section min-section">
-      <h2 className="section-label">{label}</h2>
-      <div className="min-w-0">{children}</div>
+    <section id={id} className="dash-panel site-section">
+      <header className="panel-head">
+        <span className="panel-index">{String(index).padStart(2, '0')}</span>
+        <h2 className="panel-title">{title}</h2>
+        {meta ? <span className="panel-meta">{meta}</span> : null}
+      </header>
+      <div className="panel-body">{children}</div>
     </section>
   );
 
-  return reveal ? <Reveal>{inner}</Reveal> : inner;
+  return reveal ? (
+    <Reveal className={`flex ${className}`}>{inner}</Reveal>
+  ) : (
+    <div className={`flex ${className}`}>{inner}</div>
+  );
 }
 
 export default function Home() {
@@ -157,8 +174,8 @@ export default function Home() {
   return (
     <Stage>
       <header className="sticky top-0 z-50">
-        <nav className="min-bar" aria-label="Site">
-          <div className="mx-auto flex h-14 max-w-[46rem] items-center justify-between px-5 sm:px-6">
+        <nav className="dash-bar" aria-label="Site">
+          <div className="mx-auto flex h-14 max-w-[72rem] items-center justify-between px-4 sm:px-6">
             <button
               type="button"
               onClick={() => goTo('about')}
@@ -167,91 +184,106 @@ export default function Home() {
             >
               <Signature data-sig-target className="h-[22px] w-auto" aria-hidden="true" />
             </button>
-            <div className="flex items-center gap-4 text-[11px] text-muted-foreground">
-              <span className="hidden sm:inline">
-                <TorontoTime />
-              </span>
+            <div className="flex items-center gap-1 text-[11px] text-muted-foreground">
+              {NAV_ITEMS.slice(1).map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => goTo(item.id)}
+                  className="hidden px-2 py-1 font-mono transition-colors hover:text-foreground md:inline"
+                >
+                  {item.label}
+                </button>
+              ))}
+              <span className="ml-2 mr-3 hidden h-3 w-px bg-foreground/15 md:inline-block" aria-hidden />
               <ThemeToggle />
             </div>
           </div>
         </nav>
       </header>
 
-      <main className="relative z-10 mx-auto max-w-[46rem] px-5 pb-20 sm:px-6 sm:pb-28">
-        <section id="about" className="site-section pb-12 pt-12 sm:pb-16 sm:pt-20">
-          <h1 className="font-display text-[2.6rem] font-medium leading-[0.95] sm:text-[3.4rem]">
-            Nirek Shetty
-          </h1>
-          <p className="mt-4 text-[1rem] leading-relaxed text-foreground/90 sm:text-[1.05rem]">
-            Co-founder &amp; CTO of{' '}
-            <a href="https://plyxl.com" target="_blank" rel="noopener noreferrer" className="link-plyxl plyxl-inline">
-              <PlyxlMark />
-              Plyxl
-            </a>{' '}
-            <YCBadge batch="W27" className="is-small align-[0.12em]" />
-            <span className="text-muted-foreground"> — the workspace that does the work. Toronto.</span>
-          </p>
+      <main className="relative z-10 mx-auto max-w-[72rem] px-4 pb-16 pt-4 sm:px-6 sm:pb-20 sm:pt-6">
+        <div className="dash-grid">
+          <Panel id="about" index={1} title="About" meta={<TorontoTime />} className="lg:col-span-8" reveal={false}>
+            <h1 className="font-display text-[2.3rem] font-medium leading-[0.95] sm:text-[2.9rem]">
+              Nirek Shetty
+            </h1>
+            <p className="mt-3 text-[0.98rem] leading-relaxed text-foreground/90">
+              Co-founder &amp; CTO of{' '}
+              <a href="https://plyxl.com" target="_blank" rel="noopener noreferrer" className="link-plyxl plyxl-inline">
+                <PlyxlMark />
+                Plyxl
+              </a>{' '}
+              <YCBadge batch="W27" className="is-small align-[0.12em]" />
+              <span className="text-muted-foreground"> — the workspace that does the work.</span>
+            </p>
 
-          <ul className="mt-7 list-none space-y-2 text-[0.92rem] leading-relaxed text-foreground/75">
-            {NOTES.map((item, i) => (
-              <li key={i} className="tight-list-item">
-                {item}
-              </li>
-            ))}
-          </ul>
+            <ul className="mt-5 list-none space-y-1.5 text-[0.88rem] leading-relaxed text-foreground/75">
+              {NOTES.map((item, i) => (
+                <li key={i} className="tight-list-item">
+                  {item}
+                </li>
+              ))}
+            </ul>
 
-          <div className="mt-8">
-            <YCFounderCard />
+            <div className="panel-foot">
+              <CopyEmail />
+              <SocialLinks className="-mr-2 flex items-center" />
+            </div>
+          </Panel>
+
+          <div className="flex flex-col gap-3 lg:col-span-4">
+            <Panel id="experiences" index={2} title="Experience" meta={`${EXPERIENCES.length} roles`} reveal={false}>
+              {EXPERIENCES.map((exp) => {
+                const body = (
+                  <>
+                    <p className="flex min-w-0 items-center gap-2 text-[0.88rem] leading-snug">
+                      {exp.logo ? (
+                        <Image src={exp.logo} alt="" width={16} height={16} className="h-4 w-4 shrink-0 rounded-[22%]" />
+                      ) : null}
+                      <span className="font-medium">{exp.org}</span>
+                      <span className="truncate text-muted-foreground">{exp.role}</span>
+                    </p>
+                    {exp.yc ? (
+                      <span className="flex shrink-0 items-center gap-1 font-mono text-[11px] text-muted-foreground">
+                        <YCMark className="h-3 w-3" />
+                        {exp.yc.toLowerCase()}
+                      </span>
+                    ) : exp.period ? (
+                      <span className="shrink-0 font-mono text-[11px] text-muted-foreground">{exp.period}</span>
+                    ) : null}
+                  </>
+                );
+
+                return exp.href ? (
+                  <a key={exp.org} href={exp.href} target="_blank" rel="noopener noreferrer" className="exp-row is-link">
+                    {body}
+                  </a>
+                ) : (
+                  <div key={exp.org} className="exp-row">
+                    {body}
+                  </div>
+                );
+              })}
+            </Panel>
+
+            <Panel index={3} title="Backed by" meta="YC W27" className="flex-1" reveal={false}>
+              <YCFounderCard />
+            </Panel>
           </div>
 
-          <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
-            <CopyEmail />
-            <SocialLinks className="-mr-2 flex items-center" />
-          </div>
-        </section>
+          <Panel id="plyxl" index={4} title="Plyxl" meta="plyxl.com" className="lg:col-span-12">
+            <PlyxlFeature />
+          </Panel>
 
-        <Section id="experiences" label="Experience" reveal={false}>
-          {EXPERIENCES.map((exp) => {
-            const body = (
-              <>
-                <p className="flex min-w-0 items-center gap-2 text-[0.92rem] leading-snug">
-                  {exp.logo ? (
-                    <Image src={exp.logo} alt="" width={16} height={16} className="h-4 w-4 shrink-0 rounded-[22%]" />
-                  ) : null}
-                  <span className="font-medium">{exp.org}</span>
-                  <span className="truncate text-muted-foreground">{exp.role}</span>
-                </p>
-                {exp.yc ? (
-                  <YCBadge batch={exp.yc} asLink={false} className="is-small shrink-0" />
-                ) : exp.period ? (
-                  <span className="shrink-0 font-mono text-[11px] text-muted-foreground">{exp.period}</span>
-                ) : null}
-              </>
-            );
+          <Panel id="github" index={5} title="Code" meta="last 12 months" className="lg:col-span-7">
+            <GitHubPanel />
+          </Panel>
 
-            return exp.href ? (
-              <a key={exp.org} href={exp.href} target="_blank" rel="noopener noreferrer" className="exp-row is-link">
-                {body}
-              </a>
-            ) : (
-              <div key={exp.org} className="exp-row">
-                {body}
-              </div>
-            );
-          })}
-        </Section>
-
-        <Section id="plyxl" label="Plyxl">
-          <PlyxlFeature />
-        </Section>
-
-        <Section id="github" label="Code">
-          <GitHubPanel />
-        </Section>
-
-        <Section id="books" label="Reading">
-          <Bookshelf compact />
-        </Section>
+          <Panel id="books" index={6} title="Reading" meta="hover a spine" className="lg:col-span-5">
+            <Bookshelf compact />
+          </Panel>
+        </div>
       </main>
 
       <CommandPalette open={cmdOpen} onOpenChange={setCmdOpen} onNavigate={goTo} />

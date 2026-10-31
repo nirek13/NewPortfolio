@@ -279,57 +279,104 @@ body > .sig-loader ~ * [data-sig-target] {
 /*  Chrome: paper with a faint dot grid, bracket-cornered panels,        */
 /*  dotted rules and monospace index labels                              */
 /* ------------------------------------------------------------------ */
+/* ------------------------------------------------------------------ */
+/*  Dashboard: a faint dot grid, hairline tiles on a 12-column grid      */
+/* ------------------------------------------------------------------ */
 .site-bg {
   background-color: hsl(var(--background));
+  background-image: radial-gradient(hsl(var(--foreground) / 0.07) 0.7px, transparent 0.9px);
+  background-size: 20px 20px;
+  background-position: 10px 10px;
 }
 
-/* a faint grain, so the flat paper doesn't read as a blank page */
-.site-bg::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-.dark .site-bg::before {
-  opacity: 0.05;
-}
-
-.min-bar {
-  background: hsl(var(--background) / 0.8);
+.dash-bar {
+  background: hsl(var(--background) / 0.82);
   backdrop-filter: blur(10px) saturate(1.2);
   -webkit-backdrop-filter: blur(10px) saturate(1.2);
+  border-bottom: 1px solid hsl(var(--foreground) / 0.08);
   padding-top: env(safe-area-inset-top);
 }
 
-/* label in the margin on wide screens, stacked above on phones */
-.min-section {
+.dash-grid {
   display: grid;
-  gap: 0.9rem;
-  padding: 2.75rem 0;
-  border-top: 1px solid hsl(var(--foreground) / 0.08);
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.75rem;
 }
 
-.section-label {
+@media (min-width: 1024px) {
+  .dash-grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+}
+
+.dash-panel {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid hsl(var(--foreground) / 0.1);
+  border-radius: 4px;
+  background: hsl(var(--background));
+  box-shadow: 0 1px 0 hsl(var(--foreground) / 0.03);
+  transition: border-color 0.25s ease;
+}
+
+.dash-panel:hover {
+  border-color: hsl(var(--foreground) / 0.18);
+}
+
+.panel-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  height: 2.5rem;
+  padding: 0 1rem;
+  border-bottom: 1px solid hsl(var(--foreground) / 0.07);
   font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 11px;
-  font-weight: 400;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
   color: hsl(var(--muted-foreground));
 }
 
+.panel-index {
+  color: hsl(var(--foreground) / 0.35);
+}
+
+.panel-title {
+  font-weight: 500;
+  color: hsl(var(--foreground));
+}
+
+.panel-meta {
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.panel-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  padding: 1.1rem 1rem 1.15rem;
+}
+
+.panel-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 1.25rem;
+}
+
 @media (min-width: 640px) {
-  .min-section {
-    grid-template-columns: 7.5rem minmax(0, 1fr);
-    gap: 1.5rem;
-    padding: 3.5rem 0;
+  .panel-head {
+    padding: 0 1.25rem;
   }
 
-  .section-label {
-    padding-top: 0.2rem;
+  .panel-body {
+    padding: 1.35rem 1.25rem 1.4rem;
   }
 }
 

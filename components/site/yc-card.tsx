@@ -26,10 +26,8 @@ export function YCFounderCard() {
     <a href={YC_FOUNDER_URL} target="_blank" rel="me noopener noreferrer" className="yc-card">
       <YCMark className="yc-card-mark h-9 w-9 shrink-0" />
       <span className="min-w-0 flex-1">
-        <span className="block text-[0.9rem] font-medium leading-tight">Y Combinator · W27</span>
-        <span className="block truncate text-[12px] text-muted-foreground">
-          Founder profile<span className="hidden sm:inline"> · ycombinator.com/founders/nirek-shetty</span>
-        </span>
+        <span className="block text-[0.9rem] font-medium leading-tight">Nirek Shetty · YC W27</span>
+        <span className="block truncate text-[12px] text-muted-foreground">Founder profile on Y Combinator</span>
       </span>
       <span className="yc-card-arrow shrink-0" aria-hidden="true">
         ↗
