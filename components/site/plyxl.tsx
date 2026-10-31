@@ -224,12 +224,7 @@ export function PlyxlFeature() {
           >
             <SheepArt withWord className="h-8 w-auto" />
           </a>
-          <div className="mt-2.5 flex flex-wrap items-center gap-2">
-            <YCBadge batch="W27" className="is-small" />
-            <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
-              co-founder &amp; cto
-            </span>
-          </div>
+          <p className="mt-2.5 text-[0.92rem] font-medium leading-snug">the workspace that does the work.</p>
         </div>
 
         <div className="relative shrink-0">
@@ -248,14 +243,6 @@ export function PlyxlFeature() {
             <SheepArt pupilsRef={pupilsRef} className="h-auto w-24 xl:w-28" />
           </button>
         </div>
-      </div>
-
-      <div>
-        <p className="text-[0.92rem] font-medium leading-snug">the workspace that does the work.</p>
-        <p className="mt-1.5 text-[0.82rem] leading-relaxed text-muted-foreground">
-          ask for anything and plyxl&apos;s agent gets it done across your entire business — email,
-          calendar, books, CRM and 200+ more tools, all in one workspace.
-        </p>
       </div>
 
       <div className="mt-auto">

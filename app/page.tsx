@@ -10,7 +10,7 @@ import { SocialLinks } from '@/components/site/socials';
 import { Stage } from '@/components/site/stage';
 import { GitHubPanel } from '@/components/site/github-panel';
 import { PlyxlFeature, PlyxlMark, YCBadge } from '@/components/site/plyxl';
-import { YCFounderCard, YCMark } from '@/components/site/yc-card';
+import { YCMark } from '@/components/site/yc-card';
 import { EXPERIENCES, NAV_ITEMS, type NavSection } from '@/lib/portfolio-data';
 
 const NOTES = [
@@ -19,7 +19,7 @@ const NOTES = [
     <a href="https://penseum.com" target="_blank" rel="noopener noreferrer" className="link-penseum">
       @Penseum
     </a>
-    , providing world-class education to over 2 million people worldwide.
+    , 2M+ learners.
   </>,
   <>
     started{' '}
@@ -32,13 +32,13 @@ const NOTES = [
       Hackathons Canada
     </a>{' '}
     — <span className="link-google">Google</span>, <span className="link-microsoft">Microsoft</span>,
-    25M views, 5k members.
+    5k members.
   </>,
   <>
     <a href="https://ioai-official.org" target="_blank" rel="noopener noreferrer" className="link-ioai">
       IOAI Canada
     </a>{' '}
-    silver medalist.{' '}
+    silver.{' '}
     <a
       href="https://www.spaceappschallenge.org/"
       target="_blank"
@@ -47,14 +47,7 @@ const NOTES = [
     >
       NASA Space Apps
     </a>{' '}
-    global nominee. winner of Canada&apos;s largest AI hackathon.
-  </>,
-  <>
-    national finalist in{' '}
-    <a href="https://dmz.torontomu.ca/" target="_blank" rel="noopener noreferrer" className="link-dmz">
-      DMZ&apos;s
-    </a>{' '}
-    100k pitch competition. 3× <span className="link-ingenious">Ingenious+</span> Ontario winner.
+    global nominee.
   </>,
 ];
 
@@ -219,7 +212,6 @@ export default function Home() {
                 Plyxl
               </a>{' '}
               <YCBadge batch="W27" className="is-small align-[0.12em]" />
-              <span className="text-muted-foreground"> — the workspace that does the work.</span>
             </p>
 
             <ul className="mt-4 list-none space-y-1.5 text-[0.86rem] leading-relaxed text-foreground/75 lg:text-[0.82rem]">
@@ -236,55 +228,49 @@ export default function Home() {
             </div>
           </Panel>
 
-          <div className={`flex min-h-0 flex-col gap-3 lg:col-span-3 ${onTab('experiences')}`}>
-            <Panel id="experiences" index={2} title="Experience" meta={`${EXPERIENCES.length} roles`}>
-              {EXPERIENCES.map((exp) => {
-                const body = (
-                  <>
-                    <p className="flex min-w-0 items-center gap-2 text-[0.88rem] leading-snug">
-                      {exp.logo ? (
-                        <Image src={exp.logo} alt="" width={16} height={16} className="h-4 w-4 shrink-0 rounded-[22%]" />
-                      ) : null}
-                      <span className="font-medium">{exp.org}</span>
-                      <span className="truncate text-muted-foreground">{exp.role}</span>
-                    </p>
-                    {exp.yc ? (
-                      <span className="flex shrink-0 items-center gap-1 font-mono text-[11px] text-muted-foreground">
-                        <YCMark className="h-3 w-3" />
-                        {exp.yc.toLowerCase()}
-                      </span>
-                    ) : exp.period ? (
-                      <span className="shrink-0 font-mono text-[11px] text-muted-foreground">{exp.period}</span>
+          <Panel id="experiences" index={2} title="Experience" className={`lg:col-span-3 ${onTab('experiences')}`}>
+            {EXPERIENCES.map((exp) => {
+              const body = (
+                <>
+                  <p className="flex min-w-0 items-center gap-2 text-[0.88rem] leading-snug">
+                    {exp.logo ? (
+                      <Image src={exp.logo} alt="" width={16} height={16} className="h-4 w-4 shrink-0 rounded-[22%]" />
                     ) : null}
-                  </>
-                );
+                    <span className="font-medium">{exp.org}</span>
+                    <span className="truncate text-muted-foreground">{exp.role}</span>
+                  </p>
+                  {exp.yc ? (
+                    <span className="flex shrink-0 items-center gap-1 font-mono text-[11px] text-muted-foreground">
+                      <YCMark className="h-3 w-3" />
+                      {exp.yc.toLowerCase()}
+                    </span>
+                  ) : exp.period ? (
+                    <span className="shrink-0 font-mono text-[11px] text-muted-foreground">{exp.period}</span>
+                  ) : null}
+                </>
+              );
 
-                return exp.href ? (
-                  <a key={exp.org} href={exp.href} target="_blank" rel="noopener noreferrer" className="exp-row is-link">
-                    {body}
-                  </a>
-                ) : (
-                  <div key={exp.org} className="exp-row">
-                    {body}
-                  </div>
-                );
-              })}
-            </Panel>
+              return exp.href ? (
+                <a key={exp.org} href={exp.href} target="_blank" rel="noopener noreferrer" className="exp-row is-link">
+                  {body}
+                </a>
+              ) : (
+                <div key={exp.org} className="exp-row">
+                  {body}
+                </div>
+              );
+            })}
+          </Panel>
 
-            <Panel index={3} title="Backed by" meta="YC W27" className="flex-1">
-              <YCFounderCard />
-            </Panel>
-          </div>
-
-          <Panel id="plyxl" index={4} title="Plyxl" meta="plyxl.com" className={`lg:col-span-4 lg:col-start-6 lg:row-start-1 ${onTab('plyxl')}`}>
+          <Panel id="plyxl" index={3} title="Plyxl" className={`lg:col-span-4 lg:col-start-6 lg:row-start-1 ${onTab('plyxl')}`}>
             <PlyxlFeature />
           </Panel>
 
-          <Panel id="github" index={5} title="Code" meta="last 12 months" className={`lg:col-span-7 ${onTab('github')}`}>
+          <Panel id="github" index={4} title="Code" className={`lg:col-span-7 ${onTab('github')}`}>
             <GitHubPanel />
           </Panel>
 
-          <Panel id="books" index={6} title="Reading" meta="hover a spine" className={`lg:col-span-5 ${onTab('books')}`}>
+          <Panel id="books" index={5} title="Reading" className={`lg:col-span-5 ${onTab('books')}`}>
             <Bookshelf compact />
           </Panel>
         </div>
