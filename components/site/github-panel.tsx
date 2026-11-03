@@ -21,10 +21,10 @@ const USER = 'nirek13';
 const BLOCK = 9;
 const GAP = 2;
 
-/** Five-step grayscale ramps: empty cell first, busiest cell last. */
+/** Five-step ramps in the site's fountain-pen ink: empty cell first, busiest cell last. */
 const CAL_THEME = {
-  light: ['#ececec', '#c4c4c4', '#8a8a8a', '#4a4a4a', '#0a0a0a'],
-  dark: ['#1c1c1c', '#3b3b3b', '#6a6a6a', '#a6a6a6', '#f5f5f5'],
+  light: ['#ecebe8', '#c9d1f1', '#93a3e4', '#5269d3', '#2a45c4'],
+  dark: ['#1c1c1c', '#1f2850', '#2f4192', '#5a72dc', '#93a6ff'],
 };
 
 /**

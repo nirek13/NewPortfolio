@@ -1,8 +1,10 @@
 /* ================================================================== */
-/*  Motion: a few hand-drawn SVG touches and the phone card deck.       */
+/*  Motion: a few hand-drawn SVG touches, colour, and the phone scroll.  */
 /*                                                                      */
 /*  Kept deliberately quiet: things draw in once and settle, and only   */
-/*  the clock, the clouds and the stars keep moving (slowly).            */
+/*  the clock, the clouds and the stars keep moving (slowly). Colour is  */
+/*  used sparingly: fountain-pen ink for hand-drawn marks, and a live    */
+/*  Toronto sky in the Plyxl tile.                                       */
 /*                                                                      */
 /*  Every drawn stroke uses pathLength="1", so one pair of keyframes    */
 /*  (stroke-dashoffset 1 → 0) draws any path regardless of its length.  */
@@ -13,6 +15,12 @@
 :root {
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-draw: cubic-bezier(0.65, 0, 0.35, 1);
+  /* fountain-pen royal blue, for anything drawn by hand */
+  --ink: #2a45c4;
+}
+
+.dark {
+  --ink: #93a6ff;
 }
 
 @keyframes draw {
@@ -43,30 +51,11 @@
   }
 }
 
-/* hold everything on frame one until the intro is gone (the clock keeps real time) */
+/* hold everything on frame one until the intro is gone (the clock keeps real
+   time), and each tile's drawings until that tile has scrolled into view */
 html[data-sig-loading] .dash-main *:not(.aclock-hand),
-html[data-sig-loading] .mob-tabs * {
+.has-io .dash-panel:not(.is-in) *:not(.aclock-hand) {
   animation-play-state: paused !important;
-}
-
-/* ------------------------------------------------------------------ */
-/*  Section icons (phone tab bar and index)                              */
-/* ------------------------------------------------------------------ */
-.sicon {
-  flex-shrink: 0;
-  width: 14px;
-  height: 14px;
-  overflow: visible;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.6;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.sicon path {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 0;
 }
 
 /* ------------------------------------------------------------------ */
@@ -144,7 +133,7 @@ html[data-sig-loading] .mob-tabs * {
   bottom: -0.3em;
   width: 104%;
   height: 0.34em;
-  color: hsl(var(--foreground) / 0.7);
+  color: var(--ink);
   pointer-events: none;
 }
 
@@ -156,6 +145,10 @@ html[data-sig-loading] .mob-tabs * {
 
 .hero-name {
   padding-bottom: 0.18em;
+}
+
+.pen-check {
+  color: var(--ink);
 }
 
 .pen-check path {
@@ -274,7 +267,16 @@ html[data-sig-loading] .mob-tabs * {
   transition: fill 0.2s ease, stroke 0.2s ease;
 }
 
-.exp-node.is-current .exp-node-dot,
+.exp-node.is-current .exp-node-dot {
+  fill: var(--ink);
+  stroke: var(--ink);
+}
+
+.exp-row.is-link:hover .exp-node.is-current .exp-node-dot {
+  fill: var(--ink);
+  stroke: var(--ink);
+}
+
 .exp-row.is-link:hover .exp-node-dot,
 .exp-row.is-link:focus-visible .exp-node-dot {
   fill: hsl(var(--foreground));
@@ -284,7 +286,7 @@ html[data-sig-loading] .mob-tabs * {
 /* the current role breathes, slowly */
 .exp-node-pulse {
   fill: none;
-  stroke: hsl(var(--foreground));
+  stroke: var(--ink);
   stroke-width: 0.8;
   transform-box: fill-box;
   transform-origin: center;
@@ -333,39 +335,49 @@ html[data-sig-loading] .mob-tabs * {
   stroke-linejoin: round;
 }
 
-.pasture-sun {
-  stroke: hsl(var(--foreground) / 0.45);
-  animation: fade-in 1.2s ease both 1s;
+/* the watercolour wash: fades in once the real sky has been worked out */
+.pasture-wash {
+  stroke: none;
+  animation: fade-in 1.4s ease both 0.3s;
 }
 
-.pasture-sun circle {
-  fill: hsl(var(--background));
+.dark .pasture-wash {
+  opacity: 0.78;
+}
+
+.pasture-night {
+  transition: opacity 2s ease;
 }
 
 .pasture-moon {
-  fill: hsl(var(--foreground) / 0.08);
-  stroke: hsl(var(--foreground) / 0.55);
-  animation: fade-in 1.2s ease both 1s;
+  fill: rgb(255 255 255 / 0.14);
+  stroke: rgb(255 255 255 / 0.75);
 }
 
 .pasture-star {
-  stroke: hsl(var(--foreground) / 0.6);
+  stroke: rgb(255 255 255 / 0.85);
   animation: twinkle 5s ease-in-out infinite;
 }
 
 @keyframes twinkle {
   0%,
   100% {
-    opacity: 0.2;
+    opacity: 0.25;
   }
   50% {
-    opacity: 0.85;
+    opacity: 1;
   }
 }
 
-html:not(.dark) .pasture-night,
-.dark .pasture-sun {
+/* before the sky is painted (server render), keep the paper drawing legible */
+.pasture:not(.is-live) .pasture-night {
   display: none;
+}
+
+.pasture-sun {
+  stroke: hsl(var(--foreground) / 0.45);
+  transition: transform 2s linear;
+  animation: fade-in 1.4s ease both 0.6s;
 }
 
 .pasture-cloud {
@@ -393,6 +405,10 @@ html:not(.dark) .pasture-night,
 
 .pasture-hill.is-far .pasture-hill-fill {
   fill: color-mix(in srgb, hsl(var(--foreground)) 3%, hsl(var(--background)));
+}
+
+.pasture-hill-fill {
+  transition: fill 2s ease;
 }
 
 .pasture-hill-line {
@@ -481,7 +497,8 @@ html:not(.dark) .pasture-night,
 }
 
 .cgraph-head circle {
-  fill: currentColor;
+  fill: var(--ink);
+  stroke: var(--ink);
 }
 
 .cgraph text {
@@ -493,255 +510,48 @@ html:not(.dark) .pasture-night,
 }
 
 .cgraph-head text {
-  fill: hsl(var(--foreground));
+  fill: var(--ink);
 }
 
 /* ------------------------------------------------------------------ */
-/*  Phones & tablets: a swipeable card deck                              */
+/*  Phones & tablets: one calm scroll, tiles stacked                     */
 /* ------------------------------------------------------------------ */
-.mob-tabs {
-  position: fixed;
-  right: 0.75rem;
-  bottom: calc(0.75rem + env(safe-area-inset-bottom));
-  left: 0.75rem;
-  z-index: 60;
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 0.25rem;
-  padding: 0.3rem;
-  border: 1px solid hsl(var(--foreground) / 0.12);
-  border-radius: 16px;
-  background: hsl(var(--background) / 0.86);
-  box-shadow: 0 10px 30px rgb(0 0 0 / 0.1);
-  backdrop-filter: blur(14px) saturate(1.3);
-  -webkit-backdrop-filter: blur(14px) saturate(1.3);
-  animation: fade-up 0.5s var(--ease-out) both 0.15s;
-}
-
-@media (min-width: 1024px) {
-  .mob-tabs {
-    display: none;
-  }
-}
-
-/* the pill rides along with the swipe; `difference` inverts exactly what it covers */
-.mob-pill {
-  position: absolute;
-  top: 0.3rem;
-  bottom: 0.3rem;
-  left: 0.3rem;
-  z-index: 2;
-  width: calc((100% - 0.6rem - 1rem) / 5);
-  border-radius: 12px;
-  background: #fff;
-  mix-blend-mode: difference;
-  pointer-events: none;
-  transform: translateX(calc(var(--deck-p, 0) * (100% + 0.25rem)));
-}
-
-.mob-tab {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.22rem;
-  height: 3.15rem;
-  border-radius: 12px;
-  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 10px;
-  letter-spacing: 0.02em;
-  color: hsl(var(--foreground) / 0.62);
-  -webkit-tap-highlight-color: transparent;
-  transition: color 0.2s ease;
-}
-
-.mob-tab[aria-current='page'] {
-  color: hsl(var(--foreground));
-}
-
-.mob-tab-icon {
-  width: 19px;
-  height: 19px;
-  stroke-width: 1.5;
-}
-
-/* the icon re-draws itself when its tab becomes the current one */
-.mob-tab[aria-current='page'] .mob-tab-icon path {
-  animation: draw 0.6s var(--ease-draw) both;
-  animation-delay: calc(var(--i, 0) * 0.1s);
-}
-
-/* Index on the About card */
-.m-index {
-  margin-top: 1.6rem;
-}
-
-.m-index-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: 0.45rem;
-  border-bottom: 1px dotted hsl(var(--foreground) / 0.35);
-  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: hsl(var(--muted-foreground));
-}
-
-.m-swipe {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-/* a nudge or two to say "swipe", then it rests */
-.m-swipe svg {
-  width: 24px;
-  height: 9px;
-  overflow: visible;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.3;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  animation: nudge 1.6s ease-in-out 2 1.2s;
-}
-
-@keyframes nudge {
-  0%,
-  60%,
-  100% {
-    transform: translateX(0);
-  }
-  30% {
-    transform: translateX(4px);
-  }
-}
-
-.m-index ul {
-  list-style: none;
-}
-
-.m-index-row {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  width: 100%;
-  padding: 0.7rem 0.2rem;
-  border-bottom: 1px solid hsl(var(--foreground) / 0.07);
-  text-align: left;
-  -webkit-tap-highlight-color: transparent;
-  transition: background-color 0.15s ease;
-}
-
-.m-index-row:active {
-  background: hsl(var(--foreground) / 0.05);
-}
-
-.m-index-icon {
-  width: 20px;
-  height: 20px;
-  stroke-width: 1.4;
-  color: hsl(var(--foreground) / 0.8);
-}
-
-.m-index-arrow {
-  width: 16px;
-  height: 16px;
-  flex-shrink: 0;
-  fill: none;
-  stroke: hsl(var(--muted-foreground));
-  stroke-width: 1.4;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  transition: transform 0.2s ease;
-}
-
-.m-index-row:active .m-index-arrow {
-  transform: translateX(3px);
-}
-
 @media (max-width: 1023px) {
   .dash-main {
-    height: calc(100dvh - 3rem - 1px - env(safe-area-inset-top));
-    padding: 0;
+    padding-bottom: calc(2.5rem + env(safe-area-inset-bottom));
   }
 
   .dash-grid {
-    display: flex;
-    gap: 0.6rem;
-    height: 100%;
-    padding: 0.75rem 0 calc(5.15rem + env(safe-area-inset-bottom)) 1.25rem;
-    overflow-x: auto;
-    overflow-y: hidden;
-    overscroll-behavior-x: contain;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
+    gap: 0.9rem;
   }
 
-  .dash-grid::-webkit-scrollbar {
-    display: none;
+  /* each tile settles in as it arrives (only once the observer is running,
+     so nothing is ever hidden if scripts don't load) */
+  .has-io .dash-panel {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out), border-color 0.25s ease;
   }
 
-  /* trailing room so the last card can sit in the middle too */
-  .dash-grid::after {
-    content: "";
-    flex: 0 0 0.65rem;
+  .has-io .dash-panel.is-in {
+    opacity: 1;
+    transform: none;
   }
 
-  .deck-slide {
-    flex: 0 0 100%;
-    height: 100%;
-    scroll-snap-align: center;
-    scroll-snap-stop: always;
-  }
-
-  /* cards ease back slightly as they slide away from the middle */
-  .deck-slide .dash-panel {
-    overflow: hidden;
-    opacity: calc(1 - var(--d, 0) * 0.35);
-    transform: scale(calc(1 - var(--d, 0) * 0.04));
-  }
-
-  .panel-body {
-    min-height: 0;
-    overflow-y: auto;
-    overscroll-behavior-y: contain;
-    scrollbar-width: none;
-  }
-
-  .panel-body::-webkit-scrollbar {
-    display: none;
-  }
-
-  .plyxl-hero-art {
-    width: 8.5rem;
-  }
-
+  /* the tiles have no fixed height here, so give the drawings room of their own */
   .plyxl-sky {
+    flex: none;
+    height: 13rem;
     max-height: none;
   }
 
-  /* the shelf floats in the middle of its card */
-  #books .bookshelf {
-    margin-block: auto;
+  .plyxl-hero-art {
+    width: 7rem;
   }
 
-  #books .panel-body {
-    justify-content: center;
-  }
-}
-
-@media (min-width: 640px) and (max-width: 1023px) {
-  .dash-grid {
-    padding-left: 2.5rem;
-  }
-
-  .dash-grid::after {
-    flex-basis: 1.9rem;
+  .code-graph {
+    flex: none;
+    height: 8.5rem;
   }
 }
 
@@ -756,7 +566,6 @@ html:not(.dark) .pasture-night,
 /*  Reduced motion: everything rests in its finished state               */
 /* ------------------------------------------------------------------ */
 @media (prefers-reduced-motion: reduce) {
-  .sicon path,
   .pen-mark path,
   .exp-node-dot,
   .pasture-hill-line,
@@ -770,9 +579,14 @@ html:not(.dark) .pasture-night,
   .pasture *,
   .github-cal.is-waving rect,
   .cgraph-commit,
-  .mob-tabs,
-  .m-swipe svg {
+  .pasture-wash {
     animation: none !important;
+  }
+
+  .dash-panel {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 
   .cgraph-commit,
@@ -794,4 +608,44 @@ html:not(.dark) .pasture-night,
   .tt-rays {
     transition: none;
   }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Colour                                                               */
+/* ------------------------------------------------------------------ */
+
+/* the signature is signed in fountain-pen ink, in the intro and the nav */
+.sig-loader-mark,
+[data-sig-target] {
+  color: var(--ink);
+}
+
+/* links keep their ink underline, then fill with the real brand colour on hover */
+.link-penseum {
+  --brand: #8b5cf6;
+}
+
+.link-hackathons {
+  --brand: #2a6b65;
+}
+
+.link-ioai {
+  --brand: #2a69c0;
+}
+
+.link-nasa {
+  --brand: #0b3d91;
+}
+
+.link-contractual {
+  --brand: #2e71f2;
+}
+
+a.link-penseum:hover,
+a.link-hackathons:hover,
+a.link-ioai:hover,
+a.link-nasa:hover,
+a.link-contractual:hover {
+  background-image: linear-gradient(var(--brand), var(--brand));
+  color: #fff;
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
+import { useCallback, useEffect, useState, type ReactNode } from 'react';
 import { ThemeToggle } from '@/components/site/theme-toggle';
 import { Signature } from '@/components/site/signature';
 import { CommandPalette } from '@/components/site/command-palette';
@@ -11,10 +11,10 @@ import { Stage } from '@/components/site/stage';
 import { GitHubPanel } from '@/components/site/github-panel';
 import { PlyxlFeature, PlyxlMark, YCBadge } from '@/components/site/plyxl';
 import { YCMark } from '@/components/site/yc-card';
-import { SectionIcon } from '@/components/site/svg/section-icon';
 import { AnalogClock } from '@/components/site/svg/analog-clock';
 import { DrawnCheck, PenUnderline } from '@/components/site/svg/pen';
-import { BOOKS, EXPERIENCES, NAV_ITEMS, type NavSection } from '@/lib/portfolio-data';
+import { NextSunEvent } from '@/components/site/svg/pasture';
+import { EXPERIENCES, NAV_ITEMS, type NavSection } from '@/lib/portfolio-data';
 
 const NOTES = [
   <>
@@ -54,27 +54,7 @@ const NOTES = [
   </>,
 ];
 
-/** Bottom tab bar labels for phones. */
-const TAB_LABELS: Record<NavSection, string> = {
-  about: 'About',
-  experiences: 'Work',
-  plyxl: 'Plyxl',
-  github: 'Code',
-  books: 'Books',
-};
-
-/** One-line teasers for the section index on the phone's About card. */
-const INDEX_HINTS: Partial<Record<NavSection, string>> = {
-  experiences: EXPERIENCES.map((e) => e.org).slice(0, 3).join(', '),
-  plyxl: 'pet the sheep',
-  github: 'a year of commits',
-  books: `${BOOKS.length} books on the shelf`,
-};
-
 const SECTION_INDEX = NAV_ITEMS.map((item) => item.id);
-
-/** Phones and tablets get the swipeable card deck; desktop gets the one-screen grid. */
-const DECK_QUERY = '(max-width: 1023px)';
 
 function TorontoTime() {
   const [time, setTime] = useState<string | null>(null);
@@ -141,7 +121,7 @@ function CopyEmail() {
 
 /**
  * One tile of the dashboard: a quiet header (index, title, optional meta on
- * the right) over its content. On phones each tile is one card in the deck.
+ * the right) over its content. On phones the tiles simply stack.
  */
 function Panel({
   id,
@@ -159,7 +139,7 @@ function Panel({
   children: ReactNode;
 }) {
   return (
-    <div className={`deck-slide flex min-h-0 ${className}`}>
+    <div className={`flex min-h-0 ${className}`}>
       <section id={id} className="dash-panel site-section" aria-labelledby={`${id}-title`}>
         <header className="panel-head">
           <span className="panel-index">{String(index).padStart(2, '0')}</span>
@@ -219,123 +199,41 @@ function ExperienceList() {
   );
 }
 
-/** Phones only: the About card doubles as a table of contents for the deck. */
-function SectionIndex({ onNavigate }: { onNavigate: (id: NavSection) => void }) {
-  return (
-    <div className="m-index lg:hidden">
-      <p className="m-index-head">
-        <span>Index</span>
-        <span className="m-swipe" aria-hidden="true">
-          swipe
-          <svg viewBox="0 0 28 10">
-            <path d="M1 5h24M21 1.5 25.5 5 21 8.5" />
-          </svg>
-        </span>
-      </p>
-      <ul>
-        {NAV_ITEMS.filter((item) => item.id !== 'about').map((item, i) => (
-          <li key={item.id}>
-            <button type="button" className="m-index-row" onClick={() => onNavigate(item.id)}>
-              <SectionIcon id={item.id} className="m-index-icon" />
-              <span className="font-mono text-[11px] text-muted-foreground">{String(i + 2).padStart(2, '0')}</span>
-              <span className="min-w-0 flex-1">
-                <span className="block text-[0.95rem] font-medium leading-tight">{TAB_LABELS[item.id]}</span>
-                <span className="block truncate text-[0.78rem] text-muted-foreground">{INDEX_HINTS[item.id]}</span>
-              </span>
-              <svg viewBox="0 0 16 16" className="m-index-arrow" aria-hidden="true">
-                <path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" />
-              </svg>
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
 /**
- * Drives the phone deck: tracks swipe progress continuously (for the tab pill
- * and the card depth effect) and reports which card has settled in the middle.
+ * Marks each tile `is-in` once it scrolls into view. Its drawings (rail, hills,
+ * underline) wait paused until then, so on a phone they play as you reach them
+ * rather than off-screen. On desktop every tile is already in view.
  */
-function useDeck(onSettle: (id: NavSection) => void) {
-  const deckRef = useRef<HTMLDivElement>(null);
-  const tabsRef = useRef<HTMLElement>(null);
-  const settleRef = useRef(onSettle);
-  settleRef.current = onSettle;
-
+function useSectionsInView() {
   useEffect(() => {
-    const deck = deckRef.current;
-    if (!deck) return;
-    const mq = window.matchMedia(DECK_QUERY);
-    let frame = 0;
-    let last = -1;
-
-    const stride = () => {
-      const [a, b] = deck.children as unknown as HTMLElement[];
-      return a && b ? b.offsetLeft - a.offsetLeft : deck.clientWidth;
-    };
-
-    const paint = () => {
-      frame = 0;
-      if (!mq.matches) return;
-      const p = deck.scrollLeft / Math.max(1, stride());
-      tabsRef.current?.style.setProperty('--deck-p', p.toFixed(4));
-      Array.from(deck.children).forEach((slide, i) => {
-        (slide as HTMLElement).style.setProperty('--d', Math.min(1, Math.abs(i - p)).toFixed(3));
-      });
-      const idx = Math.round(p);
-      if (idx !== last && SECTION_INDEX[idx]) {
-        last = idx;
-        settleRef.current(SECTION_INDEX[idx]);
-      }
-    };
-    const queue = () => {
-      if (!frame) frame = requestAnimationFrame(paint);
-    };
-
-    paint();
-    deck.addEventListener('scroll', queue, { passive: true });
-    window.addEventListener('resize', queue);
-    mq.addEventListener('change', queue);
-    return () => {
-      cancelAnimationFrame(frame);
-      deck.removeEventListener('scroll', queue);
-      window.removeEventListener('resize', queue);
-      mq.removeEventListener('change', queue);
-    };
+    const grid = document.querySelector('.dash-grid');
+    const panels = document.querySelectorAll<HTMLElement>('.dash-panel');
+    grid?.classList.add('has-io');
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-in');
+          io.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.18 }
+    );
+    panels.forEach((panel) => io.observe(panel));
+    return () => io.disconnect();
   }, []);
-
-  /** Brings a card to the middle of the deck. Returns false on desktop (no deck). */
-  const show = useCallback((id: NavSection, smooth = true) => {
-    const deck = deckRef.current;
-    if (!deck || !window.matchMedia(DECK_QUERY).matches) return false;
-    const slide = deck.children[SECTION_INDEX.indexOf(id)] as HTMLElement | undefined;
-    if (!slide) return false;
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    deck.scrollTo({
-      left: slide.offsetLeft - (deck.clientWidth - slide.offsetWidth) / 2,
-      behavior: smooth && !reduce ? 'smooth' : 'auto',
-    });
-    return true;
-  }, []);
-
-  return { deckRef, tabsRef, show };
 }
 
 export default function Home() {
   const [cmdOpen, setCmdOpen] = useState(false);
-  const [tab, setTab] = useState<NavSection>('about');
-  const { deckRef, tabsRef, show } = useDeck(setTab);
 
-  const goTo = useCallback(
-    (id: NavSection, smooth = true) => {
-      setTab(id);
-      window.history.replaceState(null, '', id === 'about' ? window.location.pathname : `#${id}`);
-      if (show(id, smooth)) return;
-      document.getElementById(id)?.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
-    },
-    [show]
-  );
+  useSectionsInView();
+
+  const goTo = useCallback((id: NavSection, smooth = true) => {
+    window.history.replaceState(null, '', id === 'about' ? window.location.pathname : `#${id}`);
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.getElementById(id)?.scrollIntoView({ behavior: smooth && !reduce ? 'smooth' : 'auto', block: 'start' });
+  }, []);
 
   useEffect(() => {
     const hash = window.location.hash.replace('#', '') as NavSection;
@@ -369,8 +267,8 @@ export default function Home() {
         </nav>
       </header>
 
-      <main className="dash-main relative z-10 mx-auto max-w-[80rem] sm:px-5 lg:px-3 lg:pt-3">
-        <div ref={deckRef} className="dash-grid">
+      <main className="dash-main relative z-10 mx-auto max-w-[80rem] px-3 pt-3 sm:px-5 lg:px-3">
+        <div className="dash-grid">
           <Panel id="about" index={1} title="About" meta={<TorontoTime />} className="lg:col-span-5">
             <h1 className="hero-name font-display text-[2.6rem] font-medium leading-[0.95] lg:text-[2.6rem]">
               <span className="relative inline-block">
@@ -395,8 +293,6 @@ export default function Home() {
               ))}
             </ul>
 
-            <SectionIndex onNavigate={goTo} />
-
             <div className="panel-foot">
               <CopyEmail />
               <SocialLinks className="-mr-2 flex items-center" />
@@ -407,7 +303,7 @@ export default function Home() {
             <ExperienceList />
           </Panel>
 
-          <Panel id="plyxl" index={3} title="Plyxl" className="lg:col-span-4 lg:col-start-6 lg:row-start-1">
+          <Panel id="plyxl" index={3} title="Plyxl" meta={<NextSunEvent />} className="lg:col-span-4 lg:col-start-6 lg:row-start-1">
             <PlyxlFeature />
           </Panel>
 
@@ -420,22 +316,6 @@ export default function Home() {
           </Panel>
         </div>
       </main>
-
-      <nav ref={tabsRef} className="mob-tabs lg:hidden" aria-label="Sections">
-        <span className="mob-pill" aria-hidden="true" />
-        {NAV_ITEMS.map((item) => (
-          <button
-            key={item.id}
-            type="button"
-            onClick={() => goTo(item.id)}
-            aria-current={tab === item.id ? 'page' : undefined}
-            className="mob-tab"
-          >
-            <SectionIcon id={item.id} className="mob-tab-icon" />
-            <span>{TAB_LABELS[item.id]}</span>
-          </button>
-        ))}
-      </nav>
 
       <CommandPalette open={cmdOpen} onOpenChange={setCmdOpen} onNavigate={goTo} />
     </Stage>
