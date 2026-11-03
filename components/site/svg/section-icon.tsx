@@ -31,16 +31,3 @@ export function SectionIcon({ id, className = '' }: { id: NavSection; className?
     </svg>
   );
 }
-
-/** Four bracket corners that draw themselves onto a tile. */
-export function PanelCorners() {
-  return (
-    <span className="pcorners" aria-hidden="true">
-      {(['tl', 'tr', 'br', 'bl'] as const).map((c) => (
-        <svg key={c} viewBox="0 0 10 10" className={`pcorner is-${c}`}>
-          <path d="M1 9V1h8" pathLength={1} />
-        </svg>
-      ))}
-    </span>
-  );
-}

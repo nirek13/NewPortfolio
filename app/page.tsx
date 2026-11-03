@@ -11,10 +11,9 @@ import { Stage } from '@/components/site/stage';
 import { GitHubPanel } from '@/components/site/github-panel';
 import { PlyxlFeature, PlyxlMark, YCBadge } from '@/components/site/plyxl';
 import { YCMark } from '@/components/site/yc-card';
-import { SectionIcon, PanelCorners } from '@/components/site/svg/section-icon';
+import { SectionIcon } from '@/components/site/svg/section-icon';
 import { AnalogClock } from '@/components/site/svg/analog-clock';
-import { DrawnCheck, PenArrow, PenUnderline } from '@/components/site/svg/pen';
-import { GridSpotlight } from '@/components/site/svg/grid-spotlight';
+import { DrawnCheck, PenUnderline } from '@/components/site/svg/pen';
 import { BOOKS, EXPERIENCES, NAV_ITEMS, type NavSection } from '@/lib/portfolio-data';
 
 const NOTES = [
@@ -141,9 +140,8 @@ function CopyEmail() {
 }
 
 /**
- * One tile of the dashboard: a quiet header (icon, index, title, optional meta
- * on the right) over its content, with bracket corners that draw themselves in.
- * On phones each tile is one card in the swipeable deck.
+ * One tile of the dashboard: a quiet header (index, title, optional meta on
+ * the right) over its content. On phones each tile is one card in the deck.
  */
 function Panel({
   id,
@@ -161,11 +159,9 @@ function Panel({
   children: ReactNode;
 }) {
   return (
-    <div className={`deck-slide flex min-h-0 ${className}`} style={{ ['--pi' as string]: index - 1 }}>
+    <div className={`deck-slide flex min-h-0 ${className}`}>
       <section id={id} className="dash-panel site-section" aria-labelledby={`${id}-title`}>
-        <PanelCorners />
         <header className="panel-head">
-          <SectionIcon id={id} className="panel-icon" />
           <span className="panel-index">{String(index).padStart(2, '0')}</span>
           <h2 id={`${id}-title`} className="panel-title">
             {title}
@@ -348,7 +344,6 @@ export default function Home() {
 
   return (
     <Stage>
-      <GridSpotlight />
       <header className="sticky top-0 z-50">
         <nav className="dash-bar" aria-label="Site">
           <div className="mx-auto flex h-12 max-w-[80rem] items-center justify-between px-4 sm:px-6">
@@ -403,10 +398,6 @@ export default function Home() {
             <SectionIndex onNavigate={goTo} />
 
             <div className="panel-foot">
-              <span className="say-hi" aria-hidden="true">
-                <span className="font-hand">say hi</span>
-                <PenArrow />
-              </span>
               <CopyEmail />
               <SocialLinks className="-mr-2 flex items-center" />
             </div>
