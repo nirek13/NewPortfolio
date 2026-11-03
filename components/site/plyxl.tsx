@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useCallback, useEffect, useRef, useState, type Ref } from 'react';
 import { YC_FOUNDER_URL } from '@/lib/site';
 import { YCMark } from '@/components/site/yc-card';
+import { Pasture } from '@/components/site/svg/pasture';
 
 /** Official Plyxl sheep parts (from plyxl.com), drawn with <use> so they follow the theme. */
 const SPRITE = '/plyxl-sheep.svg';
@@ -240,12 +241,13 @@ export function PlyxlFeature() {
             className={`plyxl-sheep ${baa ? 'is-baa' : ''}`}
             aria-label="Pet the Plyxl sheep"
           >
-            <SheepArt pupilsRef={pupilsRef} className="h-auto w-24 xl:w-28" />
+            <SheepArt pupilsRef={pupilsRef} className="plyxl-hero-art h-auto w-24 xl:w-28" />
           </button>
         </div>
       </div>
 
-      <div className="mt-auto">
+      <div className="plyxl-field">
+      <Pasture className="plyxl-sky" />
       <div ref={stripRef} className="sheep-strip" aria-hidden="true">
         <svg className="sheep-fence" viewBox="0 0 40 30">
           <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Caveat, Fraunces, IBM_Plex_Mono, IBM_Plex_Sans } from 'next/font/google'
 import './globals.css'
+import './motion.css'
 import { Analytics } from '@vercel/analytics/react'
 import { ThemeProvider } from '@/lib/theme-context'
 import { SignatureLoader } from '@/components/site/signature-loader'

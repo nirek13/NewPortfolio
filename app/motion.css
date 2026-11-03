@@ -1,0 +1,1045 @@
+/* ================================================================== */
+/*  Motion: hand-built SVG animations and the phone card deck.          */
+/*                                                                      */
+/*  Every drawn stroke uses pathLength="1", so one pair of keyframes    */
+/*  (stroke-dashoffset 1 → 0) draws any path regardless of its length.  */
+/*  Nothing in the page starts moving until the signature intro hands   */
+/*  over: while <html data-sig-loading> is set, animations wait paused  */
+/*  on their first frame.                                               */
+/* ================================================================== */
+
+@keyframes draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+/* hold everything on frame one until the intro is gone (the clock keeps real time) */
+html[data-sig-loading] .dash-main *:not(.aclock-hand),
+html[data-sig-loading] .mob-tabs * {
+  animation-play-state: paused !important;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Section icons                                                        */
+/* ------------------------------------------------------------------ */
+.sicon {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sicon path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+
+.panel-icon {
+  width: 13px;
+  height: 13px;
+  color: hsl(var(--foreground) / 0.7);
+  transition: transform 0.45s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.dash-panel:hover .panel-icon {
+  transform: rotate(-10deg) scale(1.15);
+}
+
+/* tile icons draw in tile by tile, stroke by stroke */
+.panel-icon path {
+  animation: draw 0.8s cubic-bezier(0.65, 0, 0.35, 1) both;
+  animation-delay: calc(0.3s + var(--pi, 0) * 0.09s + var(--i, 0) * 0.18s);
+}
+
+/* ------------------------------------------------------------------ */
+/*  Tile corners                                                         */
+/* ------------------------------------------------------------------ */
+.pcorners {
+  position: absolute;
+  inset: 4px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.pcorner {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  overflow: visible;
+  fill: none;
+  stroke: hsl(var(--foreground) / 0.45);
+  stroke-width: 1.3;
+  stroke-linecap: square;
+  transition: transform 0.4s cubic-bezier(0.3, 1.6, 0.5, 1), stroke 0.25s ease;
+}
+
+.pcorner path {
+  stroke-dasharray: 1;
+  animation: draw 0.55s cubic-bezier(0.65, 0, 0.35, 1) both;
+  animation-delay: calc(0.12s + var(--pi, 0) * 0.08s);
+}
+
+.pcorner.is-tl {
+  top: 0;
+  left: 0;
+}
+
+.pcorner.is-tr {
+  top: 0;
+  right: 0;
+  rotate: 90deg;
+}
+
+.pcorner.is-br {
+  right: 0;
+  bottom: 0;
+  rotate: 180deg;
+}
+
+.pcorner.is-bl {
+  bottom: 0;
+  left: 0;
+  rotate: 270deg;
+}
+
+.dash-panel:hover .pcorner {
+  stroke: hsl(var(--foreground) / 0.85);
+  transform: translate(-2px, -2px);
+}
+
+/* ------------------------------------------------------------------ */
+/*  Cursor lens over the dot grid                                        */
+/* ------------------------------------------------------------------ */
+.grid-spot {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  fill: hsl(var(--foreground) / 0.42);
+  transition: opacity 0.5s ease;
+}
+
+.grid-spot.is-on {
+  opacity: 1;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Analog clock                                                         */
+/* ------------------------------------------------------------------ */
+.aclock {
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+}
+
+.aclock-face {
+  stroke-width: 1.6;
+}
+
+.aclock-tick {
+  stroke-width: 1.4;
+  opacity: 0.55;
+}
+
+.aclock-hand {
+  opacity: 0;
+  transform-box: view-box;
+  transform-origin: 50% 50%;
+  animation: spin linear infinite paused;
+  transition: opacity 0.4s ease;
+}
+
+.aclock.is-set .aclock-hand {
+  opacity: 1;
+  animation-play-state: running;
+}
+
+.aclock-hand.is-hour {
+  stroke-width: 2.3;
+}
+
+.aclock-hand.is-minute {
+  stroke-width: 1.7;
+}
+
+.aclock-hand.is-second {
+  stroke-width: 1;
+  stroke: hsl(var(--foreground));
+}
+
+.aclock-pin {
+  fill: currentColor;
+  stroke: none;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Pen marks                                                            */
+/* ------------------------------------------------------------------ */
+.pen-mark {
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.pen-mark path {
+  stroke-dasharray: 1;
+  animation: draw 0.9s cubic-bezier(0.6, 0, 0.3, 1) both;
+}
+
+.pen-underline {
+  position: absolute;
+  left: -3%;
+  bottom: -0.36em;
+  width: 106%;
+  height: 0.38em;
+  color: hsl(var(--foreground) / 0.8);
+  pointer-events: none;
+}
+
+.pen-underline path:first-child {
+  stroke-width: 2.4;
+  animation-delay: 0.55s;
+}
+
+.pen-underline path:last-child {
+  stroke-width: 1.4;
+  animation-duration: 0.55s;
+  animation-delay: 1.25s;
+}
+
+.hero-name {
+  padding-bottom: 0.2em;
+}
+
+.say-hi {
+  position: absolute;
+  bottom: calc(100% - 0.5rem);
+  left: 0.1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.15rem;
+  color: hsl(var(--muted-foreground));
+  pointer-events: none;
+  rotate: -3deg;
+}
+
+.say-hi .font-hand {
+  font-size: 1.2rem;
+  line-height: 1;
+  animation: fade-up 0.5s ease both 1.5s;
+}
+
+.pen-arrow {
+  width: 44px;
+  height: 30px;
+  margin-top: 0.15rem;
+}
+
+.pen-arrow path {
+  stroke-width: 1.6;
+  animation-delay: 1.7s;
+}
+
+.pen-arrow path:last-child {
+  animation-duration: 0.3s;
+  animation-delay: 2.5s;
+}
+
+.panel-foot {
+  position: relative;
+}
+
+.pen-check path {
+  stroke-width: 2;
+  animation-duration: 0.35s;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Theme toggle: sun ⇄ moon                                             */
+/* ------------------------------------------------------------------ */
+.theme-toggle {
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  margin-right: -7px;
+  border-radius: 999px;
+  color: hsl(var(--foreground));
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 0.2s ease;
+}
+
+.theme-toggle:hover {
+  background: hsl(var(--foreground) / 0.07);
+}
+
+.theme-toggle svg {
+  width: 18px;
+  height: 18px;
+  overflow: visible;
+}
+
+.tt-core {
+  fill: currentColor;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.55s cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+
+.tt-bite {
+  transition: transform 0.55s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.tt-rays {
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  transform-box: view-box;
+  transform-origin: 50% 50%;
+  transition: transform 0.55s cubic-bezier(0.3, 1.4, 0.5, 1), opacity 0.3s ease;
+}
+
+.theme-toggle[aria-pressed='true'] .tt-core {
+  transform: scale(1.55);
+}
+
+.theme-toggle[aria-pressed='true'] .tt-bite {
+  transform: translate(-9px, 5px);
+}
+
+.theme-toggle[aria-pressed='true'] .tt-rays {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.4);
+}
+
+/* ------------------------------------------------------------------ */
+/*  Experience timeline                                                  */
+/* ------------------------------------------------------------------ */
+.exp-list {
+  position: relative;
+  margin-top: -0.6rem;
+  padding-left: 1.05rem;
+  list-style: none;
+}
+
+/* the rail runs from the first node to the last */
+.exp-list::before {
+  content: "";
+  position: absolute;
+  top: 1.3rem;
+  bottom: 1.3rem;
+  left: 5.5px;
+  width: 1px;
+  background: hsl(var(--foreground) / 0.2);
+  transform-origin: top;
+  animation: rail-grow 0.9s cubic-bezier(0.65, 0, 0.35, 1) both 0.4s;
+}
+
+@keyframes rail-grow {
+  from {
+    transform: scaleY(0);
+  }
+}
+
+.exp-list li {
+  animation: exp-in 0.5s cubic-bezier(0.3, 1.2, 0.5, 1) both;
+  animation-delay: calc(0.45s + var(--ei, 0) * 0.12s);
+}
+
+@keyframes exp-in {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+}
+
+.exp-row {
+  position: relative;
+}
+
+.exp-node {
+  position: absolute;
+  top: 50%;
+  left: -1.05rem;
+  width: 12px;
+  height: 12px;
+  overflow: visible;
+  translate: 0 -50%;
+}
+
+.exp-node-dot {
+  fill: hsl(var(--background));
+  stroke: hsl(var(--foreground) / 0.6);
+  stroke-width: 1.3;
+  stroke-dasharray: 1;
+  animation: draw 0.5s ease both;
+  animation-delay: calc(0.55s + var(--ei, 0) * 0.12s);
+  transition: fill 0.2s ease;
+}
+
+.exp-node.is-current .exp-node-dot,
+.exp-row.is-link:hover .exp-node-dot,
+.exp-row.is-link:focus-visible .exp-node-dot {
+  fill: hsl(var(--foreground));
+  stroke: hsl(var(--foreground));
+}
+
+.exp-node-pulse {
+  fill: none;
+  stroke: hsl(var(--foreground));
+  stroke-width: 1;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: node-pulse 2.4s cubic-bezier(0.2, 0.6, 0.4, 1) infinite 1.2s;
+}
+
+@keyframes node-pulse {
+  0% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  80%,
+  100% {
+    opacity: 0;
+    transform: scale(2.8);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Plyxl pasture                                                        */
+/* ------------------------------------------------------------------ */
+.plyxl-field {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 0;
+  margin-top: auto;
+}
+
+.plyxl-sky {
+  display: block;
+  flex: 1 1 0;
+  width: 100%;
+  min-height: 0;
+  max-height: 11rem;
+  margin-bottom: -2.2rem;
+}
+
+.pasture {
+  overflow: hidden;
+  fill: none;
+  stroke: hsl(var(--foreground) / 0.5);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.pasture-sun circle {
+  fill: hsl(var(--background));
+  stroke: hsl(var(--foreground) / 0.6);
+}
+
+.pasture-rays {
+  transform-box: view-box;
+  transform-origin: 324px 52px;
+  animation: spin 80s linear infinite;
+}
+
+.pasture-moon {
+  fill: hsl(var(--foreground) / 0.1);
+  stroke: hsl(var(--foreground) / 0.65);
+}
+
+.pasture-star {
+  stroke: hsl(var(--foreground) / 0.7);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: twinkle 3.2s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.55) rotate(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1) rotate(45deg);
+  }
+}
+
+html:not(.dark) .pasture-night,
+.dark .pasture-sun {
+  display: none;
+}
+
+.pasture-cloud {
+  animation: cloud-drift linear infinite;
+}
+
+.pasture-cloud path {
+  fill: hsl(var(--background));
+  stroke: hsl(var(--foreground) / 0.42);
+}
+
+@keyframes cloud-drift {
+  from {
+    transform: translateX(-40px);
+  }
+  to {
+    transform: translateX(450px);
+  }
+}
+
+.pasture-birds {
+  animation: birds-fly 34s linear infinite -9s;
+}
+
+@keyframes birds-fly {
+  from {
+    transform: translate(-40px, 0);
+  }
+  to {
+    transform: translate(430px, -26px);
+  }
+}
+
+.pasture-bird {
+  stroke: hsl(var(--foreground) / 0.6);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: flap 0.42s ease-in-out infinite alternate;
+}
+
+.pasture-bird.is-late {
+  animation-delay: -0.2s;
+}
+
+@keyframes flap {
+  to {
+    transform: scaleY(-0.35);
+  }
+}
+
+.pasture-hill-fill {
+  fill: hsl(var(--background));
+  stroke: none;
+}
+
+.pasture-hill.is-far .pasture-hill-fill {
+  fill: color-mix(in srgb, hsl(var(--foreground)) 3%, hsl(var(--background)));
+}
+
+.pasture-hill-line {
+  stroke-dasharray: 1;
+  animation: draw 1.6s cubic-bezier(0.65, 0, 0.35, 1) both 0.5s;
+}
+
+.pasture-hill.is-near .pasture-hill-line {
+  stroke: hsl(var(--foreground) / 0.65);
+  animation-delay: 0.8s;
+}
+
+.pasture-tufts {
+  stroke: hsl(var(--foreground) / 0.55);
+  animation: fade-up 0.6s ease both 1.8s;
+}
+
+.plyxl-field .sheep-strip {
+  position: relative;
+  background: transparent;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Code: calendar wave + commit graph                                   */
+/* ------------------------------------------------------------------ */
+.github-cal.is-tagged:not(.is-waving) rect {
+  opacity: 0;
+}
+
+.github-cal.is-waving rect {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: cal-in 0.5s cubic-bezier(0.3, 1.5, 0.5, 1) both;
+  animation-delay: calc(0.1s + var(--w, 0) * 16ms);
+}
+
+@keyframes cal-in {
+  from {
+    opacity: 0;
+    transform: scale(0.15);
+  }
+}
+
+.code-graph {
+  position: relative;
+  flex: 1 1 0;
+  min-height: 0;
+  margin-top: 0.75rem;
+  color: hsl(var(--foreground));
+  container-type: size;
+}
+
+/* fills whatever room is left under the calendar, scaling to fit */
+.cgraph {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-height: 15rem;
+  margin: auto;
+  overflow: visible;
+}
+
+@container (max-height: 64px) {
+  .cgraph {
+    display: none;
+  }
+}
+
+.cgraph-run {
+  animation: fade-out 0.7s ease forwards;
+  animation-delay: calc(var(--cycle) - 900ms);
+}
+
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+.cgraph-line {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  animation: draw linear both;
+}
+
+.cgraph-line.is-branch {
+  stroke: hsl(var(--foreground) / 0.55);
+}
+
+.cgraph-commit,
+.cgraph-head {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: commit-pop 0.45s cubic-bezier(0.3, 1.7, 0.5, 1) both;
+}
+
+@keyframes commit-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+}
+
+.cgraph circle {
+  fill: hsl(var(--background));
+  stroke: currentColor;
+  stroke-width: 1.6;
+}
+
+.cgraph-head circle {
+  fill: currentColor;
+}
+
+.cgraph-head .cgraph-pulse {
+  fill: none;
+  stroke-width: 1;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: node-pulse 2s cubic-bezier(0.2, 0.6, 0.4, 1) infinite;
+}
+
+.cgraph text {
+  fill: hsl(var(--muted-foreground));
+  stroke: none;
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.04em;
+}
+
+.cgraph-head text {
+  fill: hsl(var(--foreground));
+  font-weight: 500;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Phones & tablets: a swipeable card deck                              */
+/* ------------------------------------------------------------------ */
+.mob-tabs {
+  position: fixed;
+  right: 0.75rem;
+  bottom: calc(0.75rem + env(safe-area-inset-bottom));
+  left: 0.75rem;
+  z-index: 60;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.25rem;
+  padding: 0.3rem;
+  border: 1px solid hsl(var(--foreground) / 0.12);
+  border-radius: 16px;
+  background: hsl(var(--background) / 0.86);
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.12), 0 1px 0 hsl(var(--foreground) / 0.04);
+  backdrop-filter: blur(14px) saturate(1.3);
+  -webkit-backdrop-filter: blur(14px) saturate(1.3);
+  animation: tabs-in 0.6s cubic-bezier(0.3, 1.3, 0.5, 1) both 0.2s;
+}
+
+@media (min-width: 1024px) {
+  .mob-tabs {
+    display: none;
+  }
+}
+
+@keyframes tabs-in {
+  from {
+    opacity: 0;
+    transform: translateY(120%);
+  }
+}
+
+/* the pill rides along with the swipe; `difference` inverts exactly what it covers */
+.mob-pill {
+  position: absolute;
+  top: 0.3rem;
+  bottom: 0.3rem;
+  left: 0.3rem;
+  z-index: 2;
+  width: calc((100% - 0.6rem - 1rem) / 5);
+  border-radius: 12px;
+  background: #fff;
+  mix-blend-mode: difference;
+  pointer-events: none;
+  transform: translateX(calc(var(--deck-p, 0) * (100% + 0.25rem)));
+}
+
+.mob-tab {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.22rem;
+  height: 3.15rem;
+  border-radius: 12px;
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.02em;
+  color: hsl(var(--foreground) / 0.62);
+  -webkit-tap-highlight-color: transparent;
+  transition: color 0.2s ease;
+}
+
+.mob-tab[aria-current='page'] {
+  color: hsl(var(--foreground));
+}
+
+.mob-tab-icon {
+  width: 19px;
+  height: 19px;
+  stroke-width: 1.5;
+}
+
+.mob-tab:active .mob-tab-icon {
+  transform: scale(0.88);
+}
+
+/* the icon re-draws itself every time its tab becomes the current one */
+.mob-tab[aria-current='page'] .mob-tab-icon path {
+  animation: draw 0.65s cubic-bezier(0.65, 0, 0.35, 1) both;
+  animation-delay: calc(var(--i, 0) * 0.12s);
+}
+
+/* Index on the About card */
+.m-index {
+  margin-top: 1.6rem;
+}
+
+.m-index-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px dotted hsl(var(--foreground) / 0.35);
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: hsl(var(--muted-foreground));
+}
+
+.m-swipe {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.m-swipe svg {
+  width: 24px;
+  height: 9px;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  animation: nudge 1.8s ease-in-out infinite 1s;
+}
+
+@keyframes nudge {
+  0%,
+  60%,
+  100% {
+    transform: translateX(0);
+  }
+  30% {
+    transform: translateX(5px);
+  }
+}
+
+.m-index ul {
+  list-style: none;
+}
+
+.m-index li {
+  animation: fade-up 0.45s ease both;
+}
+
+.m-index li:nth-child(2) {
+  animation-delay: 0.08s;
+}
+
+.m-index li:nth-child(3) {
+  animation-delay: 0.16s;
+}
+
+.m-index li:nth-child(4) {
+  animation-delay: 0.24s;
+}
+
+.m-index-row {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  width: 100%;
+  padding: 0.7rem 0.2rem;
+  border-bottom: 1px solid hsl(var(--foreground) / 0.07);
+  text-align: left;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 0.15s ease;
+}
+
+.m-index-row:active {
+  background: hsl(var(--foreground) / 0.05);
+}
+
+.m-index-icon {
+  width: 20px;
+  height: 20px;
+  stroke-width: 1.4;
+}
+
+.m-index-icon path {
+  animation: draw 0.8s cubic-bezier(0.65, 0, 0.35, 1) both;
+  animation-delay: calc(0.6s + var(--i, 0) * 0.15s);
+}
+
+.m-index-arrow {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: hsl(var(--muted-foreground));
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.2s ease;
+}
+
+.m-index-row:active .m-index-arrow {
+  transform: translateX(3px);
+}
+
+@media (max-width: 1023px) {
+  .dash-main {
+    height: calc(100dvh - 3rem - 1px - env(safe-area-inset-top));
+    padding: 0;
+  }
+
+  .dash-grid {
+    display: flex;
+    gap: 0.6rem;
+    height: 100%;
+    padding: 0.75rem 0 calc(5.15rem + env(safe-area-inset-bottom)) 1.25rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .dash-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* trailing room so the last card can sit in the middle too */
+  .dash-grid::after {
+    content: "";
+    flex: 0 0 0.65rem;
+  }
+
+  .deck-slide {
+    flex: 0 0 100%;
+    height: 100%;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+  }
+
+  /* cards ease back and dim as they slide away from the middle */
+  .deck-slide .dash-panel {
+    overflow: hidden;
+    opacity: calc(1 - var(--d, 0) * 0.45);
+    transform: scale(calc(1 - var(--d, 0) * 0.06));
+    box-shadow: 0 1px 0 hsl(var(--foreground) / 0.03), 0 18px 40px -24px rgb(0 0 0 / 0.35);
+  }
+
+  .panel-body {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    scrollbar-width: none;
+  }
+
+  .panel-body::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* bigger sheep, taller sky */
+  .plyxl-hero-art {
+    width: 8.5rem;
+  }
+
+  .plyxl-sky {
+    max-height: none;
+  }
+
+  /* the shelf floats in the middle of its card */
+  #books .bookshelf {
+    margin-block: auto;
+  }
+
+  #books .panel-body {
+    justify-content: center;
+  }
+
+  .say-hi {
+    bottom: calc(100% - 0.2rem);
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .dash-grid {
+    padding-left: 2.5rem;
+  }
+
+  .dash-grid::after {
+    flex-basis: 1.9rem;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Desktop fit                                                          */
+/* ------------------------------------------------------------------ */
+@media (min-width: 1024px) and (min-height: 520px) and (max-height: 700px) {
+  .say-hi,
+  .plyxl-sky {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Reduced motion: everything rests in its finished state               */
+/* ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .sicon path,
+  .pcorner path,
+  .pen-mark path,
+  .exp-node-dot,
+  .pasture-hill-line,
+  .cgraph-line {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+
+  .exp-list::before,
+  .exp-list li,
+  .exp-node-pulse,
+  .say-hi .font-hand,
+  .pasture *,
+  .github-cal.is-waving rect,
+  .cgraph *,
+  .mob-tabs,
+  .m-swipe svg,
+  .m-index li {
+    animation: none;
+  }
+
+  .github-cal.is-tagged:not(.is-waving) rect {
+    opacity: 1;
+  }
+
+  /* drifting things rest somewhere sensible in the sky */
+  .pasture-cloud {
+    transform: translateX(var(--rest, 120px));
+  }
+
+  .pasture-birds {
+    transform: translate(150px, -12px);
+  }
+
+  .aclock-hand.is-second {
+    display: none;
+  }
+
+  .panel-icon,
+  .pcorner,
+  .tt-core,
+  .tt-bite,
+  .tt-rays {
+    transition: none;
+  }
+}
